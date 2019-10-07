@@ -1,14 +1,13 @@
-1. Run application :
-- npm install
-- npm start
+## Baraka
 
-2. Folder architecture :
-.
-├── asset              # Compiled files
-    ├── fonts           # Different uses fonts
-├── components                    # All components
-├── constant                     # All constant variable
-├── Documents                    # SQQA, SAS, SQQ
-├── screens                   # Regroup all different screens
-├── package.json                # Srouce file
-└── README.md
+### Installation:
+
++ Installez [Node.js](https://nodejs.org/en/).
++ Pour installer les packages -> npm install
++ Puis lancer l'App mobile -> npm start
+
+## Masters
++ AlphaKush (*App_Mobile*)
++ Abdourahime MOHAMADI HALIDI (*App_Mobile*)
++ Nicolas MANELLI (*App_Web*)
++ Loris Sanchez (*App_Web*)
