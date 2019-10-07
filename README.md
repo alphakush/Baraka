@@ -9,5 +9,3 @@
 ## Masters
 + AlphaKush (*App_Mobile*)
 + Abdourahime MOHAMADI HALIDI (*App_Mobile*)
-+ Nicolas MANELLI (*App_Web*)
-+ Loris Sanchez (*App_Web*)
