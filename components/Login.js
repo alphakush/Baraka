@@ -15,15 +15,30 @@ import Colors from '../constant/Colors';
 class Login extends Component {
   constructor(props) {
     super(props);
-    state = {
+    this.state = {
       email   : '',
       password: '',
     }
   }
 
-  onClickListener = () => {
-    Alert.alert("Baraka", "Log in not available");
-  }
+  CheckTextInput (){
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
+    if (this.state.email != ''){
+      if(reg.test(this.state.email) === false){
+        Alert.alert("Baraka","Wrong email format");
+        return;
+      }
+        if (this.state.password != ''){
+          Alert.alert("Baraka","Login not available");
+          return;
+    }else{
+      Alert.alert("Baraka","Password can't be empty");
+    }
+    }else{
+      Alert.alert("Baraka","Email can't be empty");
+      return;
+    }
+  };
 
   render() {
     return (
@@ -34,7 +49,7 @@ class Login extends Component {
               placeholder="e-mail"
               keyboardType="email-address"
               underlineColorAndroid='transparent'
-              onChangeText={(email) => this.setState({email})}/>
+              onChangeText={email => this.setState({email})}/>
           <Image style={styles.inputIcon} source={require('../images/email.png')}/>
         </View>
 
@@ -43,11 +58,11 @@ class Login extends Component {
               placeholder="mot de passe"
               secureTextEntry={true}
               underlineColorAndroid='transparent'
-              onChangeText={(password) => this.setState({password})}/>
+              onChangeText={password => this.setState({password})}/>
           <Image style={styles.inputIcon} source={require('../images/password.png')}/>
         </View>
 
-        <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onClickListener()}>
+        <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.CheckTextInput()}>
           <Text style={styles.loginText}>Se connecter</Text>
         </TouchableOpacity>
       </View>

@@ -14,18 +14,38 @@ import {
 class CreateAccount extends Component {
   constructor(props) {
     super(props);
-    state = {
+    this.state = {
       username : '',
-      email   : '',
+      email : '',
       password: '',
       confirmpassword : '',
     }
   }
-
-  onClickListener = () => {
-    Alert.alert("Baraka", "Registering not available");
-  }
-
+  CheckTextInput (){
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
+    if (this.state.email != ''){
+      if(reg.test(this.state.email) === false){
+        Alert.alert("Baraka","Wrong email format");
+        return;
+      }
+      if (this.state.username != ''){
+        if (this.state.password != ''){
+          if (this.state.password === this.state.confirmpassword){
+            Alert.alert("Baraka", "Registering not available");
+            return;
+          }else{
+            Alert.alert("Baraka","Password don't match. Try again");
+            return;}
+        }else{
+          Alert.alert("Baraka", "Password can't be empty");
+          return;}
+      }else{
+        Alert.alert("Baraka", "Username can't be empty");
+        return;}
+    }else{
+      Alert.alert("Baraka", "Email can't be empty");
+      return;}
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -35,7 +55,7 @@ class CreateAccount extends Component {
               placeholder="e-mail"
               keyboardType="email-address"
               underlineColorAndroid='transparent'
-              onChangeText={(email) => this.setState({email})}/>
+              onChangeText={email => this.setState({email})}/>
           <Image style={styles.inputIcon} source={require('../images/email.png')}/>
         </View>
 
@@ -44,7 +64,7 @@ class CreateAccount extends Component {
               placeholder="nom d'utilisateur"
               keyboardType="default"
               underlineColorAndroid='transparent'
-              onChangeText={(email) => this.setState({username})}/>
+              onChangeText={username => this.setState({username})}/>
           <Image style={styles.inputIcon} source={require('../images/username.png')}/>
         </View>
 
@@ -53,7 +73,7 @@ class CreateAccount extends Component {
               placeholder="mot de passe"
               secureTextEntry={true}
               underlineColorAndroid='transparent'
-              onChangeText={(password) => this.setState({password})}/>
+              onChangeText={password => this.setState({password})}/>
           <Image style={styles.inputIcon} source={require('../images/password.png')}/>
         </View>
 
@@ -62,11 +82,11 @@ class CreateAccount extends Component {
               placeholder="confirmation du mot de passe"
               secureTextEntry={true}
               underlineColorAndroid='transparent'
-              onChangeText={(confirmpassword) => this.setState({confirmpassword})}/>
+              onChangeText={confirmpassword => this.setState({confirmpassword})}/>
           <Image style={styles.inputIcon} source={require('../images/password.png')}/>
         </View>
 
-        <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onClickListener()}>
+        <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={()=> this.CheckTextInput()}>
           <Text style={styles.loginText}>Créer un compte</Text>
         </TouchableOpacity>
       </View>
@@ -113,6 +133,11 @@ const styles = StyleSheet.create({
     height:30,
     marginRight:15,
     justifyContent: 'center'
+  },
+  errorMessage: {
+    fontSize: 20,
+    color:"red",
+    marginLeft:-80,
   },
   buttonContainer: {
     height:45,
