@@ -1,32 +1,49 @@
 import React from 'react'
 import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-  TouchableOpacity,
-  Image,
-  Alert,
-  FlatList
+    StyleSheet,
+    View,
+    FlatList
 } from 'react-native';
 import BarItems from './BarItems';
 
-const _renderItem = ({ item }) => (
-    <BarItems
-      id={item.id}
-      name={item.name}
-      description={item.description}
-      tags={item.tags}
-      averageNotation={item.averageNotation}
-      picturesUrls={item.picturesUrls}
-    />
-)
+const BarList = props => {
+    const _renderItem = itemData => {
+        return (
+            <BarItems
+                id={itemData.item.id}
+                name={itemData.item.name}
+                description={itemData.item.description}
+                tags={itemData.item.tags}
+                averageNotation={itemData.item.averageNotation}
+                picturesUrls={itemData.item.picturesUrls}
+                onSelectBar={() => {
+                    props.navigation.navigate({
+                        routeName: 'BarInfo',
+                        params: {
+                            BarId: itemData.item.id
+                        }
+                    });
+                }}
+            />
+        );
+    };
+    return (
+        <View style={styles.list}>
+            <FlatList
+                data={props.data}
+                renderItem={_renderItem}
+                keyExtractor={item => item.id}
+            />
+        </View>
+    );
+};
 
-export default (BarsList = props => (
-  <FlatList
-  data={props.data}
-  renderItem={_renderItem}
-  keyExtractor={item => item.id}
-   />
-))
+const styles = StyleSheet.create({
+    list: {
+        flex: 1
+    }
+});
+
+export default BarList;
+
+

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert, Button } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import HeaderButton from '../components/HeaderButton';
@@ -10,7 +10,7 @@ import { BARS } from '../data/data';
 const FeedScreen = props => {
     return (
         <View style={styles.container}>
-          <BarsList data={BARS} />
+          <BarsList data={BARS} navigation={props.navigation} />
         </View>
     );
 };

@@ -6,6 +6,8 @@ import HeaderButton from '../components/HeaderButton';
 import { BARS } from '../data/data';
 
 const BarInformations = props => {
+    const barId = props.navigation.getParam('BarId');
+    console.log(barId);
     return (
       <Text>
         Informations du bar

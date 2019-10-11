@@ -8,6 +8,7 @@ import CreateAccountScreen from '../screens/CreateAccountScreen';
 import FiltersScreen from '../screens/FiltersScreen';
 import GeolocatedScreen from '../screens/GeolocatedScreen';
 import FeedScreen from '../screens/FeedScreen';
+import BarInfoScreen from '../screens/BarInformations';
 
 import Colors from '../constant/Colors'
 
@@ -25,21 +26,36 @@ const defaultStackNavOptions = {
     headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primary,
 };
 
-const LoginNavigator = createStackNavigator(
+
+const BarInfoNavigator = createStackNavigator(
     {
-        Login: LoginScreen
+        BarInfo: BarInfoScreen
     },
     {
-        defaultNavigationOptions: defaultStackNavOptions,
-        navigationOptions: {
-            drawerLabel: "Se connecter"
-        }
+        defaultNavigationOptions: defaultStackNavOptions
+    }
+);
+
+const LoginNavigator = createStackNavigator(
+    {
+        Login: {
+            screen: LoginScreen
+        },
+    },
+    {
+        // initialRouteName: 'Categories',
+        defaultNavigationOptions: defaultStackNavOptions
     }
 );
 
 const FeedNavigator = createStackNavigator(
     {
-        Feed: FeedScreen
+        Feed: {
+            screen: FeedScreen
+        },
+        BarInfo: {
+            screen: BarInfoScreen
+        },
     },
     {
         defaultNavigationOptions: defaultStackNavOptions,
@@ -90,7 +106,9 @@ const MainNavigator = createDrawerNavigator({
     Login: LoginNavigator,
     CreateAccount: CreateAccountNavigator,
     Filters: FiltersNavigator,
-    Geolocate: GeolocateNavigator
+    Geolocate: GeolocateNavigator,
+    BarInfo: BarInfoNavigator
+
 },
     {
         contentOptions: {
