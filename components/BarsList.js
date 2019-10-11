@@ -1,16 +1,26 @@
 import React from 'react'
-import { FlatList, Text } from 'react-native'
-import BarItems from './BarItems'
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Button,
+  TouchableOpacity,
+  Image,
+  Alert,
+  FlatList
+} from 'react-native';
+import BarItems from './BarItems';
 
 const _renderItem = ({ item }) => (
-  <BarItems
-    id={item.id}
-    name={item.name}
-    description={item.description}
-    tags={item.tags}
-    averageNotation={item.averageNotation}
-    picturesUrls={item.picturesUrls}
-  />
+    <BarItems
+      id={item.id}
+      name={item.name}
+      description={item.description}
+      tags={item.tags}
+      averageNotation={item.averageNotation}
+      picturesUrls={item.picturesUrls}
+    />
 )
 
 export default (BarsList = props => (

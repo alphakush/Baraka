@@ -8,6 +8,8 @@ import CreateAccountScreen from '../screens/CreateAccountScreen';
 import FiltersScreen from '../screens/FiltersScreen';
 import GeolocatedScreen from '../screens/GeolocatedScreen';
 import FeedScreen from '../screens/FeedScreen';
+import BarInfoScreen from '../screens/BarInformations';
+
 import Colors from '../constant/Colors'
 
 const defaultStackNavOptions = {
@@ -83,7 +85,6 @@ const GeolocateNavigator = createStackNavigator(
         }
     }
 );
-
 
 const MainNavigator = createDrawerNavigator({
     Home: FeedNavigator,

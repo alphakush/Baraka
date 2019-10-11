@@ -1,27 +1,35 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableHighlight } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableHighlight,TouchableOpacity,Alert,Button } from 'react-native';
 import Colors from '../constant/Colors';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+
+const OnClick = (bar) => {
+  Alert.alert("Baraka","Informations du bar : "+bar.id);
+};
 
 export default (BarItems = props => (
-  <View style={styles.box}>
-    <Image resizeMode="center" style={styles.image} source={{ uri: props.picturesUrls }} />
-    <View style={styles.boxContent}>
-      <Text style={styles.title}>{props.name}</Text>
-      <Text style={styles.description}>{props.description}</Text>
-      <Text style={styles.description}>{props.tags}</Text>
-      <Text style={styles.description}>Note : {props.averageNotation}
-      <Image resizeMode="center" style={styles.icon} source={require('../images/stars.png')}/>
-      </Text>
-      <View style={styles.buttons}>
-        <TouchableHighlight style={[styles.button, styles.view]}>
-          <Image style={styles.icon} source={require('../images/like.png')}/>
-        </TouchableHighlight>
-        <TouchableHighlight style={[styles.button, styles.view]}>
-          <Image style={styles.icon} source={require('../images/dislike.png')}/>
-        </TouchableHighlight>
+  <TouchableOpacity onPress={() => OnClick(props)}>
+    <View style={styles.box}>
+      <Image resizeMode="center" style={styles.image} source={{ uri: props.picturesUrls }} />
+      <View style={styles.boxContent}>
+        <Text style={styles.title}>{props.name}</Text>
+        <Text style={styles.description}>{props.description}</Text>
+        <Text style={styles.description}>{props.tags}</Text>
+        <Text style={styles.description}>Note : {props.averageNotation}
+        <Image resizeMode="center" style={styles.icon} source={require('../images/stars.png')}/>
+        </Text>
+        <View style={styles.buttons}>
+          <TouchableHighlight style={[styles.button, styles.view]}>
+            <Image style={styles.icon} source={require('../images/like.png')}/>
+          </TouchableHighlight>
+          <TouchableHighlight style={[styles.button, styles.view]}>
+            <Image style={styles.icon} source={require('../images/dislike.png')}/>
+          </TouchableHighlight>
+        </View>
       </View>
     </View>
-  </View>
+  </TouchableOpacity>
 ))
 
 const styles = StyleSheet.create({
