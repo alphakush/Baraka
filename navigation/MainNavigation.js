@@ -8,7 +8,6 @@ import CreateAccountScreen from '../screens/CreateAccountScreen';
 import FiltersScreen from '../screens/FiltersScreen';
 import GeolocatedScreen from '../screens/GeolocatedScreen';
 import FeedScreen from '../screens/FeedScreen';
-import BarInfoScreen from '../screens/BarInformations';
 
 import Colors from '../constant/Colors'
 
@@ -92,7 +91,6 @@ const MainNavigator = createDrawerNavigator({
     CreateAccount: CreateAccountNavigator,
     Filters: FiltersNavigator,
     Geolocate: GeolocateNavigator
-
 },
     {
         contentOptions: {

@@ -1,11 +1,10 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableHighlight,TouchableOpacity,Alert,Button } from 'react-native';
 import Colors from '../constant/Colors';
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
 
 const OnClick = (bar) => {
   Alert.alert("Baraka","Informations du bar : "+bar.id);
+  // Faire la redirection vers le screen BarInformations avec l'id du bar ??
 };
 
 export default (BarItems = props => (
