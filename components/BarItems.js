@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableHighlight,TouchableOpacity,Alert,Button } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableHighlight,TouchableOpacity } from 'react-native';
 import Colors from '../constant/Colors';
 
 const BarItems = props => {
@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
   },
   title:{
     fontSize:18,
+    //TODO add color in Color.js and import
     color:"#151515",
   },
   description:{

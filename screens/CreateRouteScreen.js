@@ -1,23 +1,24 @@
 import React from 'react';
-import { View, Text, StyleSheet, Platform } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import HeaderButton from '../components/HeaderButton';
 
-import Login from '../components/Login';
-
-const LoginScreen = props => {
+const CreateRouteScreen = props => {
     return (
-        <Login />
+        <View style={styles.screen}>
+            <Text>Create route Screen!</Text>
+        </View>
     );
 };
 
-LoginScreen.navigationOptions = navData => {
+CreateRouteScreen.navigationOptions = navData => {
     return {
-        headerTitle: 'Se connecter',
+        headerTitle: 'Create route',
+        headerLayoutPreset: 'center',
         headerLeft: <HeaderButtons HeaderButtonComponent={HeaderButton}>
             <Item
-                title="Menu"
+                title="Create route"
                 iconName="ios-menu"
                 onPress={() => {
                     navData.navigation.toggleDrawer();
@@ -35,5 +36,4 @@ const styles = StyleSheet.create({
     }
 });
 
-
-export default LoginScreen;
+export default GeolocatedScreen;

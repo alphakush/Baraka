@@ -1,65 +1,73 @@
 import React, { useState } from 'react';
-import { View, Text, Keyboard, Button, StyleSheet, Dimensions, TouchableWithoutFeedback } from 'react-native';
+import { View, Keyboard, Button, StyleSheet, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { ScrollView } from 'react-native-gesture-handler';
+import test from '../api/test'
 
 import HeaderButton from '../components/HeaderButton';
-import Colors from '../constant/Colors'
-import Input from '../components/Input';
-
+import SearchBar from "../components/SearchBar";
 const FindBarsScreen = props => {
-
     const [enteredValue, setEnteredValue] = useState('');
-
     const searchInputHandler = inputText => {
         setEnteredValue(inputText);
     };
+    const [result, setResults] = useState([]);
+
+    const searchApi =  async () => {
+        try {
+            const reponse = await test.get('/bar/:barname', {
+                params: {
+                    barname: "Wallace"
+                }
+            });
+            console.log("response" + reponse.data);
+            setResults(reponse.data);
+        } catch (e) {
+            console.log(e);
+        }
+    };
 
     return (
-        <ScrollView>
-            <TouchableWithoutFeedback
-                onPress={() => { Keyboard.dismiss(); }}>
-                <View style={styles.screen}>
-                    <Input
-                        style={styles.input}
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                        onChangeText={searchInputHandler}
-                        value={enteredValue}
-                        placeholder="Find your favorite bar"
-                    />
-                    <View style={styles.buttonContainer}>
-                        <Button
-                            title="Search"
-                            color={Colors.accent}
-                        />
-
-                    </View>
+        <TouchableWithoutFeedback onPress={() => {
+            Keyboard.dismiss();
+        }} >
+            <View style={styles.screen}>
+                <View >
+                    <SearchBar onChangeText={searchInputHandler}
+                               value={enteredValue} />
                 </View>
-            </TouchableWithoutFeedback>
-        </ScrollView>
+                <View style={styles.buttonContainer}>
+                    <Button title="Rechercher" onPress={ () => searchApi() }/>
+                </View>
+            </View>
+        </TouchableWithoutFeedback>
     );
 };
 
-FindBarsScreen.navigationOptions = () => {
+FindBarsScreen.navigationOptions = navData => {
     return {
         headerTitle: 'Trouver un bar',
+        headerLayoutPreset: 'center',
+        headerLeft: <HeaderButtons HeaderButtonComponent={HeaderButton}>
+            <Item
+                title="Menu"
+                iconName="ios-menu"
+                onPress={() => {
+                    navData.navigation.toggleDrawer();
+                }}
+            />
+        </HeaderButtons>
     };
 };
 
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         padding: 10
     },
     buttonContainer: {
-        width: '50%'
-    },
-    input: {
-        width: 200,
-        textAlign: 'center'
+        flexDirection: 'row',
+        justifyContent: 'center'
     },
 });
 

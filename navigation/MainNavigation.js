@@ -9,6 +9,7 @@ import FiltersScreen from '../screens/FiltersScreen';
 import GeolocatedScreen from '../screens/GeolocatedScreen';
 import FeedScreen from '../screens/FeedScreen';
 import BarInfoScreen from '../screens/BarInformations';
+import FindBarScreen from '../screens/FindBarsScreen';
 
 import Colors from '../constant/Colors'
 
@@ -44,7 +45,10 @@ const LoginNavigator = createStackNavigator(
     },
     {
         // initialRouteName: 'Categories',
-        defaultNavigationOptions: defaultStackNavOptions
+        defaultNavigationOptions: defaultStackNavOptions,
+        navigationOptions: {
+            drawerLabel: "Se connecter"
+        }
     }
 );
 
@@ -101,13 +105,26 @@ const GeolocateNavigator = createStackNavigator(
     }
 );
 
+const FindBarNavigator = createStackNavigator(
+    {
+        FindBar: FindBarScreen,
+    },
+    {
+        defaultNavigationOptions: defaultStackNavOptions,
+        navigationOptions: {
+            drawerLabel: "Trouver un bar"
+        }
+    }
+);
+
+
 const MainNavigator = createDrawerNavigator({
     Home: FeedNavigator,
     Login: LoginNavigator,
     CreateAccount: CreateAccountNavigator,
     Filters: FiltersNavigator,
     Geolocate: GeolocateNavigator,
-    BarInfo: BarInfoNavigator
+    Findbar: FindBarNavigator
 
 },
     {

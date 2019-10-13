@@ -5,6 +5,7 @@ import HeaderButton from '../components/HeaderButton';
 
 import { BARS } from '../data/data';
 
+// TODO: 'rename the name this screen'
 const BarInformations = props => {
     const barId = props.navigation.getParam('BarId');
     console.log(barId);
