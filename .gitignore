@@ -5,6 +5,11 @@
 /.pnp
 .pnp.js
 
+
+/server/node_modules
+/server/.idea
+/server/package-lock.json
+
 # testing
 /coverage
 
@@ -17,6 +22,9 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.idea
+.expo
+package-lock.json
 
 npm-debug.log*
 yarn-debug.log*

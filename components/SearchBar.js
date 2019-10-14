@@ -12,6 +12,9 @@ const SearchBar = props => {
                 autoCapitalize="none"
                 autoCorrect={false}
                 placeholder="Chercher un bar"
+                value={props.term}
+                onChangeText={props.onTermChange}
+
             />
         </View>
     );

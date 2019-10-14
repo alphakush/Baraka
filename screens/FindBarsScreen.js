@@ -1,27 +1,28 @@
 import React, { useState } from 'react';
-import { View, Keyboard, Button, StyleSheet, Dimensions, TouchableWithoutFeedback } from 'react-native';
+import { View, Keyboard, Button, StyleSheet, Dimensions, TouchableWithoutFeedback, Text } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { ScrollView } from 'react-native-gesture-handler';
-import test from '../api/test'
+import api from '../api/api';
 
 import HeaderButton from '../components/HeaderButton';
 import SearchBar from "../components/SearchBar";
+
 const FindBarsScreen = props => {
+
     const [enteredValue, setEnteredValue] = useState('');
-    const searchInputHandler = inputText => {
-        setEnteredValue(inputText);
-    };
+
     const [result, setResults] = useState([]);
 
-    const searchApi =  async () => {
+    const searchApi =  async (reqbar) => {
+        console.log("reqbar : " + reqbar);
         try {
-            const reponse = await test.get('/bar/:barname', {
+            const reponse = await api.get('/bar/:barname', {
                 params: {
-                    barname: "Wallace"
+                    barname: reqbar
                 }
             });
-            console.log("response" + reponse.data);
             setResults(reponse.data);
+            console.log(reponse.data);
         } catch (e) {
             console.log(e);
         }
@@ -33,11 +34,11 @@ const FindBarsScreen = props => {
         }} >
             <View style={styles.screen}>
                 <View >
-                    <SearchBar onChangeText={searchInputHandler}
-                               value={enteredValue} />
+                    <SearchBar term={enteredValue}
+                               onTermChange={setEnteredValue} />
                 </View>
                 <View style={styles.buttonContainer}>
-                    <Button title="Rechercher" onPress={ () => searchApi() }/>
+                    <Button title="Rechercher" onPress={ () => searchApi(enteredValue) }/>
                 </View>
             </View>
         </TouchableWithoutFeedback>
