@@ -6,25 +6,20 @@ import api from '../api/api';
 
 import HeaderButton from '../components/HeaderButton';
 import SearchBar from "../components/SearchBar";
+import ResultList from '../components/ResultList';
 
 const FindBarsScreen = props => {
-
     const [enteredValue, setEnteredValue] = useState('');
-
-    const [result, setResults] = useState([]);
+    const [results, setResults] = useState([]);
+    const [errorMessage, setErrorMessage ] = useState('');
 
     const searchApi =  async (reqbar) => {
-        console.log("reqbar : " + reqbar);
         try {
-            const reponse = await api.get('/bar/:barname', {
-                params: {
-                    barname: reqbar
-                }
+            const reponse = await api.get('/bar/'+reqbar,{
             });
             setResults(reponse.data);
-            console.log(reponse.data);
         } catch (e) {
-            console.log(e);
+            setErrorMessage('Something went wrong');
         }
     };
 
@@ -35,11 +30,12 @@ const FindBarsScreen = props => {
             <View style={styles.screen}>
                 <View >
                     <SearchBar term={enteredValue}
-                               onTermChange={setEnteredValue} />
+                               onTermChange={setEnteredValue}/>
                 </View>
                 <View style={styles.buttonContainer}>
                     <Button title="Rechercher" onPress={ () => searchApi(enteredValue) }/>
                 </View>
+                <ResultList searchResult={results} navigation={props.navigation} />
             </View>
         </TouchableWithoutFeedback>
     );

@@ -59,7 +59,7 @@ const FeedNavigator = createStackNavigator(
         },
         BarInfo: {
             screen: BarInfoScreen
-        },
+        }
     },
     {
         defaultNavigationOptions: defaultStackNavOptions,
@@ -107,8 +107,13 @@ const GeolocateNavigator = createStackNavigator(
 
 const FindBarNavigator = createStackNavigator(
     {
-        FindBar: FindBarScreen,
-    },
+        FindBar: {
+            screen: FindBarScreen
+        },
+        BarInfo: {
+            screen: BarInfoScreen
+        }
+        },
     {
         defaultNavigationOptions: defaultStackNavOptions,
         navigationOptions: {

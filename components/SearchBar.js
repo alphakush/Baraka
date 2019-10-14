@@ -14,7 +14,6 @@ const SearchBar = props => {
                 placeholder="Chercher un bar"
                 value={props.term}
                 onChangeText={props.onTermChange}
-
             />
         </View>
     );
