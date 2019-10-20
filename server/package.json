@@ -1,5 +1,5 @@
 {
-  "name": "Baraka_server",
+  "name": "Baraka_API",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "private": "true",
-  "dependencies": {},
+  "dependencies": {
+    "swagger-ui-express": "^4.1.2"
+  },
   "devDependencies": {
     "bcrypt": "^3.0.6",
     "express": "^4.17.1",

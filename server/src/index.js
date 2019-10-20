@@ -4,14 +4,16 @@ require('./models/Bars');
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-
+const config = require('./config');
 const authRoutes = require('./routes/authRoutes');
 const barRoutes = require('./routes/barRoutes');
 const checkingAuth = require('./middlewares/checkingAuth');
 
 const app = express();
 app.use(bodyParser.json());
-
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./Documentation/swagger');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(authRoutes);
 app.use(barRoutes);
 
@@ -32,10 +34,10 @@ mongoose.connection.on("error", (err) => {
     console.log("Error connectiong to mongo", err);
 });
 
-app.get('/',checkingAuth,(req,res) => {
+app.get(config.rootAPI,checkingAuth,(req,res) => {
     res.send(`Your email : ${req.user.email}`);
     });
 
-app.listen(3001, () => {
+app.listen(config.port, () => {
     console.log('Listening on port 3001');
 });

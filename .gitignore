@@ -22,8 +22,8 @@
 .env.development.local
 .env.test.local
 .env.production.local
-.idea
-.expo
+.idea/
+.expo/
 package-lock.json
 
 npm-debug.log*

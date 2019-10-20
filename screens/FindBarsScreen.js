@@ -15,7 +15,7 @@ const FindBarsScreen = props => {
 
     const searchApi =  async (reqbar) => {
         try {
-            const reponse = await api.get('/bar/'+reqbar);
+            const reponse = await api.get('bar/'+reqbar);
             setResults(reponse.data);
         } catch (e) {
             setErrorMessage('Something went wrong');
