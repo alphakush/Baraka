@@ -1,8 +1,17 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableHighlight,TouchableOpacity } from 'react-native';
+import { View, Text, Image, Alert, StyleSheet, TouchableHighlight,TouchableOpacity } from 'react-native';
 import Colors from '../constant/Colors';
 
 const BarItems = props => {
+
+  const TapeLike = () => {
+    Alert.alert("Baraka","You Like this bar");
+  };
+
+  const TapeDislike = () => {
+    Alert.alert("Baraka","You Dislike this bar");
+  };
+
   return (
       <TouchableOpacity onPress={props.onSelectBar} >
         <View style={styles.box}>
@@ -10,15 +19,19 @@ const BarItems = props => {
           <View style={styles.boxContent}>
             <Text style={styles.title}>{props.name}</Text>
             <Text style={styles.description}>{props.description}</Text>
-            <Text style={styles.description}>{props.tags}</Text>
+            <Text style={styles.description}>Tags:
+            {props.tags.map((item, key)=>(
+            <Text key={key} style={styles.description}> {item} </Text>)
+            )}
+            </Text>
             <Text style={styles.description}>Note : {props.averageNotation}
               <Image resizeMode="center" style={styles.icon} source={require('../images/stars.png')}/>
             </Text>
             <View style={styles.buttons}>
-              <TouchableHighlight style={[styles.button, styles.view]}>
+              <TouchableHighlight style={[styles.button, styles.view]} onPress={() => TapeLike()}>
                 <Image style={styles.icon} source={require('../images/like.png')}/>
               </TouchableHighlight>
-              <TouchableHighlight style={[styles.button, styles.view]}>
+              <TouchableHighlight style={[styles.button, styles.view]} onPress={() => TapeDislike()}>
                 <Image style={styles.icon} source={require('../images/dislike.png')}/>
               </TouchableHighlight>
             </View>

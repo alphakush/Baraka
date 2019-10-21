@@ -20,7 +20,7 @@ const BarList = props => {
                     props.navigation.navigate({
                         routeName: 'BarInfo',
                         params: {
-                            BarId: itemData.item.id
+                            Bar: itemData.item
                         }
                     });
                 }}

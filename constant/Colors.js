@@ -6,5 +6,6 @@ export default {
   LightBlue: '#F5FCFF',
   Gainsboro: '#DCDCDC',
   Grey: '#808080',
-  GreyLight: '#F0EEEE'
+  GreyLight: '#F0EEEE',
+  Black: '#000000'
 };
