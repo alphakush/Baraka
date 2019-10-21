@@ -30,6 +30,7 @@ class Login extends Component {
       }
         if (this.state.password != ''){
           Alert.alert("Baraka","Login not available");
+          // faire requête api connexion ici
           return;
     }else{
       Alert.alert("Baraka","Password can't be empty");

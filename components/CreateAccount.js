@@ -32,6 +32,7 @@ class CreateAccount extends Component {
         if (this.state.password != ''){
           if (this.state.password === this.state.confirmpassword){
             Alert.alert("Baraka", "Registering not available");
+            // faire la requête API pour inscription ici
             return;
           }else{
             Alert.alert("Baraka","Password don't match. Try again");
