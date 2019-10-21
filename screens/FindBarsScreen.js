@@ -46,8 +46,8 @@ FindBarsScreen.navigationOptions = navData => {
         headerLayoutPreset: 'center',
         headerLeft: <HeaderButtons HeaderButtonComponent={HeaderButton}>
             <Item
-                title="Menu"
-                iconName="ios-menu"
+                title={"Menu"}
+                iconName={"ios-menu"}
                 onPress={() => {
                     navData.navigation.toggleDrawer();
                 }}

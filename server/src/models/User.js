@@ -1,11 +1,21 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
-const userSchema = new mongoose.Schema({
-    userid: {
-      type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+const userFavoriteBarSchena = new mongoose.Schema({
+    barid: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Bar'
     },
+    comment:{
+        type: String,
+    },
+    author:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
+});
+
+const userSchema = new mongoose.Schema({
     username: {
       type: String,
       required: true
@@ -18,7 +28,8 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    favoriteBars: [userFavoriteBarSchena]
 });
 
 //before save the password in DB  hash + salt
