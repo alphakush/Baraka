@@ -1,6 +1,5 @@
 import React from 'react'
 import {StyleSheet, View, FlatList, Text} from 'react-native';
-import BarItems from "./BarItems";
 import ResultItem from "./ResultItem";
 
 const ResultList = props => {

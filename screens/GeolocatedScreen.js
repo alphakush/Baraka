@@ -14,7 +14,7 @@ const GeolocatedScreen = props => {
 
 GeolocatedScreen.navigationOptions = navData => {
     return {
-        headerTitle: 'Geolocate ',
+        headerTitle: 'Me géolocaliser',
         headerLayoutPreset: 'center',
         headerLeft: <HeaderButtons HeaderButtonComponent={HeaderButton}>
             <Item

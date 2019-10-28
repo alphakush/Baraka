@@ -1,17 +1,21 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { Platform } from 'react-native';
 
 import LoginScreen from '../screens/LoginScreen';
+import LogoutScreen from '../screens/LogoutScreen';
 import CreateAccountScreen from '../screens/CreateAccountScreen';
+import MyAccountScreen from '../screens/MyAccountScreen';
 import FiltersScreen from '../screens/FiltersScreen';
 import GeolocatedScreen from '../screens/GeolocatedScreen';
 import FeedScreen from '../screens/FeedScreen';
 import BarInfoScreen from '../screens/BarInformations';
 import FindBarScreen from '../screens/FindBarsScreen';
+import ContactScreen from '../screens/ContactScreen';
 
 import Colors from '../constant/Colors'
+import FavoritesScreen from '../screens/FavoritesScreen';
 
 const defaultStackNavOptions = {
     headerStyle: {
@@ -21,11 +25,28 @@ const defaultStackNavOptions = {
         fontFamily: 'open-sans',
         textAlign: 'center',
     },
-    headerBackTitleStyle:  {
+    headerBackTitleStyle: {
         fontFamily: 'open-sans',
     },
     headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primary,
 };
+
+const FeedNavigator = createStackNavigator(
+    {
+        Feed: {
+            screen: FeedScreen
+        },
+        BarInfo: {
+            screen: BarInfoScreen
+        }
+    },
+    {
+        defaultNavigationOptions: defaultStackNavOptions,
+        navigationOptions: {
+            drawerLabel: 'Accueil '
+        }
+    }
+);
 
 
 const BarInfoNavigator = createStackNavigator(
@@ -44,42 +65,41 @@ const LoginNavigator = createStackNavigator(
         },
     },
     {
-        // initialRouteName: 'Categories',
         defaultNavigationOptions: defaultStackNavOptions,
         navigationOptions: {
-            drawerLabel: "Se connecter"
-        }
-    }
-);
-
-const FeedNavigator = createStackNavigator(
-    {
-        Feed: {
-            screen: FeedScreen
-        },
-        BarInfo: {
-            screen: BarInfoScreen
-        }
-    },
-    {
-        defaultNavigationOptions: defaultStackNavOptions,
-        navigationOptions: {
-            drawerLabel: "Accueil"
+            drawerLabel: 'Me connecter   '
         }
     }
 );
 
 const CreateAccountNavigator = createStackNavigator(
     {
-        CreateAccount: CreateAccountScreen
+        CreateAccount: {
+            screen: CreateAccountScreen
+        },
     },
     {
         defaultNavigationOptions: defaultStackNavOptions,
         navigationOptions: {
-            drawerLabel: "Créer un compte"
+            drawerLabel: 'Créer mon compte    '
         }
     }
 );
+
+const LogoutNavigator = createStackNavigator(
+    {
+        Logout: {
+            screen: LogoutScreen
+        },
+    },
+    {
+        defaultNavigationOptions: defaultStackNavOptions,
+        navigationOptions: {
+            drawerLabel: 'Me déconnecter '
+        }
+    }
+);
+
 
 const FiltersNavigator = createStackNavigator(
     {
@@ -88,7 +108,7 @@ const FiltersNavigator = createStackNavigator(
     {
         defaultNavigationOptions: defaultStackNavOptions,
         navigationOptions: {
-            drawerLabel: "Filtrer"
+            drawerLabel: 'Filtrer '
         }
     }
 );
@@ -100,7 +120,7 @@ const GeolocateNavigator = createStackNavigator(
     {
         defaultNavigationOptions: defaultStackNavOptions,
         navigationOptions: {
-            drawerLabel: "Me géolocaliser"
+            drawerLabel: 'Me géolocaliser '
         }
     }
 );
@@ -113,32 +133,74 @@ const FindBarNavigator = createStackNavigator(
         BarInfo: {
             screen: BarInfoScreen
         }
-        },
+    },
     {
         defaultNavigationOptions: defaultStackNavOptions,
         navigationOptions: {
-            drawerLabel: "Trouver un bar"
+            drawerLabel: 'Trouver un bar '
         }
     }
 );
 
-
-const MainNavigator = createDrawerNavigator({
-    Home: FeedNavigator,
-    Login: LoginNavigator,
-    CreateAccount: CreateAccountNavigator,
-    Filters: FiltersNavigator,
-    Geolocate: GeolocateNavigator,
-    Findbar: FindBarNavigator
-
-},
+const FavoriteNavigator = createStackNavigator(
     {
-        contentOptions: {
-            activeTintColor: Colors.accentColor,
-            labelStyle: {
-                fontFamily: 'open-sans-bold'
-            }
+        Favorite: FavoritesScreen,
+    },
+    {
+        defaultNavigationOptions: defaultStackNavOptions,
+        navigationOptions: {
+            drawerLabel: 'Mes Favoris '
         }
-    })
+    }
+);
 
-export default createAppContainer(MainNavigator);
+const MyAccountNavigator = createStackNavigator(
+    {
+        Myaccount: MyAccountScreen,
+    },
+    {
+        defaultNavigationOptions: defaultStackNavOptions,
+        navigationOptions: {
+            drawerLabel: 'Mon compte '
+        }
+    }
+);
+
+const ContactNavigator = createStackNavigator(
+    {
+        Contact: ContactScreen,
+    },
+    {
+        defaultNavigationOptions: defaultStackNavOptions,
+        navigationOptions: {
+            drawerLabel: 'Nous contacter '
+        }
+    }
+);
+
+const switchNavigator = createSwitchNavigator({
+    loginFlow: createDrawerNavigator({
+        Home: FeedNavigator,
+        Login: LoginNavigator,
+        CreateAccount: CreateAccountNavigator,
+        Filters: FiltersNavigator,
+        Geolocate: GeolocateNavigator,
+    }),
+    mainFlow: createDrawerNavigator({
+        Home: FeedNavigator,
+        Myaccount: MyAccountNavigator,
+        Favorite: FavoriteNavigator,
+        Findbar: FindBarNavigator,
+        Contact: ContactNavigator,
+        Logout: LogoutNavigator
+    })
+}, {
+    contentOptions: {
+        activeTintColor: Colors.accentColor,
+        labelStyle: {
+            fontFamily: 'open-sans-bold'
+        }
+    }
+});
+
+export default createAppContainer(switchNavigator);

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Keyboard, Button, StyleSheet, Dimensions, TouchableWithoutFeedback, Text } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { ScrollView } from 'react-native-gesture-handler';
 import api from '../api/api';
 
 import HeaderButton from '../components/HeaderButton';
@@ -15,8 +14,9 @@ const FindBarsScreen = props => {
 
     const searchApi =  async (reqbar) => {
         try {
-            const reponse = await api.get('bar/'+reqbar);
+            const reponse = await api.get('/bar/'+reqbar);
             setResults(reponse.data);
+            console.log(reponse.data);
         } catch (e) {
             setErrorMessage('Something went wrong');
         }

@@ -1,74 +1,84 @@
-import React, { Component } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   StyleSheet,
   Text,
   View,
   TextInput,
-  Button,
   TouchableOpacity,
   Image,
   Alert
 } from 'react-native';
 
+import { useDispatch } from 'react-redux';
 import Colors from '../constant/Colors';
+import * as AuthActions from '../store/actions/AuthAction';
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email   : '',
-      password: '',
-    }
-  }
+const Login = props => {
 
-  CheckTextInput (){
-    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
-    if (this.state.email != ''){
-      if(reg.test(this.state.email) === false){
-        Alert.alert("Baraka","Wrong email format");
-        return;
-      }
-        if (this.state.password != ''){
-          Alert.alert("Baraka","Login not available");
-          // faire requête api connexion ici
-          return;
-    }else{
-      Alert.alert("Baraka","Password can't be empty");
-    }
-    }else{
-      Alert.alert("Baraka","Email can't be empty");
-      return;
-    }
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const setEmailHandler = (enteredText) => {
+    setEmail(enteredText);
   };
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <Image style={styles.bgImage} source={{ uri: "https://r1.ilikewallpaper.net/iphone-4s-wallpapers/download/24756/Colorful-App-Tiles-Background-iphone-4s-wallpaper-ilikewallpaper_com.jpg" }}/>
-        <View style={styles.inputContainer}>
-          <TextInput style={styles.inputs}
-              placeholder="e-mail"
-              keyboardType="email-address"
-              underlineColorAndroid='transparent'
-              onChangeText={email => this.setState({email})}/>
-          <Image style={styles.inputIcon} source={require('../images/email.png')}/>
-        </View>
+  const setPasswordHandler = (enteredText) => {
+    setPassword(enteredText);
+  };
 
-        <View style={styles.inputContainer}>
-          <TextInput style={styles.inputs}
-              placeholder="mot de passe"
-              secureTextEntry={true}
-              underlineColorAndroid='transparent'
-              onChangeText={password => this.setState({password})}/>
-          <Image style={styles.inputIcon} source={require('../images/password.png')}/>
-        </View>
+  
+  const signinHandler = () => {
+    console.log("signinHandler");
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (email != '') {
+      if (reg.test(email) === false) {
+        Alert.alert("Baraka", "Wrong email format");
+        return;
+      }
+      if (password != '') {
+        dispatch(AuthActions.signIn(email,password));
+        return;
+      } else {
+        Alert.alert("Baraka", "Password can't be empty");
+      }
+    } else {
+      Alert.alert("Baraka", "Email can't be empty");
+      return;
+    }
+    dispatch(AuthActions.signIn(email,password));
+  };
 
-        <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.CheckTextInput()}>
-          <Text style={styles.loginText}>Se connecter</Text>
-        </TouchableOpacity>
+  return (
+    <View style={styles.container}>
+      <Image style={styles.bgImage} source={{ uri: "https://r1.ilikewallpaper.net/iphone-4s-wallpapers/download/24756/Colorful-App-Tiles-Background-iphone-4s-wallpaper-ilikewallpaper_com.jpg" }} />
+      <View style={styles.inputContainer}>
+        <TextInput style={styles.inputs}
+          placeholder="e-mail"
+          keyboardType="email-address"
+          underlineColorAndroid='transparent'
+          onChangeText={setEmailHandler}
+          value={email}
+        />
+        <Image style={styles.inputIcon} source={require('../images/email.png')} />
       </View>
-    );
-  }
+
+      <View style={styles.inputContainer}>
+        <TextInput style={styles.inputs}
+          placeholder="mot de passe"
+          secureTextEntry={true}
+          underlineColorAndroid='transparent'
+          onChangeText={setPasswordHandler}
+          value={password}
+        />
+        <Image style={styles.inputIcon} source={require('../images/password.png')} />
+      </View>
+
+      <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={signinHandler}>
+        <Text style={styles.loginText}>Me connecter</Text>
+      </TouchableOpacity>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -81,13 +91,13 @@ const styles = StyleSheet.create({
   inputContainer: {
     borderBottomColor: Colors.LightBlue,
     backgroundColor: Colors.White,
-    borderRadius:30,
+    borderRadius: 30,
     borderBottomWidth: 1,
-    width:300,
-    height:45,
-    marginBottom:20,
+    width: 300,
+    height: 45,
+    marginBottom: 20,
     flexDirection: 'row',
-    alignItems:'center',
+    alignItems: 'center',
 
     shadowColor: Colors.Grey,
     shadowOffset: {
@@ -99,36 +109,36 @@ const styles = StyleSheet.create({
 
     elevation: 5,
   },
-  inputs:{
-    height:45,
-    marginLeft:16,
+  inputs: {
+    height: 45,
+    marginLeft: 16,
     borderBottomColor: Colors.White,
-    flex:1,
+    flex: 1,
   },
-  inputIcon:{
-    width:30,
-    height:30,
-    marginRight:15,
+  inputIcon: {
+    width: 30,
+    height: 30,
+    marginRight: 15,
     justifyContent: 'center'
   },
   buttonContainer: {
-    height:45,
+    height: 45,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom:20,
-    width:300,
-    borderRadius:30,
-    backgroundColor:'transparent'
+    marginBottom: 20,
+    width: 300,
+    borderRadius: 30,
+    backgroundColor: 'transparent'
   },
   btnForgotPassword: {
-    height:15,
+    height: 15,
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
-    marginBottom:10,
-    width:300,
-    backgroundColor:'transparent'
+    marginBottom: 10,
+    width: 300,
+    backgroundColor: 'transparent'
   },
   loginButton: {
     backgroundColor: "#00b5ec",
@@ -146,16 +156,16 @@ const styles = StyleSheet.create({
   loginText: {
     color: Colors.White,
   },
-  bgImage:{
+  bgImage: {
     flex: 1,
     position: 'absolute',
     width: '100%',
     height: '100%',
     justifyContent: 'center',
   },
-  btnText:{
+  btnText: {
     color: Colors.White,
-    fontWeight:'bold'
+    fontWeight: 'bold'
   }
 });
 

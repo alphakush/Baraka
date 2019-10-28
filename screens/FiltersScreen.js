@@ -13,9 +13,9 @@ const FiltersScreen = props => {
 
     return (
         <View style={styles.screen}>
-            <Text style={styles.title} >Available Filters</Text>
+            <Text style={styles.title} >Filtrer par</Text>
             <FilterSwitch
-                label='LIKE'
+                label="NOMBRE DE J'AIME"
                 state={isLike}
                 onChange={newvalue1 => setIsLike(newvalue1)}
             />
@@ -34,7 +34,7 @@ const FiltersScreen = props => {
 
 FiltersScreen.navigationOptions = navData => {
     return {
-        headerTitle: 'Filter ',
+        headerTitle: 'Filtrer ',
         headerLeft: (<HeaderButtons HeaderButtonComponent={HeaderButton}>
             <Item
                 title="Menu"

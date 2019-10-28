@@ -2,19 +2,22 @@ import React, { useState } from 'react';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import { useScreens } from 'react-native-screens';
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers,applyMiddleware  } from 'redux';
+import ReduxThunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 
 import barsReducer from './store/reducers/BarsReducer';
+import AuthReducer from './store/reducers/AuthReducer';
 import MainNavigator from './navigation/MainNavigation';
 
 useScreens();
 
 const rootReducer = combineReducers({
-  bars: barsReducer
+  bars: barsReducer,
+  auth: AuthReducer
 });
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk) );
 
 const fetchFonts = () => {
   return Font.loadAsync({

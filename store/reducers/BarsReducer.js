@@ -1,7 +1,8 @@
 import { BARS } from '../../data/data';
-import { TOGGLE_FAVORITE } from "../actions/BarsActions";
+import { TOGGLE_FAVORITE } from '../actions/BarsActions';
 
 const initialState = {
+    token: null,
     bars: BARS,
     filteredBars: BARS,
     favoriteBars: []

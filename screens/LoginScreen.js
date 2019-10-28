@@ -14,7 +14,7 @@ const LoginScreen = props => {
 
 LoginScreen.navigationOptions = navData => {
     return {
-        headerTitle: 'Se connecter',
+        headerTitle: 'Me connecter',
         headerLeft: <HeaderButtons HeaderButtonComponent={HeaderButton}>
             <Item
                 title="Menu"
