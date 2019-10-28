@@ -8,7 +8,7 @@ import Login from '../components/Login';
 
 const LoginScreen = props => {
     return (
-        <Login />
+        <Login navigation={props.navigation} />
     );
 };
 

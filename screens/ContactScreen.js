@@ -14,7 +14,7 @@ const ContactScreen = props => {
 
 ContactScreen.navigationOptions = navData => {
     return {
-        headerTitle: 'Create route',
+        headerTitle: 'Nous contacter',
         headerLayoutPreset: 'center',
         headerLeft: <HeaderButtons HeaderButtonComponent={HeaderButton}>
             <Item

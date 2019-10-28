@@ -25,6 +25,9 @@
 .idea/
 .expo/
 package-lock.json
+server/.deployment
+server/.vscode/
+.vscode/
 
 npm-debug.log*
 yarn-debug.log*

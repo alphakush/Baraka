@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, us, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,15 +9,17 @@ import {
   Alert
 } from 'react-native';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Colors from '../constant/Colors';
 import * as AuthActions from '../store/actions/AuthAction';
 
 const Login = props => {
 
+  const connexionStatus = useSelector(state => state.auth.token);
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [conntected, setConntected] = useState(false);
 
   const setEmailHandler = (enteredText) => {
     setEmail(enteredText);
@@ -28,26 +30,35 @@ const Login = props => {
   };
 
   
+  useEffect(() => {
+    signinHandler();
+  }, [connexionStatus]);
+
   const signinHandler = () => {
     console.log("signinHandler");
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (email != '') {
       if (reg.test(email) === false) {
-        Alert.alert("Baraka", "Wrong email format");
+        Alert.alert("Baraka", "Format de l'e-mail est erroné");
         return;
       }
       if (password != '') {
-        dispatch(AuthActions.signIn(email,password));
+        dispatch(AuthActions.signIn(email, password));
+        
+        if(connexionStatus === null ){
+
+        } else{
+          props.navigation.navigate('mainFlow');
+        }
+       
         return;
       } else {
-        Alert.alert("Baraka", "Password can't be empty");
+        Alert.alert("Baraka", "Le mot de passe ne peut pas être vide");
       }
     } else {
-      Alert.alert("Baraka", "Email can't be empty");
       return;
     }
-    dispatch(AuthActions.signIn(email,password));
-  };
+    };
 
   return (
     <View style={styles.container}>

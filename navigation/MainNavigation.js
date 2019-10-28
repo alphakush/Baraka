@@ -95,7 +95,7 @@ const LogoutNavigator = createStackNavigator(
     {
         defaultNavigationOptions: defaultStackNavOptions,
         navigationOptions: {
-            drawerLabel: 'Me déconnecter '
+            drawerLabel: 'Me déconnecter  '
         }
     }
 );
@@ -161,7 +161,7 @@ const MyAccountNavigator = createStackNavigator(
     {
         defaultNavigationOptions: defaultStackNavOptions,
         navigationOptions: {
-            drawerLabel: 'Mon compte '
+            drawerLabel: 'Mon compte   '
         }
     }
 );
@@ -173,7 +173,7 @@ const ContactNavigator = createStackNavigator(
     {
         defaultNavigationOptions: defaultStackNavOptions,
         navigationOptions: {
-            drawerLabel: 'Nous contacter '
+            drawerLabel: 'Nous contacter  '
         }
     }
 );

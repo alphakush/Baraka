@@ -9,7 +9,7 @@ import { BARS } from '../data/data';
 
 // TODO: 'rename the name this screen'
 const BarInformations = props => {
-    const bar = props.navigation.getParam('Bar');
+    const bar = props.navigation.getParam('BarId');
     const [enteredValue, setEnteredValue] = useState('');
     const [results, setResults] = useState([]);
     const [errorMessage, setErrorMessage ] = useState('');
@@ -27,8 +27,7 @@ const BarInformations = props => {
       <View style={styles.container}>
           <View style={styles.header}>
             <View style={styles.headerContent}>
-                <Image resizeMode="center" style={styles.avatar}
-                  source={{uri: bar.picturesUrls}}/>
+               
                 <Text style={styles.name}>
                   {bar.name}
                 </Text>
@@ -54,9 +53,7 @@ const BarInformations = props => {
               <Text style={styles.textInfo}>
                 Tags :
               </Text>
-              { bar.tags.map((item, key)=>(
-              <Text key={key} style={styles.TextStyle}> { item } </Text>)
-              )}
+             
               <Text style={styles.textInfo}>
                 Commentaires :
               </Text>

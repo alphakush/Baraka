@@ -14,7 +14,7 @@ const MyAccountScreen = props => {
 
 MyAccountScreen.navigationOptions = navData => {
     return {
-        headerTitle: 'Create route',
+        headerTitle: 'Mon compte ',
         headerLayoutPreset: 'center',
         headerLeft: <HeaderButtons HeaderButtonComponent={HeaderButton}>
             <Item
