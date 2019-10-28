@@ -7,5 +7,8 @@ export default {
   Gainsboro: '#DCDCDC',
   Grey: '#808080',
   GreyLight: '#F0EEEE',
-  Black: '#000000'
+  Black: '#000000',
+  Gold: '#ffca28',
+  Brown: '#c79a00',
+  Yellow: '#fffd61'
 };
