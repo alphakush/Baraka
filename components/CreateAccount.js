@@ -9,6 +9,7 @@ import {
   Image,
   Alert
 } from 'react-native';
+import Colors from '../constant/Colors';
 
 
 class CreateAccount extends Component {
@@ -25,7 +26,7 @@ class CreateAccount extends Component {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
     if (this.state.email != ''){
       if(reg.test(this.state.email) === false){
-        Alert.alert("Baraka","Wrong email format");
+        Alert.alert("Baraka","Format de l'email incorrect");
         return;
       }
       if (this.state.username != ''){
@@ -35,22 +36,22 @@ class CreateAccount extends Component {
             // faire la requête API pour inscription ici
             return;
           }else{
-            Alert.alert("Baraka","Password don't match. Try again");
+            Alert.alert("Baraka","Les mots de passe ne sont pas identique");
             return;}
         }else{
-          Alert.alert("Baraka", "Password can't be empty");
+          Alert.alert("Baraka", "Veuillez rentrer un mot de passe");
           return;}
       }else{
-        Alert.alert("Baraka", "Username can't be empty");
+        Alert.alert("Baraka", "Veuillez rentrer un nom d'utilisateur");
         return;}
     }else{
-      Alert.alert("Baraka", "Email can't be empty");
+      Alert.alert("Baraka", "Veuillez rentrer une adresse email");
       return;}
   };
   render() {
     return (
       <View style={styles.container}>
-        <Image style={styles.bgImage} source={{ uri: "https://r1.ilikewallpaper.net/iphone-4s-wallpapers/download/24756/Colorful-App-Tiles-Background-iphone-4s-wallpaper-ilikewallpaper_com.jpg" }}/>
+        <Image style={styles.bgImage} source={require('../images/background.png')}/>
         <View style={styles.inputContainer}>
           <TextInput style={styles.inputs}
               placeholder="e-mail"
@@ -77,7 +78,6 @@ class CreateAccount extends Component {
               onChangeText={password => this.setState({password})}/>
           <Image style={styles.inputIcon} source={require('../images/password.png')}/>
         </View>
-
         <View style={styles.inputContainer}>
           <TextInput style={styles.inputs}
               placeholder="confirmation du mot de passe"
@@ -100,11 +100,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#DCDCDC',
+    backgroundColor: Colors.Gainsboro,
   },
   inputContainer: {
-    borderBottomColor: '#F5FCFF',
-    backgroundColor: '#FFFFFF',
+    borderBottomColor: Colors.BlueSky,
+    backgroundColor: Colors.White,
     borderRadius:30,
     borderBottomWidth: 1,
     width:300,
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems:'center',
 
-    shadowColor: "#808080",
+    shadowColor: Colors.Grey,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   inputs:{
     height:45,
     marginLeft:16,
-    borderBottomColor: '#FFFFFF',
+    borderBottomColor: Colors.White,
     flex:1,
   },
   inputIcon:{
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   },
   errorMessage: {
     fontSize: 20,
-    color:"red",
+    color: Colors.red,
     marginLeft:-80,
   },
   buttonContainer: {
@@ -160,9 +160,8 @@ const styles = StyleSheet.create({
     backgroundColor:'transparent'
   },
   loginButton: {
-    backgroundColor: "#00b5ec",
-
-    shadowColor: "#808080",
+    backgroundColor: Colors.Grey,
+    shadowColor: Colors.Grey,
     shadowOffset: {
       width: 0,
       height: 9,
@@ -183,7 +182,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   btnText:{
-    color:"white",
+    color: Colors.White,
     fontWeight:'bold'
   }
 });
