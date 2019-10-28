@@ -5,13 +5,13 @@ export const BARS = [
         '1',
         'Wallace',
         'The Wallace is the place to be at Lyon',
-        ['trend', 'cool', 'cosy'],
+        ['Cool', 'Sympa', 'Beau'],
         'QR8H+G8 Lyon',
         4.5,
         [
-            'Awesome',
-            'Good place ',
-            'Enjoy Wallace best place'
+            'Génial',
+            'Bon endroit',
+            'Profitez du Wallace'
         ],
         'http://www.wallacebarlyon.com/images/wallacebarlogo.png',
         [
@@ -36,7 +36,7 @@ export const BARS = [
         '2',
         'Wayne\'s Bar',
         'Retro American decor in a lively pub atmosphere',
-        ['casual', 'awesome', 'cosy'],
+        ['Amusant', 'Superbe', 'Cool'],
         'M7WF+PR Nice',
         4,
         [
@@ -63,6 +63,39 @@ export const BARS = [
                 'not available'
             ]
         ],
-        'Monsieur Wallace de Lyon'
+        'Monsieur Wayne'
+    ),
+    new Bars(
+        '3',
+        'La KoloK',
+        'La Kolok c’est 2 bars avec système de bière « Self-Service » à Lyon',
+        ['Musical', 'Self-Service', 'Sympa'],
+        'M7WF+PR Lyon',
+        4.7,
+        [
+            'Genial',
+            'Amusant',
+            'Bonne ambiance'
+        ],
+        'http://lakolok.fr/wp-content/uploads/2017/10/cropped-logo-kolok-512x512_noir.png',
+        [
+            [
+                'Kronenbourg',
+                '8.00€ / L',
+                'available'
+            ],
+            [
+                'Carlsberg Elephant',
+                '11.00€ / L',
+                'availaible'
+            ]
+            ,
+            [
+                'Mont Blanc Verte',
+                '11.00 € / L',
+                'not available'
+            ]
+        ],
+        'Monsieur Smith'
     ),
 ]

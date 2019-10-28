@@ -5,11 +5,12 @@ import {
     FlatList
 } from 'react-native';
 import BarItems from './BarItems';
+import BarFeed from './BarFeed';
 
 const BarList = props => {
     const _renderItem = itemData => {
         return (
-            <BarItems
+            <BarFeed
                 id={itemData.item.id}
                 name={itemData.item.name}
                 description={itemData.item.description}
@@ -40,8 +41,10 @@ const BarList = props => {
 
 const styles = StyleSheet.create({
     list: {
-        flex: 1
-    }
+      flex: 1,
+      paddingHorizontal: 10,
+      backgroundColor:"#E6E6E6",
+    },
 });
 
 export default BarList;
