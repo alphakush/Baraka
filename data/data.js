@@ -44,7 +44,7 @@ export const BARS = [
             'Cool',
             'Beer Wayne 10'
         ],
-        'http://waynes.fr/wp-content/uploads/2016/06/logo-slider-1-1024x470.png',
+        'https://pbs.twimg.com/profile_images/2051309955/logonew.jpg',
         [
             [
                 'Beer Wayne special',
