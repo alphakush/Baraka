@@ -10,6 +10,7 @@
     {
       "type": "Feature",
       "properties": {
+        "IMG": "../images/old_coucou.jpg",
         "PARK_ID": 960,
         "FACILITYID": 28014,
         "NAME": "Bearbrook Skateboard Park",
@@ -43,6 +44,7 @@
     {
       "type": "Feature",
       "properties": {
+        "IMG": "../images/la_cale_seche.jpg",
         "PARK_ID": 1219,
         "FACILITYID": 28001,
         "NAME": "Bob MacQuarrie Skateboard Park (SK8 Extreme Park)",
@@ -76,6 +78,7 @@
     {
       "type": "Feature",
       "properties": {
+        "IMG": "../images/gaetano_cafe.jpg",
         "PARK_ID": 1157,
         "FACILITYID": 28002,
         "NAME": "Walter Baker Skateboard Park",
@@ -109,6 +112,7 @@
     {
       "type": "Feature",
       "properties": {
+        "IMG": "../images/le_bar_a_thym.jpg",
         "PARK_ID": 9,
         "FACILITYID": 28006,
         "NAME": "Roving Skateboard Park Location",
@@ -142,6 +146,7 @@
     {
       "type": "Feature",
       "properties": {
+        "IMG": "./images/esprit_chupitos.jpg",
         "PARK_ID": 1160,
         "FACILITYID": 28007,
         "NAME": "Roving Skateboard Park Location",
