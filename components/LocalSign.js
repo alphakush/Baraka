@@ -12,8 +12,7 @@ const LocalSignin = props => {
         if (connexionStatus !== null) {
             props.navigation.navigate('mainFlow');
         } else {
-            console.log("LoginFlow");
-            props.navigation.navigate('Home');
+            props.navigation.navigate('LoginFlow');
         }
     }, [connexionStatus]);
     return null;

@@ -6,7 +6,9 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
-  Alert
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard
 } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -42,7 +44,7 @@ const Login = props => {
         return;
       }
       if (password != '') {
-        dispatch(AuthActions.signIn(email, password));
+        dispatch(AuthActions.signIn(email.toLowerCase(), password));
 
         if (connexionStatus !== null) {
           props.navigation.navigate('mainFlow');
@@ -57,6 +59,8 @@ const Login = props => {
   };
 
   return (
+    <TouchableWithoutFeedback onPress={() => 
+      {Keyboard.dismiss(); }} >
     <View style={styles.container}>
       <Image style={styles.bgImage} source={{ uri: "https://r1.ilikewallpaper.net/iphone-4s-wallpapers/download/24756/Colorful-App-Tiles-Background-iphone-4s-wallpaper-ilikewallpaper_com.jpg" }} />
       <View style={styles.inputContainer}>
@@ -85,6 +89,7 @@ const Login = props => {
         <Text style={styles.loginText}>Me connecter</Text>
       </TouchableOpacity>
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 

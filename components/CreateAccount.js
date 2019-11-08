@@ -4,10 +4,11 @@ import {
   Text,
   View,
   TextInput,
-  Button,
+  TouchableWithoutFeedback,
   TouchableOpacity,
   Image,
-  Alert
+  Alert,
+  Keyboard
 } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -76,6 +77,9 @@ const CreateAccount = props => {
   };
 
   return (
+    <TouchableWithoutFeedback onPress={() =>{
+      Keyboard.dismiss();
+    }}> 
     <View style={styles.container}>
       <Image style={styles.bgImage} source={require('../images/background.png')} />
       <View style={styles.inputContainer}>
@@ -117,6 +121,7 @@ const CreateAccount = props => {
         <Text style={styles.loginText}>Créer un compte</Text>
       </TouchableOpacity>
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 

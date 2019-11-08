@@ -13,7 +13,6 @@ import FeedScreen from '../screens/FeedScreen';
 import BarInfoScreen from '../screens/BarInformationScreen';
 import FindBarScreen from '../screens/FindBarsScreen';
 import ContactScreen from '../screens/ContactScreen';
-import TryLocalSigninScreen from '../screens/TryLocalSigninScreen';
 
 import Colors from '../constant/Colors'
 import FavoritesScreen from '../screens/FavoritesScreen';
@@ -175,12 +174,6 @@ const ContactNavigator = createStackNavigator(
         navigationOptions: {
             drawerLabel: 'Nous contacter  '
         }
-    }
-);
-
-const LocalSignNavigator = createStackNavigator(
-    {
-        LocalSign: TryLocalSigninScreen,
     }
 );
 

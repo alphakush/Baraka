@@ -6,16 +6,18 @@ import HeaderButton from '../components/HeaderButton';
 import * as AuthActions from '../store/actions/AuthAction';
 import { useDispatch, useSelector } from 'react-redux';
 
+
 const LogoutScreen = props => {
     const dispatch = useDispatch();
     
     const disconnectHandler = () => {
         dispatch(AuthActions.SignOut());
+        props.navigation.navigate('loginFlow');
     }
 
     return (
         <View style={styles.screen}>
-            <Text>Log out Screen!</Text>
+            <Text>Cliquer ici pour vous déconnecter</Text>
             <Button title="Me déconnecter" onPress={disconnectHandler} />
         </View>
     );
@@ -23,11 +25,11 @@ const LogoutScreen = props => {
 
 LogoutScreen.navigationOptions = navData => {
     return {
-        headerTitle: 'Create route',
+        headerTitle: 'Se déconnecter ',
         headerLayoutPreset: 'center',
         headerLeft: <HeaderButtons HeaderButtonComponent={HeaderButton}>
             <Item
-                title="Create route"
+                title="Se déconnecter"
                 iconName="ios-menu"
                 onPress={() => {
                     navData.navigation.toggleDrawer();
@@ -42,6 +44,9 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    button: {
+        
     }
 });
 
