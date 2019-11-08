@@ -7,7 +7,7 @@ import CreateAccount from '../components/CreateAccount';
 
 const CreateAccountScreen = props => {
     return (
-        <CreateAccount />
+        <CreateAccount navigation={props.navigation} />
     );
 };
 

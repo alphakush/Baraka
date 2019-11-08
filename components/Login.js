@@ -1,4 +1,4 @@
-import React, { useState, useCallback, us, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -29,13 +29,12 @@ const Login = props => {
     setPassword(enteredText);
   };
 
-  
+
   useEffect(() => {
     signinHandler();
   }, [connexionStatus]);
 
   const signinHandler = () => {
-    console.log("signinHandler");
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (email != '') {
       if (reg.test(email) === false) {
@@ -44,13 +43,10 @@ const Login = props => {
       }
       if (password != '') {
         dispatch(AuthActions.signIn(email, password));
-        
-        if(connexionStatus === null ){
 
-        } else{
+        if (connexionStatus !== null) {
           props.navigation.navigate('mainFlow');
         }
-       
         return;
       } else {
         Alert.alert("Baraka", "Le mot de passe ne peut pas être vide");
@@ -58,7 +54,7 @@ const Login = props => {
     } else {
       return;
     }
-    };
+  };
 
   return (
     <View style={styles.container}>

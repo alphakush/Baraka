@@ -10,7 +10,7 @@ import MyAccountScreen from '../screens/MyAccountScreen';
 import FiltersScreen from '../screens/FiltersScreen';
 import GeolocatedScreen from '../screens/GeolocatedScreen';
 import FeedScreen from '../screens/FeedScreen';
-import BarInfoScreen from '../screens/BarInformations';
+import BarInfoScreen from '../screens/BarInformationScreen';
 import FindBarScreen from '../screens/FindBarsScreen';
 import ContactScreen from '../screens/ContactScreen';
 

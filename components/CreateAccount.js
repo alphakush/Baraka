@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,90 +9,115 @@ import {
   Image,
   Alert
 } from 'react-native';
+
+import { useDispatch, useSelector } from 'react-redux';
 import Colors from '../constant/Colors';
+import * as AuthActions from '../store/actions/AuthAction';
 
 
-class CreateAccount extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username : '',
-      email : '',
-      password: '',
-      confirmpassword : '',
-    }
-  }
-  CheckTextInput (){
-    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
-    if (this.state.email != ''){
-      if(reg.test(this.state.email) === false){
-        Alert.alert("Baraka","Format de l'email incorrect");
+const CreateAccount = props => {
+
+  const connexionStatus = useSelector(state => state.auth.token);
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmpassword, setConfirmpassword] = useState('');
+  const [username, setUsername] = useState('');
+  const [conntected, setConntected] = useState(false);
+
+  const setUsernameHandler = (enteredText) => {
+    setUsername(enteredText);
+  };
+
+  const setEmailHandler = (enteredText) => {
+    setEmail(enteredText);
+  };
+
+  const setPasswordHandler = (enteredText) => {
+    setPassword(enteredText);
+  };
+
+  useEffect(() => {
+    signUpHandler();
+  }, [connexionStatus]);
+
+
+
+  const signUpHandler = () => {
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (email != '') {
+      if (reg.test(email) === false) {
+        Alert.alert("Baraka", "Format de l'email incorrect");
         return;
       }
-      if (this.state.username != ''){
-        if (this.state.password != ''){
-          if (this.state.password === this.state.confirmpassword){
-            Alert.alert("Baraka", "Registering not available");
-            // faire la requête API pour inscription ici
+      if (username != '') {
+        if (password != '') {
+          if (password === confirmpassword) {
+            dispatch(AuthActions.signUp(username, email, password));
+            if (connexionStatus !== null) {
+              props.navigation.navigate('mainFlow');
+            }
             return;
-          }else{
-            Alert.alert("Baraka","Les mots de passe ne sont pas identique");
-            return;}
-        }else{
+          } else {
+            Alert.alert("Baraka", "Les mots de passe ne sont pas identique");
+            return;
+          }
+        } else {
           Alert.alert("Baraka", "Veuillez rentrer un mot de passe");
-          return;}
-      }else{
+          return;
+        }
+      } else {
         Alert.alert("Baraka", "Veuillez rentrer un nom d'utilisateur");
-        return;}
-    }else{
-      Alert.alert("Baraka", "Veuillez rentrer une adresse email");
-      return;}
+        return;
+      }
+    } else {
+      return;
+    }
   };
-  render() {
-    return (
-      <View style={styles.container}>
-        <Image style={styles.bgImage} source={require('../images/background.png')}/>
-        <View style={styles.inputContainer}>
-          <TextInput style={styles.inputs}
-              placeholder="e-mail"
-              keyboardType="email-address"
-              underlineColorAndroid='transparent'
-              onChangeText={email => this.setState({email})}/>
-          <Image style={styles.inputIcon} source={require('../images/email.png')}/>
-        </View>
 
-        <View style={styles.inputContainer}>
-          <TextInput style={styles.inputs}
-              placeholder="nom d'utilisateur"
-              keyboardType="default"
-              underlineColorAndroid='transparent'
-              onChangeText={username => this.setState({username})}/>
-          <Image style={styles.inputIcon} source={require('../images/username.png')}/>
-        </View>
-
-        <View style={styles.inputContainer}>
-          <TextInput style={styles.inputs}
-              placeholder="mot de passe"
-              secureTextEntry={true}
-              underlineColorAndroid='transparent'
-              onChangeText={password => this.setState({password})}/>
-          <Image style={styles.inputIcon} source={require('../images/password.png')}/>
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput style={styles.inputs}
-              placeholder="confirmation du mot de passe"
-              secureTextEntry={true}
-              underlineColorAndroid='transparent'
-              onChangeText={confirmpassword => this.setState({confirmpassword})}/>
-          <Image style={styles.inputIcon} source={require('../images/password.png')}/>
-        </View>
-
-        <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={()=> this.CheckTextInput()}>
-          <Text style={styles.loginText}>Créer un compte</Text>
-        </TouchableOpacity>
+  return (
+    <View style={styles.container}>
+      <Image style={styles.bgImage} source={require('../images/background.png')} />
+      <View style={styles.inputContainer}>
+        <TextInput style={styles.inputs}
+          placeholder="e-mail"
+          keyboardType="email-address"
+          underlineColorAndroid='transparent'
+          onChangeText={setEmailHandler} />
+        <Image style={styles.inputIcon} source={require('../images/email.png')} />
       </View>
-    );
-  }
+
+      <View style={styles.inputContainer}>
+        <TextInput style={styles.inputs}
+          placeholder="nom d'utilisateur"
+          keyboardType="default"
+          underlineColorAndroid='transparent'
+          onChangeText={setUsernameHandler} />
+        <Image style={styles.inputIcon} source={require('../images/username.png')} />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <TextInput style={styles.inputs}
+          placeholder="mot de passe"
+          secureTextEntry={true}
+          underlineColorAndroid='transparent'
+          onChangeText={setPasswordHandler} />
+        <Image style={styles.inputIcon} source={require('../images/password.png')} />
+      </View>
+      <View style={styles.inputContainer}>
+        <TextInput style={styles.inputs}
+          placeholder="confirmation du mot de passe"
+          secureTextEntry={true}
+          underlineColorAndroid='transparent'
+          onChangeText={setConfirmpassword} />
+        <Image style={styles.inputIcon} source={require('../images/password.png')} />
+      </View>
+
+      <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={signUpHandler}>
+        <Text style={styles.loginText}>Créer un compte</Text>
+      </TouchableOpacity>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -105,13 +130,13 @@ const styles = StyleSheet.create({
   inputContainer: {
     borderBottomColor: Colors.BlueSky,
     backgroundColor: Colors.White,
-    borderRadius:30,
+    borderRadius: 30,
     borderBottomWidth: 1,
-    width:300,
-    height:45,
-    marginBottom:20,
+    width: 300,
+    height: 45,
+    marginBottom: 20,
     flexDirection: 'row',
-    alignItems:'center',
+    alignItems: 'center',
 
     shadowColor: Colors.Grey,
     shadowOffset: {
@@ -123,41 +148,41 @@ const styles = StyleSheet.create({
 
     elevation: 5,
   },
-  inputs:{
-    height:45,
-    marginLeft:16,
+  inputs: {
+    height: 45,
+    marginLeft: 16,
     borderBottomColor: Colors.White,
-    flex:1,
+    flex: 1,
   },
-  inputIcon:{
-    width:30,
-    height:30,
-    marginRight:15,
+  inputIcon: {
+    width: 30,
+    height: 30,
+    marginRight: 15,
     justifyContent: 'center'
   },
   errorMessage: {
     fontSize: 20,
     color: Colors.red,
-    marginLeft:-80,
+    marginLeft: -80,
   },
   buttonContainer: {
-    height:45,
+    height: 45,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom:20,
-    width:300,
-    borderRadius:30,
-    backgroundColor:'transparent'
+    marginBottom: 20,
+    width: 300,
+    borderRadius: 30,
+    backgroundColor: 'transparent'
   },
   btnForgotPassword: {
-    height:15,
+    height: 15,
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
-    marginBottom:10,
-    width:300,
-    backgroundColor:'transparent'
+    marginBottom: 10,
+    width: 300,
+    backgroundColor: 'transparent'
   },
   loginButton: {
     backgroundColor: Colors.Grey,
@@ -174,16 +199,16 @@ const styles = StyleSheet.create({
   loginText: {
     color: 'white',
   },
-  bgImage:{
+  bgImage: {
     flex: 1,
     position: 'absolute',
     width: '100%',
     height: '100%',
     justifyContent: 'center',
   },
-  btnText:{
+  btnText: {
     color: Colors.White,
-    fontWeight:'bold'
+    fontWeight: 'bold'
   }
 });
 

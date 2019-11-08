@@ -25,7 +25,8 @@
     "react-navigation-tabs": "^2.4.0",
     "react-redux": "^7.1.1",
     "redux": "^4.0.4",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "react-native-maps": "~0.24.0"
   },
   "devDependencies": {
     "babel-preset-expo": "^6.0.0"

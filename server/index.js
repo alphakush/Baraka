@@ -38,7 +38,7 @@ mongoose.connection.on("error", (err) => {
     console.log("Error connectiong to mongo", err);
 });
 
-app.get('/',checkingAuth,(req,res) => {
+app.get('/',(req,res) => {
     res.sendFile(__dirname +'/Documentation/welcome.html');
     });
 

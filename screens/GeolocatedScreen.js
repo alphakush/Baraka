@@ -1,14 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import Map from '../components/Map';
 
 import HeaderButton from '../components/HeaderButton';
 
 const GeolocatedScreen = props => {
     return (
-        <View style={styles.screen}>
-            <Text>The Geolocated Screen!</Text>
-        </View>
+        <Map/>
     );
 };
 
