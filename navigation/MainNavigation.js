@@ -13,6 +13,7 @@ import FeedScreen from '../screens/FeedScreen';
 import BarInfoScreen from '../screens/BarInformationScreen';
 import FindBarScreen from '../screens/FindBarsScreen';
 import ContactScreen from '../screens/ContactScreen';
+import TryLocalSigninScreen from '../screens/TryLocalSigninScreen';
 
 import Colors from '../constant/Colors'
 import FavoritesScreen from '../screens/FavoritesScreen';
@@ -47,7 +48,6 @@ const FeedNavigator = createStackNavigator(
         }
     }
 );
-
 
 const BarInfoNavigator = createStackNavigator(
     {
@@ -178,7 +178,14 @@ const ContactNavigator = createStackNavigator(
     }
 );
 
+const LocalSignNavigator = createStackNavigator(
+    {
+        LocalSign: TryLocalSigninScreen,
+    }
+);
+
 const switchNavigator = createSwitchNavigator({
+    
     loginFlow: createDrawerNavigator({
         Home: FeedNavigator,
         Login: LoginNavigator,
