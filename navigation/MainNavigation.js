@@ -1,7 +1,13 @@
+import React from 'react';
 import { createStackNavigator } from 'react-navigation-stack';
-import { createDrawerNavigator } from 'react-navigation-drawer';
+import { createDrawerNavigator, DrawerNavigatorItems } from 'react-navigation-drawer';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
-import { Platform } from 'react-native';
+import { Platform, SafeAreaView, Button, View, StyleSheet, TouchableOpacity, Image, Text, ScrollView } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import { useDispatch } from 'react-redux';
 
 import LoginScreen from '../screens/LoginScreen';
 import LogoutScreen from '../screens/LogoutScreen';
@@ -43,7 +49,13 @@ const FeedNavigator = createStackNavigator(
     {
         defaultNavigationOptions: defaultStackNavOptions,
         navigationOptions: {
-            drawerLabel: 'Accueil '
+            drawerLabel: 'Accueil ',
+            drawerIcon: drawerConfig =>
+                <SimpleLineIcons
+                    name="home"
+                    size={20}
+                    color={drawerConfig.tintColor}
+                />
         }
     }
 );
@@ -66,7 +78,13 @@ const LoginNavigator = createStackNavigator(
     {
         defaultNavigationOptions: defaultStackNavOptions,
         navigationOptions: {
-            drawerLabel: 'Me connecter   '
+            drawerLabel: 'Me connecter   ',
+            drawerIcon: drawerConfig =>
+                <SimpleLineIcons
+                    name="login"
+                    size={20}
+                    color={drawerConfig.tintColor}
+                />
         }
     }
 );
@@ -80,7 +98,13 @@ const CreateAccountNavigator = createStackNavigator(
     {
         defaultNavigationOptions: defaultStackNavOptions,
         navigationOptions: {
-            drawerLabel: 'Créer mon compte    '
+            drawerLabel: 'Créer mon compte    ',
+            drawerIcon: drawerConfig =>
+                <SimpleLineIcons
+                    name="user-follow"
+                    size={20}
+                    color={drawerConfig.tintColor}
+                />
         }
     }
 );
@@ -94,7 +118,13 @@ const LogoutNavigator = createStackNavigator(
     {
         defaultNavigationOptions: defaultStackNavOptions,
         navigationOptions: {
-            drawerLabel: 'Me déconnecter  '
+            drawerLabel: 'Me déconnecter  ',
+            drawerIcon: drawerConfig =>
+                <SimpleLineIcons
+                    name="logout"
+                    size={20}
+                    color={drawerConfig.tintColor}
+                />
         }
     }
 );
@@ -107,7 +137,13 @@ const FiltersNavigator = createStackNavigator(
     {
         defaultNavigationOptions: defaultStackNavOptions,
         navigationOptions: {
-            drawerLabel: 'Filtrer '
+            drawerLabel: 'Filtrer ',
+            drawerIcon: drawerConfig =>
+                <AntDesign
+                    name="filter"
+                    size={20}
+                    color={drawerConfig.tintColor}
+                />
         }
     }
 );
@@ -119,7 +155,13 @@ const GeolocateNavigator = createStackNavigator(
     {
         defaultNavigationOptions: defaultStackNavOptions,
         navigationOptions: {
-            drawerLabel: 'Me géolocaliser '
+            drawerLabel: 'Me géolocaliser ',
+            drawerIcon: drawerConfig =>
+                <SimpleLineIcons
+                    name="globe"
+                    size={20}
+                    color={drawerConfig.tintColor}
+                />
         }
     }
 );
@@ -136,7 +178,13 @@ const FindBarNavigator = createStackNavigator(
     {
         defaultNavigationOptions: defaultStackNavOptions,
         navigationOptions: {
-            drawerLabel: 'Trouver un bar '
+            drawerLabel: 'Trouver un bar ',
+            drawerIcon: drawerConfig =>
+                <SimpleLineIcons
+                    name="magnifier"
+                    size={20}
+                    color={drawerConfig.tintColor}
+                />
         }
     }
 );
@@ -148,7 +196,13 @@ const FavoriteNavigator = createStackNavigator(
     {
         defaultNavigationOptions: defaultStackNavOptions,
         navigationOptions: {
-            drawerLabel: 'Mes Favoris '
+            drawerLabel: 'Mes Favoris ',
+            drawerIcon: drawerConfig =>
+                <SimpleLineIcons
+                    name="heart"
+                    size={20}
+                    color={drawerConfig.tintColor}
+                />
         }
     }
 );
@@ -160,7 +214,13 @@ const MyAccountNavigator = createStackNavigator(
     {
         defaultNavigationOptions: defaultStackNavOptions,
         navigationOptions: {
-            drawerLabel: 'Mon compte   '
+            drawerLabel: 'Mon compte   ',
+            drawerIcon: drawerConfig =>
+                <SimpleLineIcons
+                    name="user"
+                    size={20}
+                    color={drawerConfig.tintColor}
+                />
         }
     }
 );
@@ -172,27 +232,63 @@ const ContactNavigator = createStackNavigator(
     {
         defaultNavigationOptions: defaultStackNavOptions,
         navigationOptions: {
-            drawerLabel: 'Nous contacter  '
+            drawerLabel: 'Nous contacter  ',
+            drawerIcon: drawerConfig =>
+                <SimpleLineIcons
+                    name="note"
+                    size={20}
+                    color={drawerConfig.tintColor}
+                />
         }
     }
 );
 
+export const DrawerWithLogoutButton = (props) => (
+    <ScrollView contentContainerStyle={{ flex: 1, paddingTop: 20, flexDirection: 'column', justifyContent: 'space-between' }}>
+        <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
+            <DrawerNavigatorItems {...props} />
+        </SafeAreaView>
+        <TouchableOpacity>
+            <View style={styles.item}>
+                <View style={styles.iconContainer}>
+                    <SimpleLineIcons
+                        name="logout"
+                        size={20}
+               
+                        style={styles.icon}
+                    />
+                </View>
+                <Text style={styles.label}>Me déconnecter  </Text>
+            </View>
+        </TouchableOpacity>
+    </ScrollView>
+);
+
 const switchNavigator = createSwitchNavigator({
-    
-    loginFlow: createDrawerNavigator({
-        Home: FeedNavigator,
-        Login: LoginNavigator,
-        CreateAccount: CreateAccountNavigator,
-        Filters: FiltersNavigator,
-        Geolocate: GeolocateNavigator,
+
+    loginFlow: createDrawerNavigator(
+        {
+            Home: FeedNavigator,
+            Login: LoginNavigator,
+            CreateAccount: CreateAccountNavigator,
+            Filters: FiltersNavigator,
+            Geolocate: GeolocateNavigator,
+        }, {
+        drawerWidth: 220,
     }),
-    mainFlow: createDrawerNavigator({
-        Home: FeedNavigator,
-        Myaccount: MyAccountNavigator,
-        Favorite: FavoriteNavigator,
-        Findbar: FindBarNavigator,
-        Contact: ContactNavigator,
-        Logout: LogoutNavigator
+    mainFlow: createDrawerNavigator(
+        {
+            Home: FeedNavigator,
+            Myaccount: MyAccountNavigator,
+            Favorite: FavoriteNavigator,
+            Findbar: FindBarNavigator,
+            Contact: ContactNavigator,
+        }, {
+        contentOptions: {
+            activeTintColor: Colors.primary,
+        },
+        drawerWidth: 220,
+        contentComponent: DrawerWithLogoutButton
     })
 }, {
     contentOptions: {
@@ -200,6 +296,32 @@ const switchNavigator = createSwitchNavigator({
         labelStyle: {
             fontFamily: 'open-sans-bold'
         }
+    }
+});
+
+const styles = StyleSheet.create({
+    main: {
+        flex: 1,
+        paddingTop: 20
+    },
+    item: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    label: {
+        margin: 16,
+        fontWeight: 'bold',
+        color: 'rgba(0, 0, 0, .87)',
+    },
+    iconContainer: {
+        marginHorizontal: 16,
+        width: 24,
+        alignItems: 'center',
+    },
+    icon: {
+        width: 24,
+        height: 24,
+
     }
 });
 

@@ -12,11 +12,20 @@ const FavoritesScreen = props => {
     );
 };
 
-
-
-FavoritesScreen.navigationOptions = {
-    headerTitle : 'Favorites ',
-}
+FavoritesScreen.navigationOptions = navData => {
+    return {
+        headerTitle: 'Favorites ',
+        headerLeft: <HeaderButtons HeaderButtonComponent={HeaderButton}>
+            <Item
+                title="Menu"
+                iconName="ios-menu"
+                onPress={() => {
+                    navData.navigation.toggleDrawer();
+                }}
+            />
+        </HeaderButtons>
+    };
+};
 
 const styles = StyleSheet.create({
     screen: {
