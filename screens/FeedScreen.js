@@ -6,11 +6,10 @@ import HeaderButton from '../components/HeaderButton';
 
 import BarsList from '../components/BarsList';
 import { BARS } from '../data/data';
-import LocalSign from '../components/LocalSign';
+
 const FeedScreen = props => {
     return (
         <View style={styles.container}>
-            <LocalSign navigation={props.navigation}/>
           <BarsList data={BARS} navigation={props.navigation} />
         </View>
     );

@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useDispatch } from 'react-redux';
+import * as AuthActions from '../store/actions/AuthAction';
 
 import LoginScreen from '../screens/LoginScreen';
 import LogoutScreen from '../screens/LogoutScreen';
@@ -19,9 +20,10 @@ import FeedScreen from '../screens/FeedScreen';
 import BarInfoScreen from '../screens/BarInformationScreen';
 import FindBarScreen from '../screens/FindBarsScreen';
 import ContactScreen from '../screens/ContactScreen';
-
-import Colors from '../constant/Colors'
 import FavoritesScreen from '../screens/FavoritesScreen';
+import tryLocalSigninScreen from '../screens/TryLocalSigninScreen';
+
+import Colors from '../constant/Colors';
 
 const defaultStackNavOptions = {
     headerStyle: {
@@ -166,6 +168,13 @@ const GeolocateNavigator = createStackNavigator(
     }
 );
 
+
+const TryLocalSignNavigator = createStackNavigator(
+    {
+        TryLocal: tryLocalSigninScreen,
+    },
+);
+
 const FindBarNavigator = createStackNavigator(
     {
         FindBar: {
@@ -243,12 +252,17 @@ const ContactNavigator = createStackNavigator(
     }
 );
 
-export const DrawerWithLogoutButton = (props) => (
+export const DrawerWithLogoutButton = props => {
+    const dispatch = useDispatch();
+    return(
     <ScrollView contentContainerStyle={{ flex: 1, paddingTop: 20, flexDirection: 'column', justifyContent: 'space-between' }}>
         <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
             <DrawerNavigatorItems {...props} />
         </SafeAreaView>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => { 
+            dispatch(AuthActions.SignOut())
+            props.navigation.navigate('loginFlow');
+            }}>
             <View style={styles.item}>
                 <View style={styles.iconContainer}>
                     <SimpleLineIcons
@@ -262,10 +276,12 @@ export const DrawerWithLogoutButton = (props) => (
             </View>
         </TouchableOpacity>
     </ScrollView>
-);
+    )};
 
 const switchNavigator = createSwitchNavigator({
-
+    localSign: createSwitchNavigator({
+        localSign: TryLocalSignNavigator
+    }),
     loginFlow: createDrawerNavigator(
         {
             Home: FeedNavigator,

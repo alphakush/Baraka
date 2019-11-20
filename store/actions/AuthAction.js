@@ -33,15 +33,6 @@ export const signUp = (username, email, password) => {
     };
 };
 
-export const LocalSignin = () => {
-    return async dispatch => {
-        const token = await AsyncStorage.getItem('token');
-        if (token) {
-            dispatch({ type: TOGGLE_TRY_LOCAL_SIGN, payload: token });
-        }
-    };
-};
-
 export const SignOut = () => {
     return async dispatch => {
         await AsyncStorage.removeItem('token');

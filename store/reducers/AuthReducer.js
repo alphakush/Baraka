@@ -20,10 +20,8 @@ const authReducer = (state = initialState, action) => {
         case TOGGLE_SIGNUP:
             return { ...state, token: action.payload }
         case TOGGLE_TRY_LOCAL_SIGN:
-            console.log("try local signin");
             return { token: action.payload }
         case TOGGLE_SIGNOUT:
-            console.log("signout");
             return { token: null }
         default:
             return state;
