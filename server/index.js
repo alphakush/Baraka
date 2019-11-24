@@ -8,7 +8,6 @@ const bodyParser = require('body-parser');
 const config = require('./config');
 const authRoutes = require('./routes/authRoutes');
 const barRoutes = require('./routes/barRoutes');
-const checkingAuth = require('./middlewares/checkingAuth');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./Documentation/swagger');
 

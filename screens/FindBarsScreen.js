@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Keyboard, Button, StyleSheet, Dimensions, TouchableWithoutFeedback, Text } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Keyboard, Button, StyleSheet, TouchableWithoutFeedback, Text } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import api from '../api/api';
 
@@ -16,11 +16,24 @@ const FindBarsScreen = props => {
         try {
             const reponse = await api.get('/bar/'+reqbar);
             setResults(reponse.data);
-            console.log(reponse.data);
         } catch (e) {
-            setErrorMessage('Something went wrong');
+            setErrorMessage("une erreur s'est produite");
         }
     };
+
+    const displayAllBarsHandler =  async () => {
+        try {
+            const response = await api.get('/allbars');
+            console.log(response);
+        } catch (e) {
+            setErrorMessage("une erreur s'est produite");
+        }
+    };
+
+    useEffect(() => {
+        displayAllBarsHandler();
+    },[]);
+
 
     return (
         <TouchableWithoutFeedback onPress={() => {

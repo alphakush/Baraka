@@ -11,7 +11,9 @@
   "license": "ISC",
   "private": "true",
   "dependencies": {
-    "swagger-ui-express": "^4.1.2"
+    "multer": "^1.4.2",
+    "swagger-ui-express": "^4.1.2",
+    "validator": "^12.1.0"
   },
   "devDependencies": {
     "bcrypt": "^3.0.6",

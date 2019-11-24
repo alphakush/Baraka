@@ -7,9 +7,13 @@ const managerSchema = new mongoose.Schema({
     },
     firstName: {
         type: String,
+        required: true,
+        trim: true,
     },
     lastName: {
-        type: Array,
+        type: String,
+        required: true,
+        trim: true
     }
 });
 

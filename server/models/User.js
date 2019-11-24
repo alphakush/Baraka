@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+var validator = require('validator');
 
 const userFavoriteBarSchena = new mongoose.Schema({
     barid: {
@@ -8,6 +9,7 @@ const userFavoriteBarSchena = new mongoose.Schema({
     },
     comment:{
         type: String,
+        trim: true
     },
     author:{
         type: mongoose.Schema.Types.ObjectId,
@@ -18,12 +20,20 @@ const userFavoriteBarSchena = new mongoose.Schema({
 const userSchema = new mongoose.Schema({
     username: {
       type: String,
-      required: true
+      required: true,
+      trim: true
     },
     email: {
         type: String,
         unique: true,
-        required: true
+        required: true,
+        trim: true,
+        lowercase: true,
+        validate(value) {
+           if(!validator.isEmail(value)){
+               throw Error("L'e-mail est invalide");
+           } 
+        }
     },
     password: {
         type: String,
@@ -33,7 +43,6 @@ const userSchema = new mongoose.Schema({
 });
 
 //before save the password in DB  hash + salt
-
 userSchema.pre('save',function (next){
     const user = this;
     if(!user.isModified('password')){
