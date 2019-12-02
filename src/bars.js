@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import * as data from './data/info-bar.json';
-import Bar_cards from "./bar_cards";
-class bars extends Component  {
-
+import BarCards from "./BarCards";
+class Bars extends Component  {
     render() {
-
         var nombre_de_bars = Object.keys( data.features ).length;
         var rows = [];
-        console.log(nombre_de_bars);
         for (var i = 0; i < nombre_de_bars; i++) {
-            rows.push(<Bar_cards 
+            rows.push(<BarCards
+                key={i} 
                 description={data.features[i].properties.FACILITY_F}
                 name={data.features[i].properties.NAME_FR}
                 adresse={data.features[i].properties.ADDRESS_FR}
@@ -24,7 +22,7 @@ class bars extends Component  {
         ) 
     } 
 }
-export default bars;
+export default Bars;
 
 
 

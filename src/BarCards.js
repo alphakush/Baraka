@@ -8,30 +8,28 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 
-class bar_cards extends Component  {
+class BarCards extends Component  {
   constructor(props) {
     super(props);
     this.sayHello = this.sayHello.bind(this);
       this.position = props.position;
   }
   sayHello(){
-    alert(this.position);
+    alert(this.props.name)
   }
   
   render() {
-    console.log(this.position);
   return (
     <div style={{padding:'5px'}}>
       <Card style={{width: "75%", margin: 'auto'}}>
         <CardActionArea>
           <CardMedia
-            style={{height: 150}}
+            style={{height: 140}}
             image={this.props.image}
             component="img"
-            alt="Contemplative Reptile"
             title="Contemplative Reptile"
           />
-          <CardContent style={{backgroundColor: '#c79a00'}}>
+          <CardContent style={{backgroundColor: '#ffff'}}>
             <Typography gutterBottom variant="h5" component="h2">
             {this.props.name}
           </Typography>
@@ -41,7 +39,7 @@ class bar_cards extends Component  {
           </Typography>
           </CardContent>
         </CardActionArea>
-        <CardActions style={{backgroundColor: '#5b3f36'}}>
+        <CardActions style={{backgroundColor: '#ffff'}}>
           <Button size="small" color="primary">
             Partager
         </Button>
@@ -54,4 +52,4 @@ class bar_cards extends Component  {
   );
   }
 }
-export default bar_cards
+export default BarCards
