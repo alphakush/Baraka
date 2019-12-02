@@ -13,15 +13,15 @@ class Main extends Component {
   Header() {
     var utilisateur_est_connecte = true;
     return (
-      <div className="row">
-          <button type="button" className="btn btn-light btn-lg col-lg"><NavLink to="/">Home </NavLink></button>
-          <button type="button" className="btn btn-light btn-lg col-lg"><NavLink to="/bars"> Liste des bars </NavLink></button>
-          <button type="button" className="btn btn-light btn-lg col-lg"><NavLink to="/parcours"> Liste des parcours</NavLink></button>
-          <button type="button" className="btn btn-light btn-lg col-lg"><NavLink to="/contact"> Contact </NavLink></button>
+      <div className="row bg-dark">
+          <button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/">Home </NavLink></button>
+          <button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/bars"> Liste des bars </NavLink></button>
+          <button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/parcours"> Liste des parcours</NavLink></button>
+          <button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/contact"> Contact </NavLink></button>
           <div className="col-lg"></div>
           <div className="col-lg"></div>
           <div className="col-lg"></div>
-          {utilisateur_est_connecte ? (<button type="button" className="btn btn-light btn-lg col-lg"><NavLink to="./connexion">Se connecter</NavLink></button>)
+          {utilisateur_est_connecte ? (<button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="./connexion">Se connecter</NavLink></button>)
            : (<NavLink to="./connexion">Créer un compte</NavLink>)}
         </div>)
   }
@@ -29,7 +29,7 @@ class Main extends Component {
   render() {
     return (
       <HashRouter>
-        <div style={{ width: '100vw', height: '100vh' }}>
+        <div style={{ background: '#dceafd', width: '100vw', height: '100vh' }}>
           <div style={{ width: '100%', height: '0%' }}>
             <this.Header />
           </div>
