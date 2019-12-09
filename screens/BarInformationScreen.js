@@ -25,8 +25,6 @@ const BarInformations = props => {
     const [enteredValue, setEnteredValue] = useState('');
     const [results, setResults] = useState([]);
     const [errorMessage, setErrorMessage ] = useState('');
-
-    console.log(bar);
     // récuperer les commentaires en base (il faut modifier la table comment pour que ça ressemble aux data ci dessous)
     const data=[
         {id:1, image: "https://bootdey.com/img/Content/avatar/avatar1.png", name:"Tony Stark",    comment:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor."},
@@ -109,6 +107,13 @@ const BarInformations = props => {
     </View>
   </ScrollView>
     );
+};
+
+BarInformations.navigationOptions = navData => {
+    return {
+        headerTitle: 'Information',
+        headerLayoutPreset: 'center',
+    };
 };
 
 const styles = StyleSheet.create({

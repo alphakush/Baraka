@@ -19,6 +19,7 @@ import * as AuthActions from '../store/actions/AuthAction';
 const CreateAccount = props => {
 
   const connexionStatus = useSelector(state => state.auth.token);
+  const errormsg = useSelector(state => state.auth.errorMessage);
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -42,15 +43,8 @@ const CreateAccount = props => {
     signUpHandler();
   }, [connexionStatus]);
 
-
-
   const signUpHandler = () => {
-    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (email != '') {
-      if (reg.test(email) === false) {
-        Alert.alert("Baraka", "Format de l'email incorrect");
-        return;
-      }
       if (username != '') {
         if (password != '') {
           if (password === confirmpassword) {
@@ -79,7 +73,7 @@ const CreateAccount = props => {
   return (
     <TouchableWithoutFeedback onPress={() =>{
       Keyboard.dismiss();
-    }}> 
+    }}>
     <View style={styles.container}>
       <Image style={styles.bgImage} source={require('../images/background.png')} />
       <View style={styles.inputContainer}>
@@ -120,6 +114,7 @@ const CreateAccount = props => {
       <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={signUpHandler}>
         <Text style={styles.loginText}>Créer un compte</Text>
       </TouchableOpacity>
+      {errormsg ? Alert.alert("Baraka",errormsg) : null }
     </View>
     </TouchableWithoutFeedback>
   );
@@ -142,7 +137,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     flexDirection: 'row',
     alignItems: 'center',
-
     shadowColor: Colors.Grey,
     shadowOffset: {
       width: 0,
@@ -150,7 +144,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
     elevation: 5,
   },
   inputs: {
@@ -180,17 +173,8 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     backgroundColor: 'transparent'
   },
-  btnForgotPassword: {
-    height: 15,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-    marginBottom: 10,
-    width: 300,
-    backgroundColor: 'transparent'
-  },
   loginButton: {
-    backgroundColor: Colors.Grey,
+    backgroundColor: Colors.Blue,
     shadowColor: Colors.Grey,
     shadowOffset: {
       width: 0,
@@ -198,7 +182,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.50,
     shadowRadius: 12.35,
-
     elevation: 19,
   },
   loginText: {

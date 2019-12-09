@@ -13,6 +13,6 @@ export default {
   Yellow: '#fffd61',
   Red: '#ff0000',
   BlueSky: '#F5FCFF',
-  Green: '#008000'
-
+  Green: '#008000',
+  Blue: '#00b5ec'
 };

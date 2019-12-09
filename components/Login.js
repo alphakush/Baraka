@@ -14,23 +14,43 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import Colors from '../constant/Colors';
 import * as AuthActions from '../store/actions/AuthAction';
+import Dialog from 'react-native-dialog';
 
 const Login = props => {
 
+  const errormsg = useSelector(state => state.auth.errorMessage);
   const connexionStatus = useSelector(state => state.auth.token);
   const dispatch = useDispatch();
+  const [emailreset,setEmailReset] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [conntected, setConntected] = useState(false);
+  const [dialogvisible, setdialogvisible] = useState(false);
 
   const setEmailHandler = (enteredText) => {
     setEmail(enteredText);
+  };
+
+  const setEmailResetHandler = (enteredText) => {
+    setEmailReset(enteredText);
   };
 
   const setPasswordHandler = (enteredText) => {
     setPassword(enteredText);
   };
 
+  showDialog = () => {
+    setdialogvisible(true);
+  };
+
+  handleCancel = () => {
+    setdialogvisible(false);
+  };
+
+  handleReset = () => {
+    //Envoi d'email pour le reset du mot de passe
+    Alert.alert("Baraka","Reset du mot de passe du compte : "+emailreset)
+  };
 
   useEffect(() => {
     signinHandler();
@@ -45,7 +65,6 @@ const Login = props => {
       }
       if (password != '') {
         dispatch(AuthActions.signIn(email.toLowerCase(), password));
-
         if (connexionStatus !== null) {
           props.navigation.navigate('mainFlow');
         }
@@ -58,11 +77,15 @@ const Login = props => {
     }
   };
 
+  const ForgotPassword = () => {
+    Alert.alert("Baraka", "Un email vous a été envoyé");
+  };
+
   return (
-    <TouchableWithoutFeedback onPress={() => 
+    <TouchableWithoutFeedback onPress={() =>
       {Keyboard.dismiss(); }} >
     <View style={styles.container}>
-      <Image style={styles.bgImage} source={{ uri: "https://r1.ilikewallpaper.net/iphone-4s-wallpapers/download/24756/Colorful-App-Tiles-Background-iphone-4s-wallpaper-ilikewallpaper_com.jpg" }} />
+      <Image style={styles.bgImage} source={require('../images/background.png')} />
       <View style={styles.inputContainer}>
         <TextInput style={styles.inputs}
           placeholder="e-mail"
@@ -88,6 +111,25 @@ const Login = props => {
       <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={signinHandler}>
         <Text style={styles.loginText}>Me connecter</Text>
       </TouchableOpacity>
+
+      <TouchableWithoutFeedback onPress={() =>
+        {Keyboard.dismiss(); }} >
+      <Dialog.Container visible={dialogvisible}>
+        <Dialog.Title>Password reset</Dialog.Title>
+        <Dialog.Description>
+          Please, enter your email address to reset your password.
+        </Dialog.Description>
+        <Dialog.Input  placeholder="e-mail" value={emailreset} onChangeText={setEmailResetHandler}>
+        </Dialog.Input>
+        <Dialog.Button label="Cancel" onPress={handleCancel} />
+        <Dialog.Button label="Reset" onPress={handleReset} />
+      </Dialog.Container>
+      </TouchableWithoutFeedback>
+
+      <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={showDialog}>
+        <Text style={styles.loginText}>Mot de passe oublié</Text>
+      </TouchableOpacity>
+      {errormsg ? Alert.alert("Baraka",errormsg) : null }
     </View>
     </TouchableWithoutFeedback>
   );
@@ -110,7 +152,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     flexDirection: 'row',
     alignItems: 'center',
-
     shadowColor: Colors.Grey,
     shadowOffset: {
       width: 0,
@@ -118,7 +159,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
     elevation: 5,
   },
   inputs: {
@@ -153,8 +193,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent'
   },
   loginButton: {
-    backgroundColor: "#00b5ec",
-
+    backgroundColor: Colors.Blue,
     shadowColor: Colors.Grey,
     shadowOffset: {
       width: 0,
@@ -162,7 +201,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.50,
     shadowRadius: 12.35,
-
     elevation: 19,
   },
   loginText: {
