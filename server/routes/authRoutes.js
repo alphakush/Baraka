@@ -14,7 +14,7 @@ router.post(config.rootAPI+'/signup', async (req,res) => {
         await user.save();
 
         const token = jwt.sign({userId: user._id}, 'BARAKA_SECRET');
-        res.send({token});
+        res.send({user,token});
     } catch (err) {
         return  res.status(422).send({error : "Cette adresse e-mail est dèja associée à un compte"});
     }
@@ -35,7 +35,7 @@ router.post(config.rootAPI+'/signin', async (req,res) => {
     try {
         await user.comparePassword(password);
         const token = jwt.sign({userId: user._id}, 'BARAKA_SECRET');
-        res.send({ token});
+        res.send({ user,token});
     } catch (err) {
         return res.status(422).send({error: "Le mot de passe ou l'e-mail est invalide"});
     }

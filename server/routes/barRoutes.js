@@ -2,7 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const config = require('../config');
 const multer = require('multer');
+const sharp = require('sharp');
 const checkingAuth = require("../middlewares/checkingAuth");
+const base64ArrayBuffer = require('./base64ArrayBuffer');
 
 const Bar = mongoose.model('Bar');
 const router = express.Router();
@@ -19,6 +21,7 @@ router.get(config.rootAPI + '/allbars', async (req, res) => {
     for (const k in user) {
         if (user.hasOwnProperty(k)) {
             {
+                var id = user[k]._id;
                 var name = user[k].name;
                 var description = user[k].description;
                 var tags = user[k].tags;
@@ -26,11 +29,12 @@ router.get(config.rootAPI + '/allbars', async (req, res) => {
                 var note = user[k].note;
                 var image = user[k].image;
                 var product = user[k].product;
-                result.push({ 'name': name, 'description': description, 'tags': tags, 'adress': adress, 'note': note, 'image': image, 'product': product });
+                var imageToString = base64ArrayBuffer(image);
+                result.push({ 'name':id, 'name': name, 'description': description, 'tags': tags, 'adress': adress, 'note': note, 'image': imageToString, 'product': product });
             };
         }
     }
-    res.send(result)   ;
+    res.send(result) ;
 });
 
 router.get(config.rootAPI + '/bar/:barname', async (req, res) => {
@@ -48,8 +52,8 @@ const upload = multer({
         fileSize: 1000000
     },
     fileFilter(req, file, cb) {
-        if (!file.originalname.match(/\.(png|jpg|ppeg)$/)) {
-            return cb(new Error('Merci de télécharger une image'));
+        if (!file.originalname.match(/\.(png|jpg|jpeg)$/)) {
+            return cb(new Error("Votre image doit être moins 1 mo et de format png, jpg ou jgeg. Merci de bien vérifer ses informations"));
         }
         cb(undefined, true)
     }
@@ -64,7 +68,8 @@ router.post(config.rootAPI + '/bar/create-bar', upload.single('upload-bar'), asy
         [name, description, tags, adresse, coordonnées gps, produits et images' })
     }
     try {
-        const bar = new Bar({ name, description, tags, adress, note, image, products });
+        const imageCrop = await sharp(image).resize({ width: 250, height: 250 }).png().toBuffer()
+        const bar = new Bar({ name, description, tags, adress, note, imageCrop, products });
         await bar.save();
         res.send(bar);
     } catch (err) {

@@ -1,21 +1,21 @@
 import React from 'react'
-import {StyleSheet, View, FlatList, Text} from 'react-native';
+import { StyleSheet, View, FlatList, Text } from 'react-native';
 import ResultItem from "./ResultItem";
 
 const ResultList = props => {
     const _renderItemResult = itemData => {
         return (
             <ResultItem
-                id={itemData.item._id}
+                id={itemData.item.id}
                 name={itemData.item.name}
                 description={itemData.item.description}
-                averageNotation={itemData.item.averageNotation}
-                picturesUrls={itemData.item.picturesUrls}
+                averageNotation={itemData.item.note}
+                picturesUrls={itemData.item.image}
                 onSelectBar={() => {
                     props.navigation.navigate({
                         routeName: 'BarInfo',
                         params: {
-                            BarId: itemData.item._id
+                            BarId: itemData.item.id
                         }
                     });
                 }}
@@ -25,8 +25,9 @@ const ResultList = props => {
     return (
         <View style={styles.list}>
             <FlatList data={props.searchResult}
-                      renderItem={_renderItemResult}
-                      keyExtractor={item => item.id} />
+                renderItem={_renderItemResult}
+                keyExtractor={(item, index) => item.id}
+            />
         </View>
     );
 };

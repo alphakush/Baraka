@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Baraka-mobile",
-    "slug": "baraka-mobile",
+    "name": "Baraka",
+    "slug": "baraka",
     "privacy": "public",
     "sdkVersion": "34.0.0",
     "platforms": [
@@ -25,6 +25,7 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": ""
   }
 }

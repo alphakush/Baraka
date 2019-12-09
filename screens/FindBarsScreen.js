@@ -14,8 +14,8 @@ const FindBarsScreen = props => {
 
     const searchApi =  async (reqbar) => {
         try {
-            const reponse = await api.get('/bar/'+reqbar);
-            setResults(reponse.data);
+            const response = await api.get('/bar/'+reqbar);
+            setResults(response.data);
         } catch (e) {
             setErrorMessage("une erreur s'est produite");
         }
@@ -24,7 +24,7 @@ const FindBarsScreen = props => {
     const displayAllBarsHandler =  async () => {
         try {
             const response = await api.get('/allbars');
-            console.log(response);
+            setResults(response.data);
         } catch (e) {
             setErrorMessage("une erreur s'est produite");
         }
@@ -34,7 +34,7 @@ const FindBarsScreen = props => {
         displayAllBarsHandler();
     },[]);
 
-
+    
     return (
         <TouchableWithoutFeedback onPress={() => {
             Keyboard.dismiss();

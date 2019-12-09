@@ -42,6 +42,16 @@ const userSchema = new mongoose.Schema({
     favoriteBars: [userFavoriteBarSchena]
 });
 
+userSchema.methods.toJSON = function () {
+    const user = this;
+    const userObject = user.toObject()
+
+    delete userObject.password
+
+    return userObject
+}
+
+
 //before save the password in DB  hash + salt
 userSchema.pre('save',function (next){
     const user = this;

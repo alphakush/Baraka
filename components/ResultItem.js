@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableHighlight,TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet,TouchableOpacity } from 'react-native';
 import Colors from '../constant/Colors';
 
 const ResultItem = props => {
     return (
         <TouchableOpacity onPress={props.onSelectBar} >
             <View style={styles.box}>
-                <Image resizeMode="center" style={styles.image} source={{ uri: props.picturesUrls }} />
+                <Image resizeMode="center" style={styles.image} source={{ uri: `data:image/png;base64,${props.picturesUrls}` }} />
                 <View style={styles.boxContent}>
                     <Text style={styles.title}>{props.name}</Text>
                     <Text style={styles.description}>{props.description}</Text>
