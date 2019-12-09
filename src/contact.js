@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import styles from './App.css'
 
-class Contact extends Component {
+class Contact extends Component {   
+    // async componentDidMount() {
+    //     var userData = await Api.post('/contact');
+    //     }
     render() {
         return (
             <div style={{ width: '100%', height: '100%' }}>
