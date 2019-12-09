@@ -1,23 +1,40 @@
 import React, { Component } from 'react';
-import * as data from './data/info-bar.json';
 import BarCards from "./BarCards";
 import Api from "./api/api.js";
 
 class Bars extends Component {
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+          nombre_de_bars: null
+        };
+      }
+    
     async componentDidMount() {
-        var userData = await Api.get('/allbars');
-        }
+        await Api.get('/allbars').then(userData => {
+            this.setState({nombre_de_bars : userData.data})
+        });
+    }
+ 
     render() {
-        var nombre_de_bars = Object.keys(data.features).length;
         var rows = [];
-        console.log("Render");
-        for (var i = 0; i < nombre_de_bars; i++) {
+        const { nombre_de_bars } = this.state
+        console.log(nombre_de_bars);
+        if (nombre_de_bars === null)
+            return (
+                <div>
+                    {}
+                </div>
+            )
+        for (var i = 0; i < nombre_de_bars.length; i++) {
+            console.log(i)
             rows.push(<BarCards
                 key={i}
-                description={data.features[i].properties.FACILITY_F}
-                name={data.features[i].properties.NAME_FR}
-                adresse={data.features[i].properties.ADDRESS_FR}
-                image={data.features[i].properties.IMG}
+                description={nombre_de_bars[i].description}
+                name={nombre_de_bars[i].name}
+                adresse={nombre_de_bars[i].adress}
+                image={nombre_de_bars[i].image}
                 position={i}
             />);
         }

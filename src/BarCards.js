@@ -25,9 +25,9 @@ class BarCards extends Component  {
         <CardActionArea>
           <CardMedia
             style={{height: 140}}
-            image={this.props.image}
+            src = {"data:image/png;base64," + this.props.image}
             component="img"
-            title="Contemplative Reptile"
+            title={this.props.name}
           />
           <CardContent style={{backgroundColor: '#ffff'}}>
             <Typography gutterBottom variant="h5" component="h2">
