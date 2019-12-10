@@ -33,6 +33,16 @@ export const signUp = (username, email, password) => {
     };
 };
 
+export const contactEmail = (email, message) => {
+    return async dispatch => {
+        try {
+            const response = await Api.post('/contact-us', { email, message });
+        } catch (error) {
+            dispatch({ type: TOGGLE_ERROR, payload: "Merci de remplir tous les champs" });
+        }
+    };
+};
+
 export const SignOut = () => {
     return async dispatch => {
         await AsyncStorage.removeItem('token');

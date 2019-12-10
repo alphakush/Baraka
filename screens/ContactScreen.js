@@ -13,10 +13,13 @@ import {
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Colors from '../constant/Colors';
 import HeaderButton from '../components/HeaderButton';
+import { useDispatch } from 'react-redux';
+import * as AuthActions from '../store/actions/AuthAction';
 
 const ContactScreen = props => {
   const [email, setEmail] = useState('');
   const [msg, setmsg] = useState('');
+  const dispatch = useDispatch();
 
   const setEmailHandler = (enteredText) => {
     setEmail(enteredText);
@@ -26,7 +29,7 @@ const ContactScreen = props => {
   };
 
   const sendmessage = () => {
-    Alert.alert("Baraka", "Message envoyé");
+    dispatch(AuthActions.contactEmail(email, msg));
   };
 
     return (
