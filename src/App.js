@@ -3,6 +3,7 @@ import './index.css';
 import Map from './map.js';
 import Contact from './Contact';
 import Bars from './Bars'
+import AddBar from './AddBar'
 import parcours from './parcours'
 import connexion from './connexion'
 import { Route, NavLink, HashRouter } from "react-router-dom";
@@ -16,6 +17,7 @@ class Main extends Component {
     return (
       <div className="row bg-dark">
           <button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/">Home </NavLink></button>
+          <button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/Addbar">Ajouter un bar </NavLink></button>
           <button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/bars"> Liste des bars </NavLink></button>
           <button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/parcours"> Liste des parcours</NavLink></button>
           <button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/contact"> Contact </NavLink></button>
@@ -38,6 +40,7 @@ class Main extends Component {
             <Route exact path="/" component={Map} />
             <Route path="/contact" component={Contact} />
             <Route path="/bars" component={Bars} />
+            <Route path="/addbar" component={AddBar} />
             <Route path="/parcours" component={parcours} />
             <Route path="/connexion" component={connexion} />
           </div>
