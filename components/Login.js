@@ -57,14 +57,10 @@ const Login = props => {
   }, [connexionStatus]);
 
   const signinHandler = () => {
-    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (email != '') {
-      if (reg.test(email) === false) {
-        Alert.alert("Baraka", "Format de l'e-mail est erroné");
-        return;
-      }
       if (password != '') {
         dispatch(AuthActions.signIn(email.toLowerCase(), password));
+        {errormsg ? Alert.alert("Baraka",errormsg) : null }
         if (connexionStatus !== null) {
           props.navigation.navigate('mainFlow');
         }
@@ -115,21 +111,21 @@ const Login = props => {
       <TouchableWithoutFeedback onPress={() =>
         {Keyboard.dismiss(); }} >
       <Dialog.Container visible={dialogvisible}>
-        <Dialog.Title>Password reset</Dialog.Title>
+        <Dialog.Title>Réinitialisation du mot de passe</Dialog.Title>
         <Dialog.Description>
-          Please, enter your email address to reset your password.
+          Entrez votre adresse email pour réinitialiser votre mot de passe
         </Dialog.Description>
         <Dialog.Input  placeholder="e-mail" value={emailreset} onChangeText={setEmailResetHandler}>
         </Dialog.Input>
-        <Dialog.Button label="Cancel" onPress={handleCancel} />
-        <Dialog.Button label="Reset" onPress={handleReset} />
+        <Dialog.Button label="Annuler" onPress={handleCancel} />
+        <Dialog.Button label="Réinitialiser" onPress={handleReset} />
       </Dialog.Container>
       </TouchableWithoutFeedback>
 
       <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={showDialog}>
         <Text style={styles.loginText}>Mot de passe oublié</Text>
       </TouchableOpacity>
-      {errormsg ? Alert.alert("Baraka",errormsg) : null }
+
     </View>
     </TouchableWithoutFeedback>
   );

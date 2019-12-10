@@ -49,6 +49,7 @@ const CreateAccount = props => {
         if (password != '') {
           if (password === confirmpassword) {
             dispatch(AuthActions.signUp(username, email, password));
+            {errormsg ? Alert.alert("Baraka",errormsg) : null }
             if (connexionStatus !== null) {
               props.navigation.navigate('mainFlow');
             }
@@ -114,7 +115,6 @@ const CreateAccount = props => {
       <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={signUpHandler}>
         <Text style={styles.loginText}>Créer un compte</Text>
       </TouchableOpacity>
-      {errormsg ? Alert.alert("Baraka",errormsg) : null }
     </View>
     </TouchableWithoutFeedback>
   );
