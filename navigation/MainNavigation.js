@@ -259,7 +259,7 @@ export const DrawerWithLogoutButton = props => {
         <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
             <DrawerNavigatorItems {...props} />
         </SafeAreaView>
-        <TouchableOpacity onPress={() => { 
+        <TouchableOpacity onPress={() => {
             dispatch(AuthActions.SignOut())
             props.navigation.navigate('loginFlow');
             }}>
@@ -268,7 +268,7 @@ export const DrawerWithLogoutButton = props => {
                     <SimpleLineIcons
                         name="logout"
                         size={20}
-               
+
                         style={styles.icon}
                     />
                 </View>
@@ -298,6 +298,7 @@ const switchNavigator = createSwitchNavigator({
             Myaccount: MyAccountNavigator,
             Favorite: FavoriteNavigator,
             Findbar: FindBarNavigator,
+            Geolocate: GeolocateNavigator,
             Contact: ContactNavigator,
         }, {
         contentOptions: {

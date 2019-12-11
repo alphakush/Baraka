@@ -18,15 +18,13 @@ import Colors from '../constant/Colors';
 
 // TODO: 'rename the name this screen'
 const BarInformations = props => {
-    const barID = props.navigation.getParam('barID');
-    const barName = props.navigation.getParam('barName');
-    const barDescription = props.navigation.getParam('barDescription');
-    const barTags = props.navigation.getParam('barTags');
-    const barAverageNotation = props.navigation.getParam('barAverageNotation');
     const barPicturesUrls = props.navigation.getParam('barPicturesUrls');
-
-    console.log(barPicturesUrls);
-    
+    const barAverageNotation = props.navigation.getParam('barAverageNotation');
+    const barTags = props.navigation.getParam('barTags');
+    const barDescription = props.navigation.getParam('barDescription');
+    const barName = props.navigation.getParam('barName');
+    const barID = props.navigation.getParam('barID');
+    const [barliked, setbarliked] = useState(false);
     // récuperer les commentaires en base (il faut modifier la table comment pour que ça ressemble aux data ci dessous)
     const data=[
         {id:1, image: "https://bootdey.com/img/Content/avatar/avatar1.png", name:"Tony Stark",    comment:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor."},
@@ -38,21 +36,13 @@ const BarInformations = props => {
         {id:7, image: "https://bootdey.com/img/Content/avatar/avatar5.png", name:"Thor Odinson",      comment:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor."},
       ]
 
-    const TapeLike = () => {
-      Alert.alert("Baraka","You Like this bar");
-    };
-
-    const TapeDislike = () => {
-      Alert.alert("Baraka","You Dislike this bar");
-    };
-
     const GoToBar = () => {
       Alert.alert("Baraka","Itinéraire non disponible pour l'instant")
     };
 
     const Likebar = () => {
-      like = true;
-      Alert.alert("Baraka","Vous aimez ce bar")
+      {barliked ? setbarliked(false) : setbarliked(true) }
+      {barliked ? Alert.alert("Baraka","Vous n'aimez plus ce bar") : Alert.alert("Baraka","Vous aimez ce bar")}
     };
 
     return (
@@ -71,7 +61,7 @@ const BarInformations = props => {
                 <Text key={key} style={styles.descriptionBar}> {item} </Text>
               ))}
             <TouchableOpacity onPress={ () => Likebar() }>
-              <Image style={styles.like} source={{uri: 'https://png.icons8.com/android/75/e74c3c/hearts.png'}}/>
+              <Image style={styles.like} source={barliked ? require('../images/hearts.png') : require('../images/heartsempty.png')}/>
             </TouchableOpacity>
             <Text style={styles.descriptionBar}>{barDescription}</Text>
           </View>

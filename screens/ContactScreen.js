@@ -13,13 +13,14 @@ import {
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Colors from '../constant/Colors';
 import HeaderButton from '../components/HeaderButton';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import * as AuthActions from '../store/actions/AuthAction';
 
 const ContactScreen = props => {
   const [email, setEmail] = useState('');
   const [msg, setmsg] = useState('');
   const dispatch = useDispatch();
+  const errormsg = useSelector(state => state.auth.errorMessage);
 
   const setEmailHandler = (enteredText) => {
     setEmail(enteredText);
@@ -29,7 +30,21 @@ const ContactScreen = props => {
   };
 
   const sendmessage = () => {
-    dispatch(AuthActions.contactEmail(email, msg));
+    if (email != ''){
+      if (msg != ''){
+        dispatch(AuthActions.contactEmail(email, msg))
+        {errormsg ? Alert.alert("Baraka",errormsg) : null }
+        setmsg('');
+        setEmail('');
+        Alert.alert("Baraka","Message envoyé");
+      } else{
+        Alert.alert("Baraka","Veuillez renseigner un message");
+        return;
+      }
+    } else{
+      Alert.alert("Baraka","Veuillez renseigner une adresse mail valide");
+      return;
+    }
   };
 
     return (
@@ -49,8 +64,9 @@ const ContactScreen = props => {
             </View>
             <View style={styles.inputContainermsg}>
               <TextInput style={styles.inputsmsg}
-                multiline
-                editable
+                multiline={true}
+                editable={true}
+                textAlignVertical='top'
                 numberOfLines={6}
                 placeholder="message"
                 underlineColorAndroid='transparent'
@@ -58,11 +74,9 @@ const ContactScreen = props => {
                 value={msg}
               />
               </View>
-
-          <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={sendmessage}>
-            <Text style={styles.loginText}>Envoyer</Text>
-          </TouchableOpacity>
-
+              <TouchableOpacity  style={[styles.buttonContainer, styles.loginButton]} onPress={sendmessage}>
+                <Text style={styles.loginText}>Envoyer</Text>
+              </TouchableOpacity>
         </View>
       </TouchableWithoutFeedback>
     );
@@ -141,6 +155,7 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     borderBottomColor: Colors.White,
     flex: 1,
+    textAlignVertical: "top",
   },
   inputIcon: {
     width: 30,

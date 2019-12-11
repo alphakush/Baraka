@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -13,11 +13,27 @@ import HeaderButton from '../components/HeaderButton';
 
 import BarsList from '../components/BarsList';
 import { BARS } from '../data/data';
+import api from '../api/api';
 
 const FeedScreen = props => {
+  const [results, setResults] = useState([]);
+  const [errorMessage, setErrorMessage ] = useState('');
+
+  const displayAllBarsHandler =  async () => {
+      try {
+          const response = await api.get('/allbars');
+          setResults(response.data);
+      } catch (e) {
+          setErrorMessage("une erreur s'est produite");
+      }
+  };
+  useEffect(() => {
+      displayAllBarsHandler();
+  },[]);
+
     return (
         <View style={styles.container}>
-          <BarsList data={BARS} navigation={props.navigation} />
+          <BarsList data={results} navigation={props.navigation} />
         </View>
     );
 };

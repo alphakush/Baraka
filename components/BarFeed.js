@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component,useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -13,10 +13,11 @@ import {
 import Colors from '../constant/Colors';
 
 const BarFeed = props => {
+  const [barliked, setbarliked] = useState(false);
 
   const Likebar = (barname) => {
-    like = true;
-    Alert.alert("Baraka","Vous aimez "+barname)
+    {barliked ? setbarliked(false) : setbarliked(true) }
+    {barliked ? Alert.alert("Baraka","Vous n'aimez plus ce bar") : Alert.alert("Baraka","Vous aimez ce bar")}
   };
 
   return (
@@ -28,12 +29,12 @@ const BarFeed = props => {
             <Text style={styles.description}>{props.description}</Text>
           </View>
         </View>
-        <Image resizeMode="center" style={styles.cardImage} source={{uri:props.picturesUrls}}/>
+        <Image resizeMode="center" style={styles.cardImage} source={{ uri: `data:image/png;base64,${props.picturesUrls}` }}/>
         <View style={styles.cardFooter}>
           <View style={styles.socialBarContainer}>
             <View style={styles.socialBarSection}>
               <TouchableOpacity style={styles.socialBarButton} onPress={ () => Likebar(props.name) }>
-                <Image style={styles.icon} source={{uri: 'https://png.icons8.com/android/75/e74c3c/hearts.png'}}/>
+                <Image style={styles.icon} source={barliked ? require('../images/hearts.png') : require('../images/heartsempty.png')}/>
                 <Text style={styles.socialBarLabel}>78</Text>
               </TouchableOpacity>
             </View>

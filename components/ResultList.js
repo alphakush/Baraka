@@ -21,7 +21,6 @@ const ResultList = props => {
                             barTags: itemData.item.tags,
                             barAverageNotation: itemData.item.averageNotation,
                             barPicturesUrls: itemData.item.image
-                            
                         }
                     });
                 }}
@@ -45,5 +44,3 @@ const styles = StyleSheet.create({
 });
 
 export default ResultList;
-
-

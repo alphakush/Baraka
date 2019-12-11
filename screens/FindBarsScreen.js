@@ -34,7 +34,7 @@ const FindBarsScreen = props => {
         displayAllBarsHandler();
     },[]);
 
-    
+
     return (
         <TouchableWithoutFeedback onPress={() => {
             Keyboard.dismiss();

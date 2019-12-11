@@ -10,8 +10,10 @@ const tryLocalSigninScreen = props => {
   useEffect(() => {
     const TryLogin = async () => {
       const token = await AsyncStorage.getItem('token');
+      const email = await AsyncStorage.getItem('email');
+      const username = await AsyncStorage.getItem('username');
       if (token) {
-        dispatch({ type: TOGGLE_TRY_LOCAL_SIGN, payload: token });
+        dispatch({ type: TOGGLE_TRY_LOCAL_SIGN, payload: token, payloademail: email, payloadusername: username });
         props.navigation.navigate('mainFlow');
       } else {
         props.navigation.navigate("loginFlow");
