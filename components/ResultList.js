@@ -15,7 +15,13 @@ const ResultList = props => {
                     props.navigation.navigate({
                         routeName: 'BarInfo',
                         params: {
-                            BarId: itemData.item.id
+                            barID: itemData.item.id,
+                            barName: itemData.item.name,
+                            barDescription: itemData.item.description,
+                            barTags: itemData.item.tags,
+                            barAverageNotation: itemData.item.averageNotation,
+                            barPicturesUrls: itemData.item.image
+                            
                         }
                     });
                 }}

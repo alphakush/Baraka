@@ -14,17 +14,19 @@ import {
  } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import HeaderButton from '../components/HeaderButton';
-import api from '../api/api';
-
 import Colors from '../constant/Colors';
-import { BARS } from '../data/data';
 
 // TODO: 'rename the name this screen'
 const BarInformations = props => {
-    const bar = props.navigation.getParam('Bar');
-    const [enteredValue, setEnteredValue] = useState('');
-    const [results, setResults] = useState([]);
-    const [errorMessage, setErrorMessage ] = useState('');
+    const barID = props.navigation.getParam('barID');
+    const barName = props.navigation.getParam('barName');
+    const barDescription = props.navigation.getParam('barDescription');
+    const barTags = props.navigation.getParam('barTags');
+    const barAverageNotation = props.navigation.getParam('barAverageNotation');
+    const barPicturesUrls = props.navigation.getParam('barPicturesUrls');
+
+    console.log(barPicturesUrls);
+    
     // récuperer les commentaires en base (il faut modifier la table comment pour que ça ressemble aux data ci dessous)
     const data=[
         {id:1, image: "https://bootdey.com/img/Content/avatar/avatar1.png", name:"Tony Stark",    comment:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor."},
@@ -58,20 +60,20 @@ const BarInformations = props => {
         <View style={styles.container}>
         {/* Information du bar */}
         <View style={{marginHorizontal:30}}>
-          <Image resizeMode='contain' style={styles.image} source={{uri:bar.picturesUrls}}/>
+          <Image resizeMode='contain' style={styles.image} source={{ uri: `data:image/png;base64,${barPicturesUrls}` }} />
           <View style= {{alignItems:'center'}}>
-            <Text style={styles.nameBar}>{bar.name}</Text>
+            <Text style={styles.nameBar}>{barName}</Text>
             <View style={styles.aligntext}>
-              <Text style={styles.Notebar}>{bar.averageNotation}</Text>
+              <Text style={styles.Notebar}>{barAverageNotation}</Text>
               <Image style={styles.icon} source={require('../images/rated.png')}/>
             </View>
-              {bar.tags.map((item, key) => (
+              {barTags.map((item, key) => (
                 <Text key={key} style={styles.descriptionBar}> {item} </Text>
               ))}
             <TouchableOpacity onPress={ () => Likebar() }>
               <Image style={styles.like} source={{uri: 'https://png.icons8.com/android/75/e74c3c/hearts.png'}}/>
             </TouchableOpacity>
-            <Text style={styles.descriptionBar}>{bar.description}</Text>
+            <Text style={styles.descriptionBar}>{barDescription}</Text>
           </View>
         </View>
         <View style={styles.ButtonContainer}>
