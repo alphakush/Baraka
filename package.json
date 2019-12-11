@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.5.1",
-    "@react-google-maps/api": "^1.7.7",
+    "@material-ui/core": "^4.7.2",
+    "@react-google-maps/api": "^1.8.0",
     "axios": "^0.19.0",
     "bootstrap": "^4.4.1",
-    "react": "^16.10.2",
-    "react-bootstrap": "^1.0.0-beta.14",
-    "react-dom": "^16.10.2",
+    "fix": "0.0.6",
+    "react": "^16.12.0",
+    "react-bootstrap": "^1.0.0-beta.16",
+    "react-dom": "^16.12.0",
     "react-google-maps": "^9.4.5",
     "react-images-upload": "^1.2.7",
     "react-router-dom": "^5.1.2",
@@ -37,7 +38,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-decorators": "^7.6.0"
+    "@babel/plugin-proposal-decorators": "^7.7.4"
   },
   "babel": {
     "env": {

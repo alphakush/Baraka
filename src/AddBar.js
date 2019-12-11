@@ -10,25 +10,31 @@ class AddBar extends Component {
             name: '',
             adress: '',
             descritpion: '',
-            image: []
+            image:[],
+            tags: [],
+            note: ''
         };
         this.onDrop = this.onDrop.bind(this);
     }
 
     onDrop(picture) {
         this.setState({
-            pictures: this.state.pictures.concat(picture),
+            image: this.state.image.concat(picture),
         });
     }
 
     mySubmitHandler = (event) => {
         event.preventDefault();
         console.log(this.state);
+        this.props.history.push('/bars');
     }
 
     myChangeHandler = (event) => {
         let nam = event.target.name;
         let val = event.target.value;
+        if (nam === "tags") {
+            this.setState({ [nam]: "[" + val.split(',') + "]" });
+        }
         this.setState({ [nam]: val });
     }   
     render() {
@@ -48,11 +54,13 @@ class AddBar extends Component {
                         <input type='text' className="form-control" name='adress' onChange={this.myChangeHandler} />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="description">Description du bar</label>
-                        <textarea type='text' className="form-control" rows="8" name='description' onChange={this.myChangeHandler}></textarea>
+                        <label htmlFor="adress">Tags</label>
+                        <input type='text' className="form-control" name='tags' onChange={this.myChangeHandler} />
                     </div>
-                    <br/>
-                    <br/>
+                    <div className="form-group">
+                        <label htmlFor="description">Description du bar</label>
+                        <textarea type='text' className="form-control" rows="7" name='description' onChange={this.myChangeHandler}></textarea>
+                    </div>
                     <ImageUploader
                         withIcon={true}
                         buttonText='Choose images'
