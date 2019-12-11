@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import ImageUploader from 'react-images-upload';
 import styles from './App.css'
+import Api from "./api/api.js";
 
 class AddBar extends Component {
     constructor(props) {
@@ -9,10 +10,10 @@ class AddBar extends Component {
         this.state = {
             name: '',
             adress: '',
-            descritpion: '',
-            image:[],
+            image: [],
             tags: [],
-            note: ''
+            note: 0,
+            products: {}
         };
         this.onDrop = this.onDrop.bind(this);
     }
@@ -26,17 +27,36 @@ class AddBar extends Component {
     mySubmitHandler = (event) => {
         event.preventDefault();
         console.log(this.state);
+        Api.post('/bar/create-bar', this.state)
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
         this.props.history.push('/bars');
     }
 
     myChangeHandler = (event) => {
         let nam = event.target.name;
         let val = event.target.value;
-        if (nam === "tags") {
-            this.setState({ [nam]: "[" + val.split(',') + "]" });
+        switch (nam) {
+            case "tags":
+                val = "[" + val + "]"
+                this.state.tags.push(val);
+                break
+            case "products":
+                let list = (val.split(','))
+                let data = { list }
+                var products = this.state.products;
+                products += data;
+                this.setState({ products: products });
+                break
+            default:
+                this.setState({ [nam]: val });
+                break
         }
-        this.setState({ [nam]: val });
-    }   
+    }
     render() {
         return (
             <div style={{ width: '100%', height: '100%' }}>
@@ -58,8 +78,12 @@ class AddBar extends Component {
                         <input type='text' className="form-control" name='tags' onChange={this.myChangeHandler} />
                     </div>
                     <div className="form-group">
+                        <label htmlFor="adress">Produits proposés</label>
+                        <input type='text' className="form-control" name='products' onChange={this.myChangeHandler} />
+                    </div>
+                    <div className="form-group">
                         <label htmlFor="description">Description du bar</label>
-                        <textarea type='text' className="form-control" rows="7" name='description' onChange={this.myChangeHandler}></textarea>
+                        <textarea className="form-control" rows="5" name='description' onChange={this.myChangeHandler}></textarea>
                     </div>
                     <ImageUploader
                         withIcon={true}

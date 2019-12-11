@@ -5,22 +5,21 @@ import Api from "./api/api.js";
 class Bars extends Component {
     constructor(props) {
         super(props);
-    
+
         this.state = {
-          nombre_de_bars: null
+            nombre_de_bars: null
         };
-      }
-    
+    }
+
     async componentDidMount() {
         await Api.get('/allbars').then(userData => {
-            this.setState({nombre_de_bars : userData.data})
+            this.setState({ nombre_de_bars: userData.data })
         });
     }
- 
+
     render() {
         var rows = [];
         const { nombre_de_bars } = this.state
-        console.log(nombre_de_bars);
         if (nombre_de_bars === null)
             return (
                 <div>
@@ -28,7 +27,6 @@ class Bars extends Component {
                 </div>
             )
         for (var i = 0; i < nombre_de_bars.length; i++) {
-            console.log(i)
             rows.push(<BarCards
                 key={i}
                 description={nombre_de_bars[i].description}

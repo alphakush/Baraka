@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import styles from './App.css'
+import styles from './App.css';
+import Api from "./api/api.js";
 
 class Contact extends Component {
     constructor(props) {
@@ -15,19 +16,15 @@ class Contact extends Component {
     mySubmitHandler = (event) => {
         event.preventDefault();
         console.log(this.state);
+        Api.post('/contact-us', this.state)
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        this.props.history.push('/bars');
     }
-
-    //
-    //  this.state contient les données du formulaire
-    //
-    //  Vous pourrez accéder aux variables suivantes :
-    //
-    //  this.state.email        - email de l'utilisateur
-    //
-    //  this.state.object       - object du formulaire de contact
-    //
-    //  this.state.message      - corps de message du formulaire de contact
-    //
 
     myChangeHandler = (event) => {
         let nam = event.target.name;
