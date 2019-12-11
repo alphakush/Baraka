@@ -18,8 +18,8 @@ import { useDispatch,useSelector } from 'react-redux';
 import Colors from '../constant/Colors';
 
 const Map = () => {
-  const [mylatitude, setmylatitude] = useState('');
-  const [mylongitude, setmylongitude] = useState('');
+  const [mylatitude, setmylatitude] = useState();
+  const [mylongitude, setmylongitude] = useState();
 
   const recupcoord = () => {
     navigator.geolocation.watchPosition(
@@ -29,7 +29,7 @@ const Map = () => {
         setmylatitude(latitude);
       },
       error => Alert.alert(error.message),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+      { enableHighAccuracy: true, timeout: 2000, maximumAge: 1000 }
     );
   };
 
@@ -38,15 +38,15 @@ const Map = () => {
       <View style={styles.container}>
         <MapView style={styles.map}
         initialRegion={{
-            latitude:43.6123646,
-            longitude:1.4290608,
-            latitudeDelta:0.01,
-            longitudeDelta:0.01
+          latitude:43.6123646,
+          longitude:1.4290608,
+          latitudeDelta:0.01,
+          longitudeDelta:0.01
         }}>
         </MapView>
         <View style={styles.ButtonContainer}>
           <TouchableOpacity style={styles.Button} onPress={()=> recupcoord()}>
-            <Text style={styles.ButtonText}>S'y rendre</Text>
+            <Text style={styles.ButtonText}>Récupérer mes coordonnées</Text>
           </TouchableOpacity>
           <Text >Latitude : {mylatitude}</Text>
           <Text >Longitude : {mylongitude}</Text>
