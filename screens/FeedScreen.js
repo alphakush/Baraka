@@ -8,17 +8,32 @@ import {
   Button
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-
+import {
+    Accuracy,
+    requestPermissionsAsync,
+    watchPositionAsync
+  } from 'expo-location';
 import HeaderButton from '../components/HeaderButton';
 
 import BarsList from '../components/BarsList';
-import { BARS } from '../data/data';
 import api from '../api/api';
 
 const FeedScreen = props => {
   const [results, setResults] = useState([]);
   const [errorMessage, setErrorMessage ] = useState('');
+  const [err, setErr ] = useState(null);
 
+  const TrackUser = async () => {
+      try {
+          await requestPermissionsAsync();
+      } catch (e) {
+          setErr(e);
+      }
+  }
+
+  useEffect(() => {
+     TrackUser(); 
+  }, []);
   const displayAllBarsHandler =  async () => {
       try {
           const response = await api.get('/allbars');
@@ -34,6 +49,7 @@ const FeedScreen = props => {
     return (
         <View style={styles.container}>
           <BarsList data={results} navigation={props.navigation} />
+          {err ? <Text>Merci d'activer la localisation </Text> : null }
         </View>
     );
 };
