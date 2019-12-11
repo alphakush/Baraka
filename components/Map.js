@@ -13,47 +13,27 @@ import {
   ScrollView
  } from 'react-native';
 import MapView from 'react-native-maps';
-import {Location, Permissions} from 'expo';
+import * as Location from 'expo-location';
 import { useDispatch,useSelector } from 'react-redux';
 import Colors from '../constant/Colors';
 
 const Map = () => {
-  const [mylatitude, setmylatitude] = useState();
-  const [mylongitude, setmylongitude] = useState();
-
-  const recupcoord = () => {
-    navigator.geolocation.watchPosition(
-      position => {
-        const { latitude, longitude } = position.coords;
-        setmylongitude(longitude);
-        setmylatitude(latitude);
-      },
-      error => Alert.alert(error.message),
-      { enableHighAccuracy: true, timeout: 2000, maximumAge: 1000 }
-    );
-  };
 
     return (
       <ScrollView>
-      <View style={styles.container}>
-        <MapView style={styles.map}
-        initialRegion={{
-          latitude:43.6123646,
-          longitude:1.4290608,
-          latitudeDelta:0.01,
-          longitudeDelta:0.01
-        }}>
-        </MapView>
-        <View style={styles.ButtonContainer}>
-          <TouchableOpacity style={styles.Button} onPress={()=> recupcoord()}>
-            <Text style={styles.ButtonText}>Récupérer mes coordonnées</Text>
-          </TouchableOpacity>
-          <Text >Latitude : {mylatitude}</Text>
-          <Text >Longitude : {mylongitude}</Text>
+        <View style={styles.container}>
+          <MapView style={styles.map}
+          showsUserLocation={true}
+          showsMyLocationButton={true}
+          initialRegion={{
+            latitude:45.746380014259245,
+            longitude:4.834850259302889,
+            latitudeDelta:0.01,
+            longitudeDelta:0.01
+          }}>
+          </MapView>
         </View>
-      </View>
       </ScrollView>
-
     );
 };
 
@@ -66,22 +46,6 @@ const styles = StyleSheet.create({
     map: {
         height: 300
     },
-    ButtonContainer:{
-       marginHorizontal:30
-     },
-     ButtonText:{
-       color: Colors.Black,
-       fontSize:20,
-     },
-     Button: {
-       marginTop:10,
-       height:45,
-       flexDirection: 'row',
-       justifyContent: 'center',
-       alignItems: 'center',
-       borderRadius:30,
-       backgroundColor: Colors.Gold,
-     },
 });
 
 export default Map;

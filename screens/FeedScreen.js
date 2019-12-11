@@ -11,7 +11,8 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import {
     Accuracy,
     requestPermissionsAsync,
-    watchPositionAsync
+    watchPositionAsync,
+    Location
   } from 'expo-location';
 import HeaderButton from '../components/HeaderButton';
 
@@ -32,7 +33,7 @@ const FeedScreen = props => {
   }
 
   useEffect(() => {
-     TrackUser(); 
+     TrackUser();
   }, []);
   const displayAllBarsHandler =  async () => {
       try {
