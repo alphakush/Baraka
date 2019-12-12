@@ -8,7 +8,7 @@ class Contact extends Component {
         super(props);
         this.state = {
             email: '',
-            object: '',
+            sujet: '',
             message: ''
         };
     }
@@ -31,6 +31,7 @@ class Contact extends Component {
         let val = event.target.value;
         this.setState({ [nam]: val });
     }
+    
     render() {
         return (
             <div style={{ width: '100%', height: '100%' }}>
@@ -45,8 +46,8 @@ class Contact extends Component {
                         <small name="emailHelp" className="form-text text-muted">Adresse mail qui sera utilisée pour notre newsletter.</small>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="object">Object</label>
-                        <input type='text' className="form-control" name='object' onChange={this.myChangeHandler} />
+                        <label htmlFor="sujet">Sujet</label>
+                        <input type='text' className="form-control" name='sujet' onChange={this.myChangeHandler} />
                     </div>
                     <div className="form-group">
                         <label htmlFor="message">Message</label>

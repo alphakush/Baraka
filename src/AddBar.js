@@ -10,6 +10,8 @@ class AddBar extends Component {
         this.state = {
             name: '',
             adress: '',
+            number: '',
+            manager: '',
             image: [],
             tags: [],
             note: 0,
@@ -57,6 +59,7 @@ class AddBar extends Component {
                 break
         }
     }
+
     render() {
         return (
             <div style={{ width: '100%', height: '100%' }}>
@@ -65,36 +68,52 @@ class AddBar extends Component {
                 </div>
                 <div className={styles.form}></div>
                 <form onSubmit={this.mySubmitHandler}>
-                    <div className="form-group">
-                        <label htmlFor="name">Nom du bar</label>
-                        <input type='text' className="form-control" name='name' onChange={this.myChangeHandler} />
+                    <div className="row form-group">
+                        <div className="col-lg">
+                            <label htmlFor="name">Nom du bar</label>
+                            <input type='text' className="form-control" name='name' onChange={this.myChangeHandler} />
+                        </div>
+                        <div className="col-lg">
+                            <label htmlFor="manager">Nom du responsable</label>
+                            <input type='text' className="form-control" name='manager' onChange={this.myChangeHandler} />
+                        </div>
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="adress">Adresse</label>
-                        <input type='text' className="form-control" name='adress' onChange={this.myChangeHandler} />
+                    <div className="row form-group">
+                        <div className="col">
+                            <label htmlFor="adress">Adresse</label>
+                            <input type='text' className="form-control" name='adress' onChange={this.myChangeHandler} />
+                        </div>
+                        <div className="col">
+                            <label htmlFor="number">Numéro</label>
+                            <input type='text' className="form-control" name='number' onChange={this.myChangeHandler} />
+                        </div>
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="adress">Tags</label>
-                        <input type='text' className="form-control" name='tags' onChange={this.myChangeHandler} />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="adress">Produits proposés</label>
-                        <input type='text' className="form-control" name='products' onChange={this.myChangeHandler} />
+                    <div className="row form-group">
+                        <div className="col">
+                            <label htmlFor="adress">Tags</label>
+                            <input type='text' className="form-control" name='tags' onChange={this.myChangeHandler} />
+                        </div>
+                        <div className="col">
+                            <label htmlFor="adress">Produits proposés</label>
+                            <input type='text' className="form-control" name='products' onChange={this.myChangeHandler} />
+                        </div>
                     </div>
                     <div className="form-group">
                         <label htmlFor="description">Description du bar</label>
-                        <textarea className="form-control" rows="5" name='description' onChange={this.myChangeHandler}></textarea>
+                        <textarea className="form-control" rows="6" name='description' onChange={this.myChangeHandler}></textarea>
                     </div>
-                    <ImageUploader
-                        withIcon={true}
-                        buttonText='Choose images'
-                        onChange={this.onDrop}
-                        imgExtension={['.jpg', '.png']}
-                        maxFileSize={5242880}
-                    />
+                    <br/>
+                        <ImageUploader
+                            withIcon={true}
+                            buttonText='Choose images'
+                            onChange={this.onDrop}
+                            imgExtension={['.jpg', '.png']}
+                            maxFileSize={5242880}
+                        />
                     <button type="submit" className="btn btn-primary btn-block">Envoyer</button>
                 </form>
-            </div>)
+            </div>
+        )
     }
 }
 export default AddBar;
