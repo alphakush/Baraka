@@ -25,8 +25,9 @@ const BarList = props => {
                             barDescription: itemData.item.description,
                             barTags: itemData.item.tags,
                             barAverageNotation: itemData.item.averageNotation,
-                            barPicturesUrls: itemData.item.image
-
+                            barPicturesUrls: itemData.item.image,
+                            barlatitude: itemData.item.latitude,
+                            barlongitude: itemData.item.longitude
                         }
                     });
                 }}

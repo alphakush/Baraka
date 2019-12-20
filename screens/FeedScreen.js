@@ -15,14 +15,17 @@ import {
     Location
   } from 'expo-location';
 import HeaderButton from '../components/HeaderButton';
-
 import BarsList from '../components/BarsList';
 import api from '../api/api';
+import { useDispatch, useSelector } from 'react-redux';
 
 const FeedScreen = props => {
   const [results, setResults] = useState([]);
   const [errorMessage, setErrorMessage ] = useState('');
   const [err, setErr ] = useState(null);
+
+  const userlatitude = useSelector(state => state.auth.userlatitude);
+  const userlongitude = useSelector(state => state.auth.userlongitude);
 
   const TrackUser = async () => {
       try {

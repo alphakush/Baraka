@@ -18,10 +18,14 @@ import * as AuthActions from '../store/actions/AuthAction';
 
 const ContactScreen = props => {
   const [email, setEmail] = useState('');
+  const [objet, setobjet] = useState('');
   const [msg, setmsg] = useState('');
   const dispatch = useDispatch();
   const errormsg = useSelector(state => state.auth.errorMessage);
 
+  const setObjetHandler = (enteredText) => {
+    setobjet(enteredText);
+  };
   const setEmailHandler = (enteredText) => {
     setEmail(enteredText);
   };
@@ -31,20 +35,27 @@ const ContactScreen = props => {
 
   const sendmessage = () => {
     if (email != ''){
-      if (msg != ''){
-        dispatch(AuthActions.contactEmail(email, msg))
-        {errormsg ? Alert.alert("Baraka",errormsg) : null }
-        setmsg('');
-        setEmail('');
-        Alert.alert("Baraka","Message envoyé");
+      if (objet != ''){
+        if (msg != ''){
+          dispatch(AuthActions.contactEmail(email,objet,msg))
+          {errormsg ? Alert.alert("Baraka",errormsg) : null }
+          setmsg('');
+          setEmail('');
+          setobjet('');
+          Alert.alert("Baraka","Message envoyé");
+        } else{
+          Alert.alert("Baraka","Veuillez renseigner un message");
+          return;
+        }
       } else{
-        Alert.alert("Baraka","Veuillez renseigner un message");
+        Alert.alert("Baraka","Veuillez renseigner un objet");
+        return;
+        }
+      } else{
+        Alert.alert("Baraka","Veuillez renseigner une adresse mail valide");
         return;
       }
-    } else{
-      Alert.alert("Baraka","Veuillez renseigner une adresse mail valide");
-      return;
-    }
+
   };
 
     return (
@@ -62,6 +73,16 @@ const ContactScreen = props => {
               value={email}
             />
             </View>
+            <View style={styles.inputContainer}>
+              <TextInput style={styles.inputs}
+                editable={true}
+                textAlignVertical='top'
+                placeholder="Objet"
+                underlineColorAndroid='transparent'
+                onChangeText={setObjetHandler}
+                value={objet}
+              />
+            </View>
             <View style={styles.inputContainermsg}>
               <TextInput style={styles.inputsmsg}
                 multiline={true}
@@ -73,7 +94,7 @@ const ContactScreen = props => {
                 onChangeText={setmsgHandler}
                 value={msg}
               />
-              </View>
+            </View>
               <TouchableOpacity  style={[styles.buttonContainer, styles.loginButton]} onPress={sendmessage}>
                 <Text style={styles.loginText}>Envoyer</Text>
               </TouchableOpacity>

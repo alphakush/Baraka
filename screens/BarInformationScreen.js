@@ -16,7 +16,6 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import HeaderButton from '../components/HeaderButton';
 import Colors from '../constant/Colors';
 
-// TODO: 'rename the name this screen'
 const BarInformations = props => {
     const barPicturesUrls = props.navigation.getParam('barPicturesUrls');
     const barAverageNotation = props.navigation.getParam('barAverageNotation');
@@ -25,6 +24,8 @@ const BarInformations = props => {
     const barName = props.navigation.getParam('barName');
     const barID = props.navigation.getParam('barID');
     const [barliked, setbarliked] = useState(false);
+    const barlatitude = props.navigation.getParam('barlatitude');
+    const barlongitude = props.navigation.getParam('barlongitude');
     // récuperer les commentaires en base (il faut modifier la table comment pour que ça ressemble aux data ci dessous)
     const data=[
         {id:1, image: "https://bootdey.com/img/Content/avatar/avatar1.png", name:"Tony Stark",    comment:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor."},
@@ -48,7 +49,6 @@ const BarInformations = props => {
     return (
       <ScrollView>
         <View style={styles.container}>
-        {/* Information du bar */}
         <View style={{marginHorizontal:30}}>
           <Image resizeMode='contain' style={styles.image} source={{ uri: `data:image/png;base64,${barPicturesUrls}` }} />
           <View style= {{alignItems:'center'}}>
@@ -67,12 +67,20 @@ const BarInformations = props => {
           </View>
         </View>
         <View style={styles.ButtonContainer}>
-          <TouchableOpacity style={styles.Button} onPress={()=> GoToBar()}>
+          <TouchableOpacity style={styles.Button} onPress={() => {
+              props.navigation.navigate({
+                  routeName: 'BarRoute',
+                  params: {
+                      barlatitude : {barlatitude},
+                      barlongitude : {barlongitude},
+                      barname : {barName}
+                  }
+              });
+          }}>
             <Text style={styles.ButtonText}>S'y rendre</Text>
           </TouchableOpacity>
         </View>
 
-        {/* Espace commentaire */}
         <FlatList
           style={styles.rootCom}
           data={data}
@@ -109,7 +117,6 @@ BarInformations.navigationOptions = navData => {
 };
 
 const styles = StyleSheet.create({
-  // Header
   nameBar:{
    fontSize:28,
    color:Colors.Black,
@@ -132,8 +139,6 @@ const styles = StyleSheet.create({
    justifyContent: 'center',
    alignItems: 'center',
  },
-
- //Bouton
  ButtonContainer:{
     marginHorizontal:30
   },
@@ -150,8 +155,6 @@ const styles = StyleSheet.create({
     borderRadius:30,
     backgroundColor: Colors.Gold,
   },
-
-  //Espace commentaire
   rootCom: {
     backgroundColor: Colors.White,
     marginTop:10,
@@ -182,16 +185,10 @@ const styles = StyleSheet.create({
     borderRadius:20,
     marginLeft:20
   },
-  timeCom:{
-    fontSize:11,
-    color:Colors.Grey,
-  },
   nameCom:{
     fontSize:16,
     fontWeight:"bold",
   },
-
-//Divers
   image:{
     height: 100,
     width: null,
@@ -204,12 +201,6 @@ const styles = StyleSheet.create({
     width:40,
     height:40,
   },
-  textInfo:{
-    fontSize:18,
-    marginTop:20,
-    color: Colors.Black,
-  }
 });
-
 
 export default BarInformations;

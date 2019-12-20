@@ -209,10 +209,6 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
   },
-  btnText: {
-    color: Colors.White,
-    fontWeight: 'bold'
-  }
 });
 
 export default Login;

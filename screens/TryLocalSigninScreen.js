@@ -12,8 +12,17 @@ const tryLocalSigninScreen = props => {
       const token = await AsyncStorage.getItem('token');
       const email = await AsyncStorage.getItem('email');
       const username = await AsyncStorage.getItem('username');
+      const userlatitude = await AsyncStorage.getItem('userlatitude');
+      const userlongitude = await AsyncStorage.getItem('userlongitude');
+
       if (token) {
-        dispatch({ type: TOGGLE_TRY_LOCAL_SIGN, payload: token, payloademail: email, payloadusername: username });
+        dispatch({ type: TOGGLE_TRY_LOCAL_SIGN,
+          payload: token,
+          payloademail: email,
+          payloadusername: username,
+          payloaduserlatitude: userlatitude,
+          payloaduserlongitude: userlongitude
+        });
         props.navigation.navigate('mainFlow');
       } else {
         props.navigation.navigate("loginFlow");

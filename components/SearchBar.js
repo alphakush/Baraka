@@ -11,7 +11,7 @@ const SearchBar = props => {
                 style={styles.inputStyle}
                 autoCapitalize="none"
                 autoCorrect={false}
-                placeholder="Chercher un bar"
+                placeholder="Rechercher un bar"
                 value={props.term}
                 onChangeText={props.onTermChange}
             />

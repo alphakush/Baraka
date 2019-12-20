@@ -22,6 +22,7 @@ import FindBarScreen from '../screens/FindBarsScreen';
 import ContactScreen from '../screens/ContactScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import tryLocalSigninScreen from '../screens/TryLocalSigninScreen';
+import BarRouteScreen from '../screens/BarRoute';
 
 import Colors from '../constant/Colors';
 
@@ -46,6 +47,9 @@ const FeedNavigator = createStackNavigator(
         },
         BarInfo: {
             screen: BarInfoScreen
+        },
+        BarRoute: {
+          screen: BarRouteScreen
         }
     },
     {
@@ -64,7 +68,12 @@ const FeedNavigator = createStackNavigator(
 
 const BarInfoNavigator = createStackNavigator(
     {
-        BarInfo: BarInfoScreen
+        BarInfo: {
+          screen: BarInfoScreen
+        },
+        BarRoute: {
+          screen: BarRouteScreen
+        }
     },
     {
         defaultNavigationOptions: defaultStackNavOptions
@@ -158,6 +167,23 @@ const GeolocateNavigator = createStackNavigator(
         defaultNavigationOptions: defaultStackNavOptions,
         navigationOptions: {
             drawerLabel: 'Me géolocaliser ',
+            drawerIcon: drawerConfig =>
+                <SimpleLineIcons
+                    name="globe"
+                    size={20}
+                    color={drawerConfig.tintColor}
+                />
+        }
+    }
+);
+const BarRouteNavigator = createStackNavigator(
+    {
+        BarRoute: BarRouteScreen,
+    },
+    {
+        defaultNavigationOptions: defaultStackNavOptions,
+        navigationOptions: {
+            drawerLabel: 'Itinéraire',
             drawerIcon: drawerConfig =>
                 <SimpleLineIcons
                     name="globe"
@@ -268,7 +294,6 @@ export const DrawerWithLogoutButton = props => {
                     <SimpleLineIcons
                         name="logout"
                         size={20}
-
                         style={styles.icon}
                     />
                 </View>
@@ -328,7 +353,7 @@ const styles = StyleSheet.create({
     label: {
         margin: 16,
         fontWeight: 'bold',
-        color: 'rgba(0, 0, 0, .87)',
+        color: Colors.Black,
     },
     iconContainer: {
         marginHorizontal: 16,

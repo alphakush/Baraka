@@ -22,7 +22,6 @@ const MyAccountScreen = props => {
   const [isDate, setIsDate] = useState(false);
   const username = useSelector(state => state.auth.username);
   const email = useSelector(state => state.auth.email);
-
     return (
       <View style={styles.container}>
           <View style={styles.header}>

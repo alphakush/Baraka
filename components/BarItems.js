@@ -62,11 +62,11 @@ const styles = StyleSheet.create({
   title:{
     fontSize:18,
     //TODO add color in Color.js and import
-    color:"#151515",
+    color: Colors.Black,
   },
   description:{
     fontSize:15,
-    color: "#646464",
+    color: Colors.GreyDark,
   },
   buttons:{
     flexDirection: 'row',

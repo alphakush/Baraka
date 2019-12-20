@@ -28,17 +28,29 @@ const authReducer = (state = initialState, action) => {
         case TOGGLE_ERROR:
             return { ...state, errorMessage: action.payload }
         case TOGGLE_SIGNUP:
-            return { ...state, token: action.payload, email: action.payloademail, username: action.payloadusername }
+            return { ...state,
+              token: action.payload,
+              email: action.payloademail,
+              username: action.payloadusername,
+              userlatitude: action.payloaduserlatitude,
+              userlongitude: action.payloaduserlongitude
+            }
         case TOGGLE_TRY_LOCAL_SIGN:
             return {
               token: action.payload,
               email: action.payloademail,
               username: action.payloadusername,
               userlatitude : action.payloaduserlatitude,
-              userlongitude : action.payloaduserlongitude,
+              userlongitude : action.payloaduserlongitude
             }
         case TOGGLE_SIGNOUT:
-            return { token: null, email : null, username : null }
+            return {
+              token: null,
+              email : null,
+              username : null,
+              userlatitude: null,
+              userlongitude: null
+            }
         default:
             return state;
     }
