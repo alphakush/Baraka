@@ -1,59 +1,60 @@
 import React, { useState, useEffect } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Alert,
-  Button
+    View,
+    Text,
+    StyleSheet,
+    ActivityIndicator
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import {
-    Accuracy,
-    requestPermissionsAsync,
-    watchPositionAsync,
-    Location
-  } from 'expo-location';
+import { requestPermissionsAsync } from 'expo-location';
+import * as BarsActions from '../store/actions/BarsActions';
 import HeaderButton from '../components/HeaderButton';
 import BarsList from '../components/BarsList';
-import api from '../api/api';
 import { useDispatch, useSelector } from 'react-redux';
+import Colors from '../constant/Colors';
 
 const FeedScreen = props => {
-  const [results, setResults] = useState([]);
-  const [errorMessage, setErrorMessage ] = useState('');
-  const [err, setErr ] = useState(null);
+    const [err, setErr] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const dispatch = useDispatch();
 
-  const userlatitude = useSelector(state => state.auth.userlatitude);
-  const userlongitude = useSelector(state => state.auth.userlongitude);
+    const allbars = useSelector(state => state.bars.allbars);
+    const errorMessage = useSelector(state => state.bars.errorMessage);
 
-  const TrackUser = async () => {
-      try {
-          await requestPermissionsAsync();
-      } catch (e) {
-          setErr(e);
-      }
-  }
+    const userlatitude = useSelector(state => state.auth.userlatitude);
+    const userlongitude = useSelector(state => state.auth.userlongitude);
 
-  useEffect(() => {
-     TrackUser();
-  }, []);
-  const displayAllBarsHandler =  async () => {
-      try {
-          const response = await api.get('/allbars');
-          setResults(response.data);
-      } catch (e) {
-          setErrorMessage("une erreur s'est produite");
-      }
-  };
-  useEffect(() => {
-      displayAllBarsHandler();
-  },[]);
+    const TrackUser = async () => {
+        try {
+            await requestPermissionsAsync();
+        } catch (e) {
+            setErr(e);
+        }
+    }
 
+    useEffect(() => {
+        TrackUser();
+    }, []);
+
+
+    useEffect(() => {
+        const loadAllBars = async () => {
+            setIsLoading(true);
+            await dispatch(BarsActions.getAllBar());
+            setIsLoading(false);
+        }
+        loadAllBars();
+    }, [dispatch]);
+
+    if (isLoading) {
+        return <View style={styles.actvityloadStyle}>
+            <ActivityIndicator size='large' color={Colors.primary} />
+        </View>
+    }
     return (
         <View style={styles.container}>
-          <BarsList data={results} navigation={props.navigation} />
-          {err ? <Text>Merci d'activer la localisation </Text> : null }
+            <BarsList data={allbars} navigation={props.navigation} />
+            {err ? <Text>Merci d'activer la localisation </Text> : null}
         </View>
     );
 };
@@ -80,7 +81,12 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     container: {
-      flex: 1, paddingTop: 20
+        flex: 1, paddingTop: 20
+    },
+    actvityloadStyle: {
+        flex: 1,
+        justifyContent: 'center',
+        alignContent: 'center'
     }
 });
 
