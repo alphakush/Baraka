@@ -11,7 +11,7 @@ const BarList = props => {
     const _renderItem = itemData => {
         return (
             <BarFeed
-            id={itemData.item.id}
+            id={itemData.item._id}
             name={itemData.item.name}
             description={itemData.item.description}
             averageNotation={itemData.item.note}
@@ -20,7 +20,7 @@ const BarList = props => {
                     props.navigation.navigate({
                         routeName: 'BarInfo',
                         params: {
-                            barID: itemData.item.id,
+                            barID: itemData.item._id,
                             barName: itemData.item.name,
                             barDescription: itemData.item.description,
                             barTags: itemData.item.tags,
@@ -39,7 +39,7 @@ const BarList = props => {
             <FlatList
                 data={props.data}
                 renderItem={_renderItem}
-                keyExtractor={(item, index) => item.id}
+                keyExtractor={(item, index) => item._id}
             />
         </View>
     );

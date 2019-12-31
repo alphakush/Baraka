@@ -6,7 +6,7 @@ const ResultList = props => {
     const _renderItemResult = itemData => {
         return (
             <ResultItem
-                id={itemData.item.id}
+                id={itemData.item._id}
                 name={itemData.item.name}
                 description={itemData.item.description}
                 averageNotation={itemData.item.note}
@@ -15,7 +15,7 @@ const ResultList = props => {
                     props.navigation.navigate({
                         routeName: 'BarInfo',
                         params: {
-                            barID: itemData.item.id,
+                            barID: itemData.item._id,
                             barName: itemData.item.name,
                             barDescription: itemData.item.description,
                             barTags: itemData.item.tags,
@@ -31,7 +31,7 @@ const ResultList = props => {
         <View style={styles.list}>
             <FlatList data={props.searchResult}
                 renderItem={_renderItemResult}
-                keyExtractor={(item, index) => item.id}
+                keyExtractor={(item, index) => item._id}
             />
         </View>
     );

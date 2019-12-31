@@ -7,7 +7,7 @@ import HeaderButton from '../components/HeaderButton';
 const ConfidentialityScreen = props => {
     return (
         <View style={styles.screen}>
-            <Text>My account Screen!</Text>
+            <Text>ConfidentialityScreen Screen!</Text>
         </View>
     );
 };

@@ -3,12 +3,8 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
-  TouchableOpacity,
   Image,
   Alert,
-  TouchableWithoutFeedback,
-  Keyboard
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,7 +21,7 @@ const MyAccountScreen = props => {
     return (
       <View style={styles.container}>
           <View style={styles.header}>
-          <Text style={styles.info}>Mes informations</Text>
+          <Text style={styles.info}>Mes informations  </Text>
           </View>
           <Image style={styles.avatar} source={{uri: 'https://bootdey.com/img/Content/avatar/avatar1.png'}}/>
             <View style={styles.body}>

@@ -19,6 +19,7 @@ const FeedScreen = props => {
     const dispatch = useDispatch();
 
     const allbars = useSelector(state => state.bars.allbars);
+
     const errorMessage = useSelector(state => state.bars.errorMessage);
 
     const userlatitude = useSelector(state => state.auth.userlatitude);
@@ -35,8 +36,8 @@ const FeedScreen = props => {
     useEffect(() => {
         TrackUser();
     }, []);
-
-
+    
+    // Pour charger tous les bars
     useEffect(() => {
         const loadAllBars = async () => {
             setIsLoading(true);
@@ -46,6 +47,15 @@ const FeedScreen = props => {
         loadAllBars();
     }, [dispatch]);
 
+    //Pour charger les favoris de l'utilsateur
+    useEffect(() => {
+        const loadFavorites = async () => {
+            await dispatch(BarsActions.getFavoriteBar());
+        }
+        loadFavorites();
+    }, [dispatch]);
+
+    //Pour ajouter un spinner en attendant que la page se charge
     if (isLoading) {
         return <View style={styles.actvityloadStyle}>
             <ActivityIndicator size='large' color={Colors.primary} />
