@@ -8,7 +8,6 @@ import BarsList from '../components/BarsList';
 
 const FavoritesScreen = props => {
     const myfavorite = useSelector(state => state.bars.favoriteBars);
-
     return (
         <View style={styles.container}>
             <BarsList data={myfavorite} navigation={props.navigation} />

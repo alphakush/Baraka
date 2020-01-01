@@ -36,24 +36,32 @@ const FeedScreen = props => {
     useEffect(() => {
         TrackUser();
     }, []);
-    
+
+
+    const loadFavorites = async () => {
+        await dispatch(BarsActions.getFavoriteBar());
+    }
+
+    const loadAllBars = async () => {
+        setIsLoading(true);
+        await dispatch(BarsActions.getAllBar());
+        setIsLoading(false);
+        loadFavorites();
+    }
+
     // Pour charger tous les bars
     useEffect(() => {
-        const loadAllBars = async () => {
-            setIsLoading(true);
-            await dispatch(BarsActions.getAllBar());
-            setIsLoading(false);
-        }
         loadAllBars();
     }, [dispatch]);
 
-    //Pour charger les favoris de l'utilsateur
-    useEffect(() => {
-        const loadFavorites = async () => {
-            await dispatch(BarsActions.getFavoriteBar());
+    useEffect(()=>{
+        const willFocusSub = props.navigation.addListener('willFocus',loadAllBars);
+        return () => {
+            willFocusSub.remove();
         }
-        loadFavorites();
-    }, [dispatch]);
+    },[loadAllBars]);
+
+    //Pour charger les favoris de l'utilsateur
 
     //Pour ajouter un spinner en attendant que la page se charge
     if (isLoading) {
@@ -61,6 +69,7 @@ const FeedScreen = props => {
             <ActivityIndicator size='large' color={Colors.primary} />
         </View>
     }
+
     return (
         <View style={styles.container}>
             <BarsList data={allbars} navigation={props.navigation} />

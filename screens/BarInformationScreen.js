@@ -48,25 +48,22 @@ const BarInformations = props => {
   const Likebar = () => {
     if (barliked) {
       setbarliked(false);
-      Alert.alert("Baraka", "Vous n'aimez plus ce bar")
+      dispatch(BarsActions.removeBarToFavorite(barID));
     } else {
       setbarliked(true)
-      dispatch(BarsActions.addFavorite(barID));
-      Alert.alert("Baraka", "Vous aimez ce bar")
+      dispatch(BarsActions.addBarToFavorite(barID));
     }
   };
 
-  const myfavorite = useSelector(state => state.bars.favoriteBars);
-
+  // Vérifie que le bar est en favoris de cet utilsateur
   const currentMealIsFavorite = useSelector(state => state.bars.favoriteBars.some(bar => bar._id === barID)
   );
 
+  // On affiche le coeur j'aime de l'utilsateur
   useEffect(() => {
-
     if(currentMealIsFavorite){
       setbarliked(true);
     }
-
 }, [currentMealIsFavorite]);
 
 

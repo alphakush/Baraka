@@ -1,4 +1,5 @@
 export const ADD_TO_FAVORITE = "ADD_TO_FAVORITE";
+export const REMOVE_TO_FAVORITE = "REMOVE_TO_FAVORITE";
 export const GET_ALL_BARS = "GET_ALL_BARS";
 export const TOGGLE_ERROR_BARS = "TOGGLE_ERROR_BARS";
 export const GET_FAVORITES_BARS = "GET_FAVORITES_BARS";
@@ -19,8 +20,8 @@ export const getAllBar = () => {
     };
 };
 
-// Function permettant d'ajouter un bar à ses favoris.
-export const addFavorite = (barID) => {
+// Function permettant d'AJOUTER un bar à ses favoris.
+export const addBarToFavorite = (barID) => {
     return async dispatch => {
         try {
             const response = await Api.post('/add-favorite', {barID});
@@ -33,7 +34,21 @@ export const addFavorite = (barID) => {
     };
 };
 
-//Function permettant d'obtenir tous ses bars favoris.
+// Function permettant de SUPPRIMER un bar de ses favoris.
+export const removeBarToFavorite = (barID) => {
+    return async dispatch => {
+        try {
+            const response = await Api.delete('/delete-favorite/'+barID);
+            dispatch({ type: REMOVE_TO_FAVORITE,
+              payload: response.data,
+            });
+        } catch (error) {
+            dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la récupération des données." });
+        }
+    };
+};
+
+//Function permettant d'obtenir tous ses bars FAVORIS.
 export const getFavoriteBar = () => {
     return async dispatch => {
         try {
