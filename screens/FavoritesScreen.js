@@ -11,7 +11,6 @@ const FavoritesScreen = props => {
     const dispatch = useDispatch();
 
     const myfavorite = useSelector(state => state.bars.favoriteBars);
-    console.log(myfavorite);
 
     const loadFavorites = async () => {
         await dispatch(BarsActions.getFavoriteBar());
