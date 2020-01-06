@@ -1,9 +1,10 @@
-import { ADD_TO_FAVORITE, GET_ALL_BARS, TOGGLE_ERROR_BARS, GET_FAVORITES_BARS,REMOVE_TO_FAVORITE } from '../actions/BarsActions';
+import { ADD_TO_FAVORITE, GET_ALL_BARS, TOGGLE_ERROR_BARS, GET_FAVORITES_BARS,REMOVE_TO_FAVORITE, GET_COMMENT } from '../actions/BarsActions';
 
 const initialState = {
     allbars: [],
     filteredBars: [],
     favoriteBars: [],
+    commentBars: [],
     errorMessage: '',
 }
 
@@ -17,8 +18,11 @@ const barsReducer = (state = initialState, action) => {
             //TODO : à adapter
             const existingIndex = state.favoriteBars.findIndex(bars);
         case REMOVE_TO_FAVORITE:
-            //TODO / à adapter
+            //TODO /à adapter
             const existing = state.favoriteBars.findIndex(bars);
+        case GET_COMMENT:
+            //TODO à faire getComment
+            return { ...state, commentBars: action.payload }
         case TOGGLE_ERROR_BARS:
             return { ...state, errorMessage: action.payload }
         default:

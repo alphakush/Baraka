@@ -3,6 +3,7 @@ export const REMOVE_TO_FAVORITE = "REMOVE_TO_FAVORITE";
 export const GET_ALL_BARS = "GET_ALL_BARS";
 export const TOGGLE_ERROR_BARS = "TOGGLE_ERROR_BARS";
 export const GET_FAVORITES_BARS = "GET_FAVORITES_BARS";
+export const GET_COMMENT = "GET_COMMENT";
 
 import Api from '../../api/api';
 
@@ -58,6 +59,20 @@ export const getFavoriteBar = () => {
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la récupération des données." });
+        }
+    };
+};
+
+//Function permettant d'obtenir tous ses bars FAVORIS.
+export const getComment = (barID) => {
+    return async dispatch => {
+        try {
+            const response = await Api.get('/bar/all-comment/'+barID );
+            dispatch({ type: GET_COMMENT,
+              payload: response.data,
+            });
+        } catch (error) {
+            dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite pour récupérer les commentaires." });
         }
     };
 };

@@ -67,6 +67,13 @@ const BarInformations = props => {
 }, [currentMealIsFavorite]);
 
 
+  // On affiche le coeur j'aime de l'utilsateur
+  useEffect(() => {
+    dispatch(BarsActions.getComment(barID));
+}, [dispatch]);
+
+const getComment = useSelector(state => state.bars.commentBars);
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -104,21 +111,21 @@ const BarInformations = props => {
 
         <FlatList
           style={styles.rootCom}
-          data={data}
+          data={getComment}
           ItemSeparatorComponent={() => {
             return (<View style={styles.separatorCom} />)
           }}
           keyExtractor={(item) => {
-            return item.id.toString();
+            return item._id.toString();
           }}
           renderItem={(item) => {
             const Commentaire = item.item;
             return (
               <View style={styles.containerCom}>
-                <Image style={styles.imageCom} source={{ uri: Commentaire.image }} />
+                <Image style={styles.imageCom} source={{ uri: `data:image/png;base64,${Commentaire.image}` }} />
                 <View style={styles.contentCom}>
                   <View style={styles.contentHeaderCom}>
-                    <Text style={styles.nameCom}>{Commentaire.name}</Text>
+                    <Text style={styles.nameCom}>{Commentaire.author}</Text>
                   </View>
                   <Text rkType='primary3 mediumLine'>{Commentaire.comment}</Text>
                 </View>
