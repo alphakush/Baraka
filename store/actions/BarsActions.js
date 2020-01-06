@@ -24,7 +24,7 @@ export const getAllBar = () => {
 export const addBarToFavorite = (barID) => {
     return async dispatch => {
         try {
-            const response = await Api.post('/add-favorite', {barID});
+            const response = await Api.post('/bar/add-favorite', {barID});
             dispatch({ type: ADD_TO_FAVORITE,
               payload: response.data,
             });

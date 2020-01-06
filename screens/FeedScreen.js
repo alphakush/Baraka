@@ -37,7 +37,7 @@ const FeedScreen = props => {
         TrackUser();
     }, []);
 
-
+    //Pour récupérer les favoris de l'utilisateur
     const loadFavorites = async () => {
         await dispatch(BarsActions.getFavoriteBar());
     }
@@ -49,7 +49,7 @@ const FeedScreen = props => {
         loadFavorites();
     }
 
-    // Pour charger tous les bars
+    // Pour récupérer tous les bars
     useEffect(() => {
         loadAllBars();
     }, [dispatch]);

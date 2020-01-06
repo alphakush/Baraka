@@ -226,7 +226,12 @@ const FindBarNavigator = createStackNavigator(
 
 const FavoriteNavigator = createStackNavigator(
     {
-        Favorite: FavoritesScreen,
+        Favorite: {
+            screen : FavoritesScreen
+        },
+        BarInfo: {
+            screen: BarInfoScreen
+        }
     },
     {
         defaultNavigationOptions: defaultStackNavOptions,
