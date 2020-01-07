@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as data from './data/info-bar.json';
+import * as data from '../data/info-bar.json';
 import Bar_cards from "./bar_cards";
 class bars extends Component  {
 

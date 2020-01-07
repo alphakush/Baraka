@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import './index.css';
-import Map from './map.js';
-import Contact from './contact';
-import bars from './bars'
-import parcours from './parcours'
-import connexion from './connexion'
+import Map from './Components/map.js';
+import Contact from './Components/contact';
+import bars from './Components/bars'
+import parcours from './Components/parcours'
+import connexion from './Components/connexion'
 import { Route, NavLink, HashRouter } from "react-router-dom";
 
 class Main extends Component {
