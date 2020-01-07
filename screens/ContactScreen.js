@@ -8,7 +8,8 @@ import {
   Image,
   Alert,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  KeyboardAvoidingView
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Colors from '../constant/Colors';
@@ -59,6 +60,10 @@ const ContactScreen = props => {
   };
 
     return (
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior="padding"
+      >
       <TouchableWithoutFeedback onPress={() =>
         {Keyboard.dismiss(); }} >
         <View style={styles.container}>
@@ -100,6 +105,7 @@ const ContactScreen = props => {
               </TouchableOpacity>
         </View>
       </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     );
 };
 

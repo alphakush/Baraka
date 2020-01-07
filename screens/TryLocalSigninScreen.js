@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { AsyncStorage } from 'react-native';
 import {TOGGLE_TRY_LOCAL_SIGN } from '../store/actions/AuthAction';
 import { useDispatch } from 'react-redux';
-
+import * as Location from 'expo-location';
 
 const tryLocalSigninScreen = props => {
   const dispatch = useDispatch();
@@ -12,9 +12,9 @@ const tryLocalSigninScreen = props => {
       const token = await AsyncStorage.getItem('token');
       const email = await AsyncStorage.getItem('email');
       const username = await AsyncStorage.getItem('username');
-      const userlatitude = await AsyncStorage.getItem('userlatitude');
-      const userlongitude = await AsyncStorage.getItem('userlongitude');
-
+      let location = await Location.getCurrentPositionAsync({});
+      const userlatitude = location.coords.latitude.toString();
+      const userlongitude = location.coords.longitude.toString();
       if (token) {
         dispatch({ type: TOGGLE_TRY_LOCAL_SIGN,
           payload: token,

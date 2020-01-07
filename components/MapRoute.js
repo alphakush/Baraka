@@ -23,6 +23,7 @@ import MapViewDirections from 'react-native-maps-directions';
 import HeaderButton from '../components/HeaderButton';
 
 const HEIGHT = Dimensions.get('window').height
+const WIDTH = (Dimensions.get('window').width / 3)
 const GOOGLE_MAPS_APIKEY = "AIzaSyCHcQmmWvpRpHrpvfNp7u4A3F4iXPvYpe8";
 const DEFAULT_PADDING = { top: 50, right: 50, bottom: 50, left: 50 }
 
@@ -35,6 +36,7 @@ const MapRoute = props => {
   const [distance, setdistance] = useState('');
   const [arrivage, setarrivage] = useState('');
   const [labelduration, setlabelduration] = useState('');
+  const [labeldistance, setlabeldistance] = useState('');
 
   const MARKERS = [
     destinationbar[0],
@@ -109,22 +111,29 @@ const MapRoute = props => {
                 setduration(Math.round(result.duration));
                 setlabelduration('minutes');
               }
-              setdistance(result.distance.toFixed(0));
+
+              if (result.distance.toFixed(0) == "0"){
+                setdistance(result.distance.toString().substring(2));
+                setlabeldistance("mètres");
+              } else{
+                setdistance(result.distance.toFixed(0));
+                setlabeldistance("km");
+              }
               date.setHours(date.getHours(),date.getMinutes()+Math.round(result.duration));
               setarrivage(date.toLocaleTimeString('fr-FR').slice(0, -3));
             }}
             />
           </MapView>
-          <View style={styles.notificationBox}>
-            <Text style={styles.arrivage}>{arrivage}</Text>
-            <Text style={styles.duration}>{duration}</Text>
-            <Text style={styles.distance}>{distance}</Text>
-          </View>
-          <View style={styles.notificationBoxbis}>
-            <Text style={styles.descarrivage}>arrivée</Text>
-            <Text style={styles.descduration}>{labelduration}</Text>
-            <Text style={styles.descdistance}>km</Text>
-          </View>
+        </View>
+        < View style = {{flex: 1,flexDirection: 'row',justifyContent: 'center',alignItems: 'end',paddingTop: 10,flexGrow: 1,}}>
+          <View style = {{width:WIDTH,height: 40,justifyContent: 'center', alignItems: 'center',flexGrow: 1}}><Text style={styles.arrivage}>{arrivage}</Text></View>
+          <View style = {{width:WIDTH,height: 40,justifyContent: 'center', alignItems: 'center',flexGrow: 1}}><Text style={styles.duration}>{duration}</Text></View>
+          <View style = {{width:WIDTH,height: 40,justifyContent: 'center', alignItems: 'center',flexGrow: 1}}><Text style={styles.distance}>{distance}</Text></View>
+        </View>
+        < View style = {{flex: 1,flexDirection: 'row',justifyContent: 'center',alignItems: 'end',flexGrow: 1,}}>
+          <View style = {{width:WIDTH,height: 40,justifyContent: 'center', alignItems: 'center',flexGrow: 1}}><Text style={styles.descarrivage}>arrivée</Text></View>
+          <View style = {{width:WIDTH,height: 40,justifyContent: 'center', alignItems: 'center',flexGrow: 1}}><Text style={styles.descduration}>{labelduration}</Text></View>
+          <View style = {{width:WIDTH,height: 40,justifyContent: 'center', alignItems: 'center',flexGrow: 1}}><Text style={styles.descdistance}>{labeldistance}</Text></View>
         </View>
       </ScrollView>
     );
@@ -155,66 +164,68 @@ const styles = StyleSheet.create({
      color:Colors.Black,
      marginTop : 10
    },
-
-   notificationBox: {
+   valuesBox: {
    backgroundColor: Colors.White,
    flexDirection:'row',
-   marginTop : 10,
+   width: WIDTH,
+   height: 50,
+   flex:1,
    shadowOffset: {
       width: 0,
       height: 6,
     },
     borderRadius:30,
    },
-
-   notificationBoxbis: {
+   descriptionBox: {
    backgroundColor: Colors.White,
    flexDirection:'row',
+   width: WIDTH,
+   height: 50,
+   flex:1,
    shadowOffset: {
       width: 0,
       height: 6,
     },
     borderRadius:30,
    },
-
  descduration:{
     fontSize:20,
     color: Colors.GreyDark,
-    marginRight : 30,
-    marginLeft : 40
+    flex: 1,
+    textAlign: 'center',
   },
  descdistance:{
     fontSize:20,
     color: Colors.GreyDark,
-    marginRight : 25,
-    marginLeft : 55
+    flex: 1,
+    textAlign: 'center',
   },
  descarrivage:{
     fontSize:20,
     color: Colors.GreyDark,
-    marginRight : 35,
-    marginLeft : 30
+    flex: 1,
+    textAlign: 'center',
   },
  duration:{
+   flex:1,
+   textAlign: 'center',
     fontSize:40,
     color: Colors.Black,
-    marginRight : 50,
     fontWeight:'bold',
-    marginLeft : 45
   },
  distance:{
+    flex:1,
+    textAlign: 'center',
     fontSize:40,
     color: Colors.Black,
-    marginRight : 40,
     fontWeight:'bold',
-    marginLeft : 0
   },
  arrivage:{
+   flex:1,
+   textAlign: 'center',
     fontSize:40,
     color: Colors.Black,
-    marginRight : 15,
     fontWeight:'bold',
-    marginLeft : 10
   },
 });
 

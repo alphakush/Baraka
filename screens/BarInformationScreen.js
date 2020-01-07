@@ -3,11 +3,15 @@ import {
   View,
   Text,
   StyleSheet,
+  TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   Alert,
   Image,
   FlatList,
-  ScrollView
+  ScrollView,
+  Keyboard,
+  KeyboardAvoidingView
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import HeaderButton from '../components/HeaderButton';
@@ -28,6 +32,21 @@ const BarInformations = props => {
   const barlatitude = props.navigation.getParam('barlatitude');
   const barlongitude = props.navigation.getParam('barlongitude');
 
+  const [comment, setcomment] = useState('');
+  const setcommentHandler = (enteredText) => {
+    setcomment(enteredText);
+  };
+  const sendcomment = () => {
+    if (comment != ''){
+      dispatch(BarsActions.postComment(barID,comment));
+      Alert.alert("Baraka","votre message a été posté")
+       setcomment('');
+     } else{
+       Alert.alert("Baraka","Veuillez entrer un commentaire correcte")
+       return;
+     }
+  };
+
   const dispatch = useDispatch();
 
   // récuperer les commentaires en base (il faut modifier la table comment pour que ça ressemble aux data ci dessous)
@@ -40,10 +59,6 @@ const BarInformations = props => {
     { id: 6, image: "https://bootdey.com/img/Content/avatar/avatar4.png", name: "Nick Fury", comment: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor." },
     { id: 7, image: "https://bootdey.com/img/Content/avatar/avatar5.png", name: "Thor Odinson", comment: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor." },
   ]
-
-  const GoToBar = () => {
-    Alert.alert("Baraka", "Itinéraire non disponible pour l'instant")
-  };
 
   const Likebar = () => {
     if (barliked) {
@@ -73,8 +88,10 @@ const BarInformations = props => {
 }, [dispatch]);
 
 const getComment = useSelector(state => state.bars.commentBars);
-
   return (
+    <KeyboardAvoidingView style={styles.container} behavior="height">
+      <TouchableWithoutFeedback onPress={() =>
+        {Keyboard.dismiss(); }} >
     <ScrollView>
       <View style={styles.container}>
         <View style={{ marginHorizontal: 30 }}>
@@ -108,7 +125,17 @@ const getComment = useSelector(state => state.bars.commentBars);
             <Text style={styles.ButtonText}>S'y rendre</Text>
           </TouchableOpacity>
         </View>
-
+          <Text style={styles.desccomment}>Votre commentaire :</Text>
+          <View style={styles.inputContainermsg}>
+            <TextInput style={styles.inputs}
+              placeholder="Commentaires"
+              onChangeText={setcommentHandler}
+              value={comment}
+            />
+            <TouchableOpacity  style={[styles.buttonContainer, styles.commentButton]} onPress={sendcomment}>
+              <Text style={styles.commentButtonText}>Envoyer</Text>
+            </TouchableOpacity>
+          </View>
         <FlatList
           style={styles.rootCom}
           data={getComment}
@@ -132,9 +159,10 @@ const getComment = useSelector(state => state.bars.commentBars);
               </View>
             );
           }} />
-
       </View>
     </ScrollView>
+    </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -147,6 +175,56 @@ BarInformations.navigationOptions = navData => {
 };
 
 const styles = StyleSheet.create({
+  buttonContainer: {
+    height: 45,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+    marginLeft : 40,
+    width: 100,
+    borderBottomRightRadius : 15,
+    borderTopRightRadius : 15,
+    backgroundColor: 'transparent'
+  },
+  commentButton: {
+    backgroundColor: Colors.Gold,
+    elevation: 19,
+  },
+  commentButtonText: {
+    color: Colors.Black,
+    fontWeight: 'bold',
+    fontSize: 15,
+  },
+  desccomment: {
+    marginTop: 10,
+    color: Colors.Black,
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  inputContainermsg: {
+    borderBottomColor: Colors.LightBlue,
+    backgroundColor: Colors.White,
+    borderRadius: 15,
+    height:45,
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    shadowColor: Colors.Grey,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+  },
+  inputs: {
+    height: 45,
+    marginLeft: 16,
+    borderBottomColor: Colors.White,
+    flex: 1,
+  },
   nameBar: {
     fontSize: 28,
     color: Colors.Black,

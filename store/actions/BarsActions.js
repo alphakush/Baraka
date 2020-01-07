@@ -4,6 +4,7 @@ export const GET_ALL_BARS = "GET_ALL_BARS";
 export const TOGGLE_ERROR_BARS = "TOGGLE_ERROR_BARS";
 export const GET_FAVORITES_BARS = "GET_FAVORITES_BARS";
 export const GET_COMMENT = "GET_COMMENT";
+export const POST_COMMENT = "POST_COMMENT";
 
 import Api from '../../api/api';
 
@@ -73,6 +74,20 @@ export const getComment = (barID) => {
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite pour récupérer les commentaires." });
+        }
+    };
+};
+
+//Function permettant de poster un commentaire sur un bar.
+export const postComment = (barID, comment) => {
+    return async dispatch => {
+        try {
+            const response = await Api.post('/bar/add-comment',{barID, comment});
+            dispatch({ type: POST_COMMENT,
+              payload: response.data,
+            });
+        } catch (error) {
+            dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite pour poster le commentaire." });
         }
     };
 };

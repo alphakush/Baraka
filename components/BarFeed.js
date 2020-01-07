@@ -11,6 +11,7 @@ import {
   Button
 } from 'react-native';
 import Colors from '../constant/Colors';
+import * as Location from 'expo-location';
 
 const BarFeed = props => {
   const [barliked, setbarliked] = useState(false);
