@@ -12,10 +12,10 @@ import {
 } from 'react-native';
 import Colors from '../constant/Colors';
 import * as Location from 'expo-location';
+import { Rating, AirbnbRating } from 'react-native-ratings';
 
 const BarFeed = props => {
   const [barliked, setbarliked] = useState(false);
-
   const Likebar = (barname) => {
     {barliked ? setbarliked(false) : setbarliked(true) }
     {barliked ? Alert.alert("Baraka","Vous n'aimez plus ce bar") : Alert.alert("Baraka","Vous aimez ce bar")}
@@ -40,10 +40,14 @@ const BarFeed = props => {
               </TouchableOpacity>
             </View>
             <View style={styles.socialBarSection}>
-              <View style={styles.socialBarButton}>
-                <Image style={styles.icon} source={require('../images/rated.png')}/>
-                <Text style={styles.socialBarLabel}>{props.averageNotation}</Text>
-              </View>
+              <Rating
+                type='star'
+                ratingCount={5}
+                imageSize={20}
+                readonly={true}
+                fractions={1}
+                startingValue={props.averageNotation}
+              />
             </View>
             <View style={styles.socialBarSection}>
               <View style={styles.socialBarButton}>
@@ -109,6 +113,8 @@ const styles = StyleSheet.create({
   title:{
     fontSize:22,
     flex:1,
+    fontWeight: 'bold',
+    alignSelf: 'center',
   },
   description:{
     fontSize:15,

@@ -3,6 +3,7 @@ export const TOGGLE_SIGNUP = "TOGGLE_SIGNUP";
 export const TOGGLE_SIGNOUT = "TOGGLE_SIGNOUT";
 export const TOGGLE_TRY_LOCAL_SIGN = "TOGGLE_TRY_LOCAL_SIGN";
 export const TOGGLE_ERROR = "TOGGLE_ERROR";
+export const GET_USERLOCATION = "GET_USERLOCATION";
 
 import Api from '../../api/api';
 import { AsyncStorage } from 'react-native';
@@ -76,5 +77,18 @@ export const SignOut = () => {
         await AsyncStorage.removeItem('userlatitude');
         await AsyncStorage.removeItem('userlongitude');
         dispatch({ type: TOGGLE_SIGNOUT });
+    };
+};
+
+export const GetUserLocation = (latitude, longitude) => {
+    return async dispatch => {
+        try {
+            dispatch({ type: GET_USERLOCATION,
+              payloaduserlatitude: latitude,
+              payloaduserlongitude: longitude
+            });
+        } catch (error) {
+            dispatch({ type: TOGGLE_ERROR, payload: "Impossible de récuperer la localisation" });
+        }
     };
 };

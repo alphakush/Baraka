@@ -37,6 +37,7 @@ const MapRoute = props => {
   const [arrivage, setarrivage] = useState('');
   const [labelduration, setlabelduration] = useState('');
   const [labeldistance, setlabeldistance] = useState('');
+  console.log(userposition);
 
   const MARKERS = [
     destinationbar[0],
@@ -125,15 +126,15 @@ const MapRoute = props => {
             />
           </MapView>
         </View>
-        < View style = {{flex: 1,flexDirection: 'row',justifyContent: 'center',alignItems: 'end',paddingTop: 10,flexGrow: 1,}}>
-          <View style = {{width:WIDTH,height: 40,justifyContent: 'center', alignItems: 'center',flexGrow: 1}}><Text style={styles.arrivage}>{arrivage}</Text></View>
-          <View style = {{width:WIDTH,height: 40,justifyContent: 'center', alignItems: 'center',flexGrow: 1}}><Text style={styles.duration}>{duration}</Text></View>
-          <View style = {{width:WIDTH,height: 40,justifyContent: 'center', alignItems: 'center',flexGrow: 1}}><Text style={styles.distance}>{distance}</Text></View>
+        < View style={{flex: 1,flexDirection: 'row',justifyContent: 'center',paddingTop: 10,flexGrow: 1,}}>
+          <View style={styles.flexrow}><Text style={styles.arrivage}>{arrivage} </Text></View>
+          <View style={styles.flexrow}><Text style={styles.duration}>{duration}</Text></View>
+          <View style={styles.flexrow}><Text style={styles.distance}>{distance}</Text></View>
         </View>
-        < View style = {{flex: 1,flexDirection: 'row',justifyContent: 'center',alignItems: 'end',flexGrow: 1,}}>
-          <View style = {{width:WIDTH,height: 40,justifyContent: 'center', alignItems: 'center',flexGrow: 1}}><Text style={styles.descarrivage}>arrivée</Text></View>
-          <View style = {{width:WIDTH,height: 40,justifyContent: 'center', alignItems: 'center',flexGrow: 1}}><Text style={styles.descduration}>{labelduration}</Text></View>
-          <View style = {{width:WIDTH,height: 40,justifyContent: 'center', alignItems: 'center',flexGrow: 1}}><Text style={styles.descdistance}>{labeldistance}</Text></View>
+        < View style={{flex: 1,flexDirection: 'row',justifyContent: 'center',flexGrow: 1,}}>
+          <View style={styles.flexrow}><Text style={styles.descarrivage}>arrivée</Text></View>
+          <View style={styles.flexrow}><Text style={styles.descduration}>{labelduration}</Text></View>
+          <View style={styles.flexrow}><Text style={styles.descdistance}>{labeldistance}</Text></View>
         </View>
       </ScrollView>
     );
@@ -156,6 +157,13 @@ MapRoute.navigationOptions = navData => {
 };
 
 const styles = StyleSheet.create({
+    flexrow:{
+      width:WIDTH,
+      height: 50,
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexGrow: 1,
+    },
     map: {
       height: HEIGHT - 200
     },

@@ -1,4 +1,12 @@
-import { ADD_TO_FAVORITE, GET_ALL_BARS, TOGGLE_ERROR_BARS, GET_FAVORITES_BARS,REMOVE_TO_FAVORITE, GET_COMMENT, POST_COMMENT } from '../actions/BarsActions';
+import {
+  ADD_TO_FAVORITE,
+  GET_ALL_BARS,
+  TOGGLE_ERROR_BARS,
+  GET_FAVORITES_BARS,
+  REMOVE_TO_FAVORITE,
+  GET_COMMENT,
+  POST_COMMENT
+} from '../actions/BarsActions';
 
 const initialState = {
     allbars: [],

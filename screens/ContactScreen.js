@@ -43,7 +43,7 @@ const ContactScreen = props => {
           setmsg('');
           setEmail('');
           setobjet('');
-          Alert.alert("Baraka","Message envoyé");
+          Alert.alert("Baraka","Message envoyé avec succès");
         } else{
           Alert.alert("Baraka","Veuillez renseigner un message");
           return;

@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   Image,
   Alert,
-  Keyboard
+  Keyboard,
+  KeyboardAvoidingView
 } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -72,6 +73,10 @@ const CreateAccount = props => {
   };
 
   return (
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior="padding"
+    >
     <TouchableWithoutFeedback onPress={() =>{
       Keyboard.dismiss();
     }}>
@@ -117,6 +122,7 @@ const CreateAccount = props => {
       </TouchableOpacity>
     </View>
     </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 

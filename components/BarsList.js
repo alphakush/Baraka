@@ -9,6 +9,7 @@ import BarFeed from './BarFeed';
 
 const BarList = props => {
     const _renderItem = itemData => {
+      console.log(itemData.item.note)
         return (
             <BarFeed
             id={itemData.item._id}
@@ -24,7 +25,7 @@ const BarList = props => {
                             barName: itemData.item.name,
                             barDescription: itemData.item.description,
                             barTags: itemData.item.tags,
-                            barAverageNotation: itemData.item.averageNotation,
+                            barAverageNotation: itemData.item.note,
                             barPicturesUrls: itemData.item.image,
                             barlatitude: itemData.item.latitude,
                             barlongitude: itemData.item.longitude

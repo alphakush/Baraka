@@ -64,7 +64,7 @@ export const getFavoriteBar = () => {
     };
 };
 
-//Function permettant d'obtenir tous ses bars FAVORIS.
+//Function permettant d'obtenir tout les commentaires d'un bar
 export const getComment = (barID) => {
     return async dispatch => {
         try {

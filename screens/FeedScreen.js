@@ -6,28 +6,32 @@ import {
     ActivityIndicator
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { requestPermissionsAsync } from 'expo-location';
+import { requestPermissionsAsync, watchPositionAsync, Accuracy } from 'expo-location';
 import * as BarsActions from '../store/actions/BarsActions';
 import HeaderButton from '../components/HeaderButton';
 import BarsList from '../components/BarsList';
 import { useDispatch, useSelector } from 'react-redux';
 import Colors from '../constant/Colors';
+import * as AuthActions from '../store/actions/AuthAction';
 
 const FeedScreen = props => {
     const [err, setErr] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const dispatch = useDispatch();
-
     const allbars = useSelector(state => state.bars.allbars);
-
     const errorMessage = useSelector(state => state.bars.errorMessage);
-
     const userlatitude = useSelector(state => state.auth.userlatitude);
     const userlongitude = useSelector(state => state.auth.userlongitude);
 
     const TrackUser = async () => {
         try {
             await requestPermissionsAsync();
+            await watchPositionAsync({
+                accuracy: Accuracy.BestForNavigation,
+                distanceInterval: 10
+            }, (location) =>{
+                dispatch(AuthActions.GetUserLocation(location.coords.latitude, location.coords.longitude));
+            });
         } catch (e) {
             setErr(e);
         }

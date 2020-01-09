@@ -2,7 +2,7 @@ import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 
 const instance = axios.create({
-    baseURL: "https://baraka-api.herokuapp.com/api/v1",
+    baseURL: "https://baraka-production.herokuapp.com/api/v1",
     headers:{
         'Content-Type': 'application/json; charset=utf-8',
         }
@@ -20,5 +20,5 @@ instance.interceptors.request.use(
       return Promise.reject(err);
     }
   );
-  
+
   export default instance;

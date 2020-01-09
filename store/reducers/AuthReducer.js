@@ -3,7 +3,8 @@ import {
     TOGGLE_ERROR,
     TOGGLE_SIGNUP,
     TOGGLE_SIGNOUT,
-    TOGGLE_TRY_LOCAL_SIGN
+    TOGGLE_TRY_LOCAL_SIGN,
+    GET_USERLOCATION
 } from '../actions/AuthAction';
 
 const initialState = {
@@ -40,6 +41,11 @@ const authReducer = (state = initialState, action) => {
               token: action.payload,
               email: action.payloademail,
               username: action.payloadusername,
+              userlatitude : action.payloaduserlatitude,
+              userlongitude : action.payloaduserlongitude
+            }
+        case GET_USERLOCATION:
+            return {
               userlatitude : action.payloaduserlatitude,
               userlongitude : action.payloaduserlongitude
             }

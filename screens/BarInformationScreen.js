@@ -10,20 +10,21 @@ import {
   Image,
   FlatList,
   ScrollView,
-  Keyboard,
-  KeyboardAvoidingView
+  Keyboard
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import HeaderButton from '../components/HeaderButton';
 import Colors from '../constant/Colors';
 import { useDispatch, useSelector } from 'react-redux';
 import * as BarsActions from '../store/actions/BarsActions';
+import { Rating, AirbnbRating } from 'react-native-ratings';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const BarInformations = props => {
 
   //Informations spécifiques créer bar dans la FlatList
   const barPicturesUrls = props.navigation.getParam('barPicturesUrls');
-  const barAverageNotation = props.navigation.getParam('barAverageNotation');
+  const barAverageNotation = Number(props.navigation.getParam('barAverageNotation'));
   const barTags = props.navigation.getParam('barTags');
   const barDescription = props.navigation.getParam('barDescription');
   const barName = props.navigation.getParam('barName');
@@ -31,14 +32,19 @@ const BarInformations = props => {
   const [barliked, setbarliked] = useState(false);
   const barlatitude = props.navigation.getParam('barlatitude');
   const barlongitude = props.navigation.getParam('barlongitude');
-
+  const errormsg = useSelector(state => state.auth.errorMessage);
   const [comment, setcomment] = useState('');
+  const [rating, setrating] = useState(3); //3 par default
   const setcommentHandler = (enteredText) => {
     setcomment(enteredText);
   };
+  const setratingHandler = (enteredText) => {
+    setrating(enteredText);
+  };
   const sendcomment = () => {
     if (comment != ''){
-      dispatch(BarsActions.postComment(barID,comment));
+      dispatch(BarsActions.postComment(barID,comment))
+      {errormsg ? Alert.alert("Baraka",errormsg) : null }
       Alert.alert("Baraka","votre message a été posté")
        setcomment('');
      } else{
@@ -46,7 +52,6 @@ const BarInformations = props => {
        return;
      }
   };
-
   const dispatch = useDispatch();
 
   // récuperer les commentaires en base (il faut modifier la table comment pour que ça ressemble aux data ci dessous)
@@ -63,9 +68,11 @@ const BarInformations = props => {
   const Likebar = () => {
     if (barliked) {
       setbarliked(false);
+      props.navigation.setParams({barlike: false});
       dispatch(BarsActions.removeBarToFavorite(barID));
     } else {
       setbarliked(true)
+      props.navigation.setParams({barlike: true});
       dispatch(BarsActions.addBarToFavorite(barID));
     }
   };
@@ -77,33 +84,41 @@ const BarInformations = props => {
   // On affiche le coeur j'aime de l'utilsateur
   useEffect(() => {
     if(currentMealIsFavorite){
+      props.navigation.setParams({barlike: true});
       setbarliked(true);
     }
 }, [currentMealIsFavorite]);
 
 
-  // On affiche le coeur j'aime de l'utilsateur
+  // On récupère les commentaires du bar
   useEffect(() => {
     dispatch(BarsActions.getComment(barID));
 }, [dispatch]);
 
+
 const getComment = useSelector(state => state.bars.commentBars);
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="height">
-      <TouchableWithoutFeedback onPress={() =>
-        {Keyboard.dismiss(); }} >
+    <KeyboardAwareScrollView>
     <ScrollView>
+    <TouchableWithoutFeedback onPress={() =>
+      {Keyboard.dismiss(); }} >
       <View style={styles.container}>
         <View style={{ marginHorizontal: 30 }}>
           <Image resizeMode='contain' style={styles.image} source={{ uri: `data:image/png;base64,${barPicturesUrls}` }} />
           <View style={{ alignItems: 'center' }}>
             <Text style={styles.nameBar}>{barName}</Text>
             <View style={styles.aligntext}>
-              <Text style={styles.Notebar}>{barAverageNotation}</Text>
-              <Image style={styles.icon} source={require('../images/rated.png')} />
+            <Rating
+              type='star'
+              ratingCount={5}
+              imageSize={35}
+              readonly={true}
+              fractions={1}
+              startingValue={barAverageNotation}
+            />
             </View>
             {barTags.map((item, key) => (
-              <Text key={key} style={styles.descriptionBar}> {item} </Text>
+              <Text key={key} style={styles.descriptionBar}>{item}</Text>
             ))}
             <TouchableOpacity onPress={() => Likebar()}>
               <Image style={styles.like} source={barliked ? require('../images/hearts.png') : require('../images/heartsempty.png')} />
@@ -113,22 +128,29 @@ const getComment = useSelector(state => state.bars.commentBars);
         </View>
         <View style={styles.ButtonContainer}>
           <TouchableOpacity style={styles.Button} onPress={() => {
-            props.navigation.navigate({
-              routeName: 'BarRoute',
-              params: {
-                barlatitude: { barlatitude },
-                barlongitude: { barlongitude },
-                barname: { barName }
-              }
-            });
-          }}>
+              props.navigation.navigate({
+                routeName: 'BarRoute',
+                params: {
+                  barlatitude: { barlatitude },
+                  barlongitude: { barlongitude },
+                  barname: { barName }
+                }
+              });
+            }}>
             <Text style={styles.ButtonText}>S'y rendre</Text>
           </TouchableOpacity>
         </View>
           <Text style={styles.desccomment}>Votre commentaire :</Text>
+          <AirbnbRating
+            count={5}
+            reviews={["Médiocre", "Moyen", "Bien", "Très Bien", "Excellent"]}
+            defaultRating={rating}
+            size={22}
+            onFinishRating={setratingHandler}
+          />
           <View style={styles.inputContainermsg}>
             <TextInput style={styles.inputs}
-              placeholder="Commentaires"
+              placeholder="Entrez votre commentaires ici"
               onChangeText={setcommentHandler}
               value={comment}
             />
@@ -160,17 +182,27 @@ const getComment = useSelector(state => state.bars.commentBars);
             );
           }} />
       </View>
+      </TouchableWithoutFeedback>
     </ScrollView>
-    </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    </KeyboardAwareScrollView>
   );
 };
 
 BarInformations.navigationOptions = navData => {
   const getBarName = navData.navigation.getParam('barName');
+  const like = navData.navigation.getParam('barlike');
   return {
-    headerTitle: `Détails sur : ${getBarName}`,
+    headerTitle: `Détails du bar ${getBarName}`,
     headerLayoutPreset: 'center',
+    headerRight: (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+            <Item
+                title="Like"
+                iconName={like ? "ios-heart" : "ios-heart-empty"}
+                onPress={() => Alert.alert("Baraka","InProgress")}
+            />
+        </HeaderButtons>
+    )
   };
 };
 
