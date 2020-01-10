@@ -9,8 +9,8 @@ const FilterSwitch = props => {
                 <Switch
                 trackColor = {{ true: Colors.primary}}
                 thumbColor = { Platform.OS == 'android' ? Colors.primary : ''}
-                value={props.state} 
-                onValueChange={props.onChange}  />
+                value={props.state}
+                onValueChange={props.onChange}/>
             </View>
     );
 };

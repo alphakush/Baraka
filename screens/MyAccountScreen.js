@@ -13,11 +13,28 @@ import Colors from '../constant/Colors';
 import FilterSwitch from '../components/FilterSwitch';
 
 const MyAccountScreen = props => {
+  const { navigation } = props;
+
   const [isLike, setIsLike] = useState(false);
   const [isDistance, setIsDistance] = useState(false);
   const [isDate, setIsDate] = useState(false);
+
   const username = useSelector(state => state.auth.username);
   const email = useSelector(state => state.auth.email);
+
+  const saveFilters = useCallback(() => {
+    const appliedFilters = {
+      userLike: isLike,
+      userDistance: isDistance,
+      userDate: isDate,
+    };
+    console.log(appliedFilters);
+  }, [isLike, isDistance, isDate]);
+
+  useEffect(() => {
+    navigation.setParams({ save: saveFilters });
+  }, [saveFilters]);
+
     return (
       <View style={styles.container}>
           <View style={styles.header}>
@@ -68,9 +85,7 @@ MyAccountScreen.navigationOptions = navData => {
               <Item
                   title="Save"
                   iconName="ios-save"
-                  onPress={() => {
-                      Alert.alert("Baraka", "Sauvegarde non disponible");
-                  }}
+                  onPress={ navData.navigation.getParam('save')}
               />
           </HeaderButtons>
       )
