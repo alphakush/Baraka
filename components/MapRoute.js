@@ -37,7 +37,6 @@ const MapRoute = props => {
   const [arrivage, setarrivage] = useState('');
   const [labelduration, setlabelduration] = useState('');
   const [labeldistance, setlabeldistance] = useState('');
-  console.log(userposition);
 
   const MARKERS = [
     destinationbar[0],

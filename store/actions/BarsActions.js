@@ -5,10 +5,11 @@ export const TOGGLE_ERROR_BARS = "TOGGLE_ERROR_BARS";
 export const GET_FAVORITES_BARS = "GET_FAVORITES_BARS";
 export const GET_COMMENT = "GET_COMMENT";
 export const POST_COMMENT = "POST_COMMENT";
+export const SET_FILTERS ='SET_FILTERS';
 
 import Api from '../../api/api';
 
-// Function pour obtenir tous les bars.
+// Function pour OBTENIR TOUS LES  tous les bars.
 export const getAllBar = () => {
     return async dispatch => {
         try {
@@ -88,6 +89,34 @@ export const postComment = (barID, comment) => {
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite pour poster le commentaire." });
+        }
+    };
+};
+
+// Function pour OBTENIR TOUS LES  tous les bars.
+export const setFilters = (filterUser) => {
+    return async dispatch => {
+        try {
+          //On vérifie qu'un filtre est True pour ne exécuter une rêquete inutile
+            let requestFilterUser ='';
+
+            //si l'utilisateur active le filtre pour la DATE
+            if(filterUser.Date) {
+              filterDataString = "?sortBy=createdAt:desc";
+              requestFilterUser = requestFilterUser + filterDataString;
+            }
+            //// TODO: faire pour LIKE et DISTANCE
+            const response = await Api.get('/allbars'+requestFilterUser);
+
+            dispatch({ type: SET_FILTERS,
+              payload: response.data,
+              payloadDate: filterUser.Date,
+              payloadLike: filterUser.Like,
+              payloadDistance: filterUser.Distance
+            });
+
+        } catch (error) {
+            dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la récupération des données." });
         }
     };
 };

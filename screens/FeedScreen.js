@@ -7,21 +7,29 @@ import {
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { requestPermissionsAsync, watchPositionAsync, Accuracy } from 'expo-location';
-import * as BarsActions from '../store/actions/BarsActions';
+
 import HeaderButton from '../components/HeaderButton';
 import BarsList from '../components/BarsList';
 import { useDispatch, useSelector } from 'react-redux';
 import Colors from '../constant/Colors';
+
 import * as AuthActions from '../store/actions/AuthAction';
+import * as BarsActions from '../store/actions/BarsActions';
 
 const FeedScreen = props => {
     const [err, setErr] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const dispatch = useDispatch();
+
     const allbars = useSelector(state => state.bars.allbars);
     const errorMessage = useSelector(state => state.bars.errorMessage);
+
     const userlatitude = useSelector(state => state.auth.userlatitude);
     const userlongitude = useSelector(state => state.auth.userlongitude);
+
+    const activeFilterByLike = useSelector(state => state.bars.filterByLike);
+    const activeFilterByDistance = useSelector(state => state.bars.filterByDistance);
+    const activeFilterByDate = useSelector(state => state.bars.filterByDate);
 
     const TrackUser = async () => {
         try {
@@ -48,7 +56,12 @@ const FeedScreen = props => {
 
     const loadAllBars = async () => {
         setIsLoading(true);
-        await dispatch(BarsActions.getAllBar());
+        // On vérifie qu'on n'a pas activé de filtre
+        if( !activeFilterByDate){
+          await dispatch(BarsActions.getAllBar());
+        } else {
+
+        }
         setIsLoading(false);
         loadFavorites();
     }
@@ -64,8 +77,6 @@ const FeedScreen = props => {
             willFocusSub.remove();
         }
     },[loadAllBars]);
-
-    //Pour charger les favoris de l'utilsateur
 
     //Pour ajouter un spinner en attendant que la page se charge
     if (isLoading) {

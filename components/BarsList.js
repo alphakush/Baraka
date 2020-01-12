@@ -9,7 +9,6 @@ import BarFeed from './BarFeed';
 
 const BarList = props => {
     const _renderItem = itemData => {
-      console.log(itemData.item.note)
         return (
             <BarFeed
             id={itemData.item._id}

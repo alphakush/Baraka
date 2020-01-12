@@ -11,10 +11,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import HeaderButton from '../components/HeaderButton';
 import Colors from '../constant/Colors';
 import FilterSwitch from '../components/FilterSwitch';
+import * as BarsActions from '../store/actions/BarsActions';
 
 const MyAccountScreen = props => {
   const { navigation } = props;
-
+  const dispatch = useDispatch();
   const [isLike, setIsLike] = useState(false);
   const [isDistance, setIsDistance] = useState(false);
   const [isDate, setIsDate] = useState(false);
@@ -24,12 +25,13 @@ const MyAccountScreen = props => {
 
   const saveFilters = useCallback(() => {
     const appliedFilters = {
-      userLike: isLike,
-      userDistance: isDistance,
-      userDate: isDate,
+      Like: isLike,
+      Distance: isDistance,
+      Date: isDate,
     };
-    console.log(appliedFilters);
-  }, [isLike, isDistance, isDate]);
+    dispatch(BarsActions.setFilters(appliedFilters));
+
+  }, [isLike, isDistance, isDate, dispatch]);
 
   useEffect(() => {
     navigation.setParams({ save: saveFilters });
@@ -48,17 +50,17 @@ const MyAccountScreen = props => {
                 </View>
                 <Text style={styles.title} >Filtrer les bars par : </Text>
                 <FilterSwitch
-                    label="Nombre de j'aime"
+                    label="NOMBRE DE J'AIME"
                     state={isLike}
                     onChange={newvalue1 => setIsLike(newvalue1)}
                 />
                 <FilterSwitch
-                    label='Distance (10km)'
+                    label='DISTANCE (10 KM)'
                     state={isDistance}
                     onChange={newvalue => setIsDistance(newvalue)}
                 />
                 <FilterSwitch
-                    label='Date (plus récent)'
+                    label='DATE (plus récent)'
                     state={isDate}
                     onChange={newvalue => setIsDate(newvalue)} />
             </View>
