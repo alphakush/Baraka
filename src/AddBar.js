@@ -50,9 +50,7 @@ class AddBar extends Component {
             case "products":
                 let list = (val.split(','))
                 let data = { list }
-                var products = this.state.products;
-                products += data;
-                this.setState({ products: products });
+                this.setState({ products: data });
                 break
             default:
                 this.setState({ [nam]: val });

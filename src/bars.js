@@ -13,7 +13,7 @@ class Bars extends Component {
 
     async componentDidMount() {
         await Api.get('/allbars').then(userData => {
-            this.setState({ nombre_de_bars: userData.data })
+            this.setState({ nombre_de_bars: userData.data })    
         });
     }
 

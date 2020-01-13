@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import styles from './App.css';
 import Api from "./api/api.js";
+import ReCAPTCHA from "react-google-recaptcha";
 
-class Contact extends Component {
+class Suscribe extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -11,6 +12,10 @@ class Contact extends Component {
             sujet: '',
             message: ''
         };
+    }
+    
+    onSubmintCaptcha(value) {
+        console.log("Captcha value:", value);
     }
 
     mySubmitHandler = (event) => {
@@ -26,12 +31,13 @@ class Contact extends Component {
         this.props.history.push('/bars');
     }
 
+
     myChangeHandler = (event) => {
         let nam = event.target.name;
         let val = event.target.value;
         this.setState({ [nam]: val });
     }
-    
+
     render() {
         return (
             <div style={{ width: '100%', height: '100%' }}>
@@ -43,6 +49,7 @@ class Contact extends Component {
                     <div className="form-group">
                         <label htmlFor="email">Adresse mail</label>
                         <input type='text' className="form-control" name='email' onChange={this.myChangeHandler} />
+                        <small name="emailHelp" className="form-text text-muted">Adresse mail qui sera utilisée pour notre newsletter.</small>
                     </div>
                     <div className="form-group">
                         <label htmlFor="sujet">Sujet</label>
@@ -52,9 +59,13 @@ class Contact extends Component {
                         <label htmlFor="message">Message</label>
                         <textarea type='text' className="form-control" rows="8" name='message' onChange={this.myChangeHandler}></textarea>
                     </div>
+                    <ReCAPTCHA
+                        sitekey="6LeqoscUAAAAADqYshkP3pdOqcJy2JuPRWC0SNHB"
+                        onChange={this.onSubmintCaptcha}
+                    />
                     <button type="submit" className="btn btn-primary btn-block">Envoyer</button>
                 </form>
             </div>)
     }
 }
-export default Contact;
+export default Suscribe;
