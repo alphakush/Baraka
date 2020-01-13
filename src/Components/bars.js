@@ -7,7 +7,6 @@ class bars extends Component  {
 
         var nombre_de_bars = Object.keys( data.features ).length;
         var rows = [];
-        console.log(nombre_de_bars);
         for (var i = 0; i < nombre_de_bars; i++) {
             rows.push(<Bar_cards 
                 description={data.features[i].properties.FACILITY_F}
