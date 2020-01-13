@@ -6,6 +6,20 @@
   height: 40vmin;
 }
 
+.navbar {
+  left : 5px;
+  padding-left : 5px;
+  padding-right : 5px;
+}
+
+.from {
+  padding: 5%;
+}
+
+.large {
+  height: 100px;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -18,5 +32,5 @@
 }
 
 .App-link {
-  color: #09d3ac;
+  color: #ffff;
 }
