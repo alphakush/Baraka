@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import ImageUploader from 'react-images-upload';
-import styles from './App.css'
-import Api from "./api/api.js";
+import styles from '../App.css'
+import Api from "../api/api.js";
 
 class AddBar extends Component {
     constructor(props) {
