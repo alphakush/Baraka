@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     width: 100,
     borderBottomRightRadius : 15,
     borderTopRightRadius : 15,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
   },
   commentButton: {
     backgroundColor: Colors.Gold,
@@ -227,6 +227,7 @@ const styles = StyleSheet.create({
     color: Colors.Black,
     fontWeight: 'bold',
     fontSize: 15,
+    flexWrap: "wrap"
   },
   desccomment: {
     marginTop: 10,

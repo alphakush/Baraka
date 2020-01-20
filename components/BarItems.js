@@ -52,17 +52,20 @@ const styles = StyleSheet.create({
     marginBottom:5,
     backgroundColor: 'white',
     flexDirection: 'row',
+    flexWrap: "wrap"
   },
   boxContent: {
     flex:1,
     flexDirection: 'column',
     alignItems: 'flex-start',
     marginLeft:10,
+    flexWrap: "wrap"
   },
   title:{
     fontSize:18,
-    //TODO add color in Color.js and import
     color: Colors.Black,
+    flex: 1,
+    flexWrap: 'wrap'
   },
   description:{
     fontSize:15,

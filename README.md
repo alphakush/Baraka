@@ -13,3 +13,6 @@
 ## Masters
 + AlphaKush (*App_Mobile*)
 + Abdourahime MOHAMADI HALIDI (*App_Mobile*)
+
+### Problèmes connus
++ Avec les One Plus lorsque le FONT est "OnePlus Slate" les textes ne s'affichent pas correctement.
