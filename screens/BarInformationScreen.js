@@ -22,7 +22,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 const BarInformations = props => {
 
-  //Informations spécifiques créer bar dans la FlatList
+  //Informations spécifiques pour populer FlatList
   const barPicturesUrls = props.navigation.getParam('barPicturesUrls');
   const barAverageNotation = Number(props.navigation.getParam('barAverageNotation'));
   const barTags = props.navigation.getParam('barTags');
@@ -53,17 +53,6 @@ const BarInformations = props => {
      }
   };
   const dispatch = useDispatch();
-
-  // récuperer les commentaires en base (il faut modifier la table comment pour que ça ressemble aux data ci dessous)
-  const data = [
-    { id: 1, image: "https://bootdey.com/img/Content/avatar/avatar1.png", name: "Tony Stark", comment: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor." },
-    { id: 2, image: "https://bootdey.com/img/Content/avatar/avatar6.png", name: "Natasha Romanof", comment: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor." },
-    { id: 3, image: "https://bootdey.com/img/Content/avatar/avatar7.png", name: "Steve Rogers", comment: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor." },
-    { id: 4, image: "https://bootdey.com/img/Content/avatar/avatar2.png", name: "Bruce Banner", comment: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor." },
-    { id: 5, image: "https://bootdey.com/img/Content/avatar/avatar3.png", name: "Clint Barton", comment: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor." },
-    { id: 6, image: "https://bootdey.com/img/Content/avatar/avatar4.png", name: "Nick Fury", comment: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor." },
-    { id: 7, image: "https://bootdey.com/img/Content/avatar/avatar5.png", name: "Thor Odinson", comment: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor." },
-  ]
 
   const Likebar = () => {
     if (barliked) {

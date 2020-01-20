@@ -15,12 +15,14 @@ const ResultList = props => {
                     props.navigation.navigate({
                         routeName: 'BarInfo',
                         params: {
-                            barID: itemData.item._id,
-                            barName: itemData.item.name,
-                            barDescription: itemData.item.description,
-                            barTags: itemData.item.tags,
-                            barAverageNotation: itemData.item.averageNotation,
-                            barPicturesUrls: itemData.item.image
+                          barID: itemData.item._id,
+                          barName: itemData.item.name,
+                          barDescription: itemData.item.description,
+                          barTags: itemData.item.tags,
+                          barAverageNotation: itemData.item.note,
+                          barPicturesUrls: itemData.item.image,
+                          barlatitude: itemData.item.latitude,
+                          barlongitude: itemData.item.longitude
                         }
                     });
                 }}

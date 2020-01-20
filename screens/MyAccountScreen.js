@@ -55,7 +55,7 @@ const MyAccountScreen = props => {
                     onChange={newvalue1 => setIsLike(newvalue1)}
                 />
                 <FilterSwitch
-                    label='DISTANCE (10 KM)'
+                    label='DISTANCE (-1KM)'
                     state={isDistance}
                     onChange={newvalue => setIsDistance(newvalue)}
                 />

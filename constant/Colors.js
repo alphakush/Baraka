@@ -1,5 +1,5 @@
 export default {
-  primary: '#f7287b',
+  primary: '#F4C52B',
   accent: '#c717fc',
   accentColor: '#ff6f00',
   White: '#FFFFFF',
@@ -14,5 +14,6 @@ export default {
   Red: '#ff0000',
   BlueSky: '#F5FCFF',
   Green: '#008000',
-  Blue: '#00b5ec'
+  Blue: '#00b5ec',
+  Burgudy: '#5C1909'
 };
