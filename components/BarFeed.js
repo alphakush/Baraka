@@ -36,7 +36,7 @@ const BarFeed = props => {
             <View style={styles.socialBarSection}>
               <TouchableOpacity style={styles.socialBarButton} onPress={ () => Likebar(props.name) }>
                 <Image style={styles.icon} source={barliked ? require('../images/hearts.png') : require('../images/heartsempty.png')}/>
-                <Text style={styles.socialBarLabel}>{Math.floor(Math.random() * 100) + 1}</Text>
+                <Text style={styles.socialBarLabel}>{props.numberLike}</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.socialBarSection}>
@@ -52,7 +52,7 @@ const BarFeed = props => {
             <View style={styles.socialBarSection}>
               <View style={styles.socialBarButton}>
                 <Image style={styles.icon} source={{uri: 'https://png.icons8.com/ios-glyphs/75/2ecc71/comments.png'}}/>
-                <Text rkType='primary4 hintColor' style={styles.socialBarLabel}>{Math.floor(Math.random() * 100) + 1}</Text>
+                <Text rkType='primary4 hintColor' style={styles.socialBarLabel}>{props.numbercomment}</Text>
               </View>
             </View>
           </View>

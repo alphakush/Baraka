@@ -59,8 +59,6 @@ const FeedScreen = props => {
         // On vérifie qu'on n'a pas activé de filtre
         if( !activeFilterByDate){
           await dispatch(BarsActions.getAllBar());
-        } else {
-
         }
         setIsLoading(false);
         loadFavorites();

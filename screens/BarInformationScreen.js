@@ -35,6 +35,9 @@ const BarInformations = props => {
   const errormsg = useSelector(state => state.auth.errorMessage);
   const [comment, setcomment] = useState('');
   const [rating, setrating] = useState(3); //3 par default
+
+  const dispatch = useDispatch();
+
   const setcommentHandler = (enteredText) => {
     setcomment(enteredText);
   };
@@ -52,7 +55,6 @@ const BarInformations = props => {
        return;
      }
   };
-  const dispatch = useDispatch();
 
   const Likebar = () => {
     if (barliked) {
@@ -76,13 +78,12 @@ const BarInformations = props => {
       props.navigation.setParams({barlike: true});
       setbarliked(true);
     }
-}, [currentMealIsFavorite]);
-
+}, []);
 
   // On récupère les commentaires du bar
   useEffect(() => {
     dispatch(BarsActions.getComment(barID));
-}, [dispatch]);
+}, [setbarliked]);
 
 
 const getComment = useSelector(state => state.bars.commentBars);
@@ -115,6 +116,7 @@ const getComment = useSelector(state => state.bars.commentBars);
             <Text style={styles.descriptionBar}>{barDescription}</Text>
           </View>
         </View>
+
         <View style={styles.ButtonContainer}>
           <TouchableOpacity style={styles.Button} onPress={() => {
               props.navigation.navigate({
@@ -147,15 +149,18 @@ const getComment = useSelector(state => state.bars.commentBars);
               <Text style={styles.commentButtonText}>Envoyer</Text>
             </TouchableOpacity>
           </View>
+
         <FlatList
           style={styles.rootCom}
           data={getComment}
           ItemSeparatorComponent={() => {
             return (<View style={styles.separatorCom} />)
           }}
-          keyExtractor={(item) => {
-            return item._id.toString();
-          }}
+          //keyExtractor={(item) => {
+            //console.log("ici ", item._id);
+            //return item._id.toString();
+          keyExtractor={(item, index) => item._id}
+
           renderItem={(item) => {
             const Commentaire = item.item;
             return (

@@ -12,7 +12,6 @@ const CreateAccountScreen = props => {
 };
 
 CreateAccountScreen.navigationOptions = navData => {
-    console.log();
     return {
         headerTitle: 'Créer un compte',
         headerLeft: <HeaderButtons HeaderButtonComponent={HeaderButton}>

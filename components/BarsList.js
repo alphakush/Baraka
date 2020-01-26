@@ -16,6 +16,8 @@ const BarList = props => {
             description={itemData.item.description}
             averageNotation={itemData.item.note}
             picturesUrls={itemData.item.image}
+            numbercomment={itemData.item.counterComment}
+            numberLike={itemData.item.counterLike}
                 onSelectBar={() => {
                     props.navigation.navigate({
                         routeName: 'BarInfo',

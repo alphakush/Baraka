@@ -27,11 +27,10 @@ const barsReducer = (state = initialState, action) => {
         case GET_FAVORITES_BARS:
             return { ...state, favoriteBars: action.payload }
         case ADD_TO_FAVORITE:
-            //TODO : à adapter
+            return {...state}
         case REMOVE_TO_FAVORITE:
-            //TODO /à adapter
+            return { ...state}
         case GET_COMMENT:
-            //TODO à faire getComment
             return { ...state, commentBars: action.payload }
         case POST_COMMENT:
             return { ...state, response: action.payload }
