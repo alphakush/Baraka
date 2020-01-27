@@ -80,10 +80,10 @@ export const getComment = (barID) => {
 };
 
 //Function permettant de poster un commentaire sur un bar.
-export const postComment = (barID, comment) => {
+export const postComment = (barID, comment, userNote) => {
     return async dispatch => {
         try {
-            const response = await Api.post('/bar/add-comment',{barID, comment});
+            const response = await Api.post('/bar/add-comment',{barID, comment, userNote});
             dispatch({ type: POST_COMMENT,
               payload: response.data,
             });

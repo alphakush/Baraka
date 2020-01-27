@@ -46,7 +46,7 @@ const BarInformations = props => {
   };
   const sendcomment = () => {
     if (comment != ''){
-      dispatch(BarsActions.postComment(barID,comment))
+      dispatch(BarsActions.postComment(barID,comment, rating))
       {errormsg ? Alert.alert("Baraka",errormsg) : null }
       Alert.alert("Baraka","votre message a été posté")
        setcomment('');
