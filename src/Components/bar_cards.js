@@ -28,8 +28,8 @@ class bar_cards extends Component  {
             style={{height: 150}}
             image={this.props.image}
             component="img"
-            alt="Contemplative Reptile"
-            title="Contemplative Reptile"
+            alt=""
+            title=""
           />
           <CardContent style={{backgroundColor: '#c79a00'}}>
             <Typography gutterBottom variant="h5" component="h2">

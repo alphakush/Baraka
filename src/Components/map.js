@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from "react-google-maps";
-import * as data from '../data/info-bar.json';
+import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow, DirectionsRenderer } from "react-google-maps";
+import Api from "../api/api.js";
 import '../index.css';
 //import { positions } from '@material-ui/system';
 import { useState } from "react";
@@ -10,8 +10,15 @@ class Map extends Component {
         super(props);
         this.state = {
             latitude: 0,
-            longitude: 0
+            longitude: 0,
+            nombre_de_bars: null
         }
+    }
+    async componentDidMount() {
+        await Api.get('/allbars').then(userData => {
+            console.log(userData)
+            this.setState({ nombre_de_bars: userData.data })
+        });
     }
     success(pos) {
         var crd = pos.coords;
@@ -34,11 +41,33 @@ class Map extends Component {
     }
     map() {
         const [selectedBar, setSelectedBar] = useState(null);
+        var rows = []
+        const { nombre_de_bars } = this.state
+        if (nombre_de_bars === null)
+            return (
+                <div>
+                    Problème API
+                </div>
+            )
+        for (var i = 0; i < nombre_de_bars.length; i++) {
+            rows.push(<Marker key={nombre_de_bars[i].id}
+                position={{
+                    lat: nombre_de_bars[i].latitude,
+                    lng: nombre_de_bars[i].longitude
+                }}
+                onClick={() => {
+                    setSelectedBar(nombre_de_bars[i]);
+                }}
+                icon={{
+                    url: '/images/biere_logo.png',
+                    scaledSize: new window.google.maps.Size(25, 25)
+                }}
+            />);
+        }
         return (
             <GoogleMap
                 defaultZoom={14}
-                // defaultCenter={{ lat: this.state.latitude, lng: this.state.longitude }}
-                defaultCenter={{ lat: 43.1208, lng: 5.93321 }}
+                defaultCenter={{ lat: this.state.latitude, lng: this.state.longitude }}
                 defaultOptions={{
                     zoomControl: false,
                     mapTypeControl: false,
@@ -47,33 +76,26 @@ class Map extends Component {
                     rotateControl: false,
                     fullscreenControl: false
                 }}>
-                {data.features.map(park => (
-                    <Marker key={park.properties.FACILITY_F}
-                        position={{
-                            lat: park.geometry.coordinates[0],
-                            lng: park.geometry.coordinates[1]
-                        }}
-                        onClick={() => {
-                            setSelectedBar(park);
-                        }}
-                        icon={{
-                            url: '/images/biere_logo.png',
-                            scaledSize: new window.google.maps.Size(25, 25)
-                        }}
-                    />
-                ))}
+                <Marker
+                position={{ lat: this.state.latitude, lng: this.state.longitude }} 
+                icon={{
+                    url: '/images/marker.png',
+                    scaledSize: new window.google.maps.Size(50, 50)
+                }}
+                />
+                {rows}
                 {selectedBar && (
                     <InfoWindow
                         position={{
-                            lat: selectedBar.geometry.coordinates[0],
-                            lng: selectedBar.geometry.coordinates[1]
+                            lat: selectedBar.latitude,
+                            lng: selectedBar.longitude
                         }}
                         onCloseClick={() => {
                             setSelectedBar(null);
                         }}
                     >
                         <div>
-                            <h1>{selectedBar.properties.NAME_FR}</h1><br />
+                            <h1>{selectedBar.name}</h1><br />
                         </div>
                     </InfoWindow>
                 )}

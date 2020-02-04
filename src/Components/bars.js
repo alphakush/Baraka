@@ -31,8 +31,10 @@ class Bars extends Component {
                 key={i}
                 description={nombre_de_bars[i].description}
                 name={nombre_de_bars[i].name}
-                adresse={nombre_de_bars[i].adress}
+                adresse={nombre_de_bars[i].address}
                 image={nombre_de_bars[i].image}
+                note={nombre_de_bars[i].note}
+                phone={nombre_de_bars[i].phone}
                 position={i}
             />);
         }

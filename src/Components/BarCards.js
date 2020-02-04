@@ -15,7 +15,7 @@ class BarCards extends Component  {
       this.position = props.position;
   }
   sayHello(){
-    alert(this.props.name)
+    alert(this.props.phone)
   }
   
   render() {
@@ -44,8 +44,9 @@ class BarCards extends Component  {
             Partager
         </Button>
           <Button size="small" color="primary" onClick={this.sayHello}>
-            Voir les actualités de ce bar
+            Voir le numéro du bar
         </Button>
+        <Typography variant="body2" color="textSecondary" component="p">Note : {this.props.note}/5</Typography>
         </CardActions>
       </Card>
     </div>
