@@ -32,7 +32,7 @@ const FindBarsScreen = props => {
 
     useEffect(() => {
         displayAllBarsHandler();
-    },[]);
+    },[enteredValue]);
 
 
     return (

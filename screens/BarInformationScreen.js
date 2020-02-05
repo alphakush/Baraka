@@ -37,6 +37,7 @@ const BarInformations = props => {
   const [rating, setrating] = useState(3); //3 par default
 
   const dispatch = useDispatch();
+  const getComment = useSelector(state => state.bars.commentBars);
 
   const setcommentHandler = (enteredText) => {
     setcomment(enteredText);
@@ -48,7 +49,8 @@ const BarInformations = props => {
     if (comment != ''){
       dispatch(BarsActions.postComment(barID,comment, rating))
       {errormsg ? Alert.alert("Baraka",errormsg) : null }
-      Alert.alert("Baraka","votre message a été posté")
+      Alert.alert("Baraka","votre message a été posté");
+      dispatch(BarsActions.getComment(barID));
        setcomment('');
      } else{
        Alert.alert("Baraka","Veuillez entrer un commentaire correcte")
@@ -83,10 +85,10 @@ const BarInformations = props => {
   // On récupère les commentaires du bar
   useEffect(() => {
     dispatch(BarsActions.getComment(barID));
-}, [setbarliked]);
+}, []);
 
 
-const getComment = useSelector(state => state.bars.commentBars);
+
   return (
     <KeyboardAwareScrollView>
     <ScrollView>
