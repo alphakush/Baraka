@@ -35,7 +35,6 @@ const BarInformations = props => {
   const errormsg = useSelector(state => state.auth.errorMessage);
   const [comment, setcomment] = useState('');
   const [rating, setrating] = useState(3); //3 par default
-
   const dispatch = useDispatch();
 
   const setcommentHandler = (enteredText) => {
@@ -59,23 +58,19 @@ const BarInformations = props => {
   const Likebar = () => {
     if (barliked) {
       setbarliked(false);
-      props.navigation.setParams({barlike: false});
       dispatch(BarsActions.removeBarToFavorite(barID));
     } else {
       setbarliked(true)
-      props.navigation.setParams({barlike: true});
       dispatch(BarsActions.addBarToFavorite(barID));
     }
   };
 
   // Vérifie que le bar est en favoris de cet utilsateur
-  const currentMealIsFavorite = useSelector(state => state.bars.favoriteBars.some(bar => bar._id === barID)
-  );
+  const currentMealIsFavorite = useSelector(state => state.bars.favoriteBars.some(bar => bar._id === barID));
 
   // On affiche le coeur j'aime de l'utilsateur
   useEffect(() => {
     if(currentMealIsFavorite){
-      props.navigation.setParams({barlike: true});
       setbarliked(true);
     }
 }, []);
@@ -184,19 +179,9 @@ const getComment = useSelector(state => state.bars.commentBars);
 
 BarInformations.navigationOptions = navData => {
   const getBarName = navData.navigation.getParam('barName');
-  const like = navData.navigation.getParam('barlike');
   return {
     headerTitle: `Détails du bar ${getBarName}`,
     headerLayoutPreset: 'center',
-    headerRight: (
-        <HeaderButtons HeaderButtonComponent={HeaderButton}>
-            <Item
-                title="Like"
-                iconName={like ? "ios-heart" : "ios-heart-empty"}
-                onPress={() => Alert.alert("Baraka","InProgress")}
-            />
-        </HeaderButtons>
-    )
   };
 };
 

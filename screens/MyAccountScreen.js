@@ -22,7 +22,6 @@ const MyAccountScreen = props => {
 
   const username = useSelector(state => state.auth.username);
   const email = useSelector(state => state.auth.email);
-
   const saveFilters = useCallback(() => {
     const appliedFilters = {
       Like: isLike,
