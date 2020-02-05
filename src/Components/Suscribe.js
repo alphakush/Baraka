@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import styles from '../App.css';
 import Api from "../api/api.js";
-import ReCAPTCHA from "react-google-recaptcha";
 
 class Suscribe extends Component {
     constructor(props) {
@@ -14,10 +13,6 @@ class Suscribe extends Component {
         };
     }
     
-    onSubmintCaptcha(value) {
-        console.log("Captcha value:", value);
-    }
-
     mySubmitHandler = (event) => {
         event.preventDefault();
         console.log(this.state);
@@ -28,6 +23,7 @@ class Suscribe extends Component {
             .catch(function (error) {
                 console.log(error);
             });
+        alert('Le compte a été crée.');
         this.props.history.push('/');
     }
 

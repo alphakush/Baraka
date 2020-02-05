@@ -6,7 +6,6 @@ import bars from './Components/bars.js'
 import parcours from './Components/parcours.js'
 import login from './Components/Login.js'
 import AddBar from './Components/AddBar.js'
-import Manager from './Components/Manager.js'
 import Suscribe from './Components/Suscribe.js'
 import { Route, NavLink, HashRouter } from "react-router-dom";
 //import 'bootstrap/dist/css/bootstrap.css';
