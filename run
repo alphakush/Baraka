@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#
+
+set -o nounset \
+    -o errexit \
+    -o verbose \
+    -o xtrace
+
+
+# Set environment values if they exist as arguments
+if [ $# -ne 0 ]; then
+  for var in "$@"
+  do
+    export "$var"
+  done
+fi
+env | sort
+
+id
+
+npm run build --production
+
+exec serve -s build

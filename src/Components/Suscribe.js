@@ -8,9 +8,9 @@ class Suscribe extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            username: '',
             email: '',
-            sujet: '',
-            message: ''
+            password: ''
         };
     }
     
@@ -21,14 +21,14 @@ class Suscribe extends Component {
     mySubmitHandler = (event) => {
         event.preventDefault();
         console.log(this.state);
-        Api.post('/contact-us', this.state)
+        Api.post('/signup', this.state)
             .then(function (response) {
                 console.log(response);
             })
             .catch(function (error) {
                 console.log(error);
             });
-        this.props.history.push('/bars');
+        this.props.history.push('/');
     }
 
 
@@ -40,29 +40,24 @@ class Suscribe extends Component {
 
     render() {
         return (
-            <div style={{ width: '100%', height: '100%' }}>
+            <div style={{ padding:'5%', width: '100%', height: '100%' }}>
                 <div>
-                    <h1 className="text-center text-primary">Contact</h1>
+                    <h1 className="text-center text-primary">Creer un compte</h1>
                 </div>
                 <div className={styles.form}></div>
                 <form onSubmit={this.mySubmitHandler}>
                     <div className="form-group">
+                        <label htmlFor="name">Nom d'utilisateur</label>
+                        <input type='text' className="form-control" name='username' onChange={this.myChangeHandler} />
+                    </div>
+                    <div className="form-group">
                         <label htmlFor="email">Adresse mail</label>
-                        <input type='text' className="form-control" name='email' onChange={this.myChangeHandler} />
-                        <small name="emailHelp" className="form-text text-muted">Adresse mail qui sera utilisée pour notre newsletter.</small>
+                        <input type='email' className="form-control" name='email' onChange={this.myChangeHandler} />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="sujet">Sujet</label>
-                        <input type='text' className="form-control" name='sujet' onChange={this.myChangeHandler} />
+                        <label htmlFor="password">Mot de passe</label>
+                        <input type='text' className="form-control" name='password' onChange={this.myChangeHandler} />
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="message">Message</label>
-                        <textarea type='text' className="form-control" rows="8" name='message' onChange={this.myChangeHandler}></textarea>
-                    </div>
-                    <ReCAPTCHA
-                        sitekey="6LeqoscUAAAAADqYshkP3pdOqcJy2JuPRWC0SNHB"
-                        onChange={this.onSubmintCaptcha}
-                    />
                     <button type="submit" className="btn btn-primary btn-block">Envoyer</button>
                 </form>
             </div>)

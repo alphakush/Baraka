@@ -1,0 +1,12 @@
+version: "3"
+services:
+    frontend:
+        container_name: baraka
+        build:
+            context: ./client
+            dockerfile: Dockerfile
+        image: vikasraj/awesome_web
+        ports:
+            - "5000:5001"
+        volumes:
+            - ./src/

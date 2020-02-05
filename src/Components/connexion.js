@@ -3,7 +3,7 @@ class actualites_bars extends Component  {
     render() {
         return(
         <div>
-            Connexion 
+            actualites_bars
         </div>) 
     } 
 }

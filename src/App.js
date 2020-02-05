@@ -4,7 +4,7 @@ import Map from './Components/map.js';
 import Contact from './Components/contact.js';
 import bars from './Components/bars.js'
 import parcours from './Components/parcours.js'
-import connexion from './Components/connexion.js'
+import login from './Components/Login.js'
 import AddBar from './Components/AddBar.js'
 import Manager from './Components/Manager.js'
 import Suscribe from './Components/Suscribe.js'
@@ -25,7 +25,6 @@ class Main extends Component {
           <button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/contact"> Contact </NavLink></button>
           <div className="col-lg"></div>
           <button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/suscribe"> Créer un compte </NavLink></button>
-          <button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/manager"> Ajouter un manager </NavLink></button>
           {utilisateur_est_connecte ? (<button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="./connexion">Se connecter</NavLink></button>)
            : (<NavLink to="./connexion">Créer un compte</NavLink>)}
         </div>)
@@ -38,15 +37,14 @@ class Main extends Component {
           <div style={{ width: '100%', height: '0%' }}>
             <this.Header />
           </div>
-          <div style={{ height: '100%', paddingTop: '5%'}}>
+          <div style={{ height: '100%', paddingTop: '2.5%'}}>
             <Route exact path="/" component={Map} />
             <Route path="/contact" component={Contact} />
             <Route path="/bars" component={bars} />
             <Route path="/suscribe" component={Suscribe} />
             <Route path="/addbar" component={AddBar} />
             <Route path="/parcours" component={parcours} />
-            <Route path="/connexion" component={connexion} />
-            <Route path="/manager" component={Manager} />
+            <Route path="/connexion" component={login} />
           </div>
         </div>
       </HashRouter>

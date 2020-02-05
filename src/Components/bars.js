@@ -28,7 +28,7 @@ class Bars extends Component {
             )
         for (var i = 0; i < nombre_de_bars.length; i++) {
             rows.push(<BarCards
-                key={nombre_de_bars[i]._id}
+                key={i}
                 description={nombre_de_bars[i].description}
                 name={nombre_de_bars[i].name}
                 adresse={nombre_de_bars[i].address}
