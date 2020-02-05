@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow, DirectionsRenderer } from "react-google-maps";
+import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from "react-google-maps";
 import Api from "../api/api.js";
 import '../index.css';
 //import { positions } from '@material-ui/system';
@@ -16,7 +16,6 @@ class Map extends Component {
     }
     async componentDidMount() {
         await Api.get('/allbars').then(userData => {
-            console.log(userData)
             this.setState({ nombre_de_bars: userData.data })
         });
     }
@@ -116,7 +115,7 @@ class Map extends Component {
         const WrappedMap = withScriptjs(withGoogleMap(this.map.bind(this)));
         return (
             <WrappedMap
-                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCARoALGnORPsB-faLx61kr2zFqnKYtwEs&callback=initMap"
+                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCARoALGnORPsB-faLx61kr2zFqnKYtwEs&callback"
                 loadingElement={<div style={{ height: `100%`, width: '100%' }} />}
                 containerElement={<div style={{ height: `100%`, width: '100%' }} />}
                 mapElement={<div style={{ height: `100%`, width: '100%' }} />}

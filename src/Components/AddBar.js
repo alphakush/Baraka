@@ -60,7 +60,7 @@ class AddBar extends Component {
 
     render() {
         return (
-            <div style={{ width: '100%', height: '100%' }}>
+            <div style={{ padding: '5%', width: '100%', height: '100%' }}>
                 <div>
                     <h1 className="text-center text-primary">Ajouter un bar</h1>
                 </div>

@@ -26,10 +26,10 @@ import React, { Component } from "react";
 
       handleSubmit = event => {
           event.preventDefault();
-          console.log(this.state);
           Api.post('/signin', this.state)
           .then(function (response) {
               console.log(response);
+              alert(response.statusText);
           })
           .catch(function (error) {
               console.log(error);
