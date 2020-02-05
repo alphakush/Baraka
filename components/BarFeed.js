@@ -1,4 +1,4 @@
-import React, { Component,useState } from 'react';
+import React, { Component,useState,useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -13,13 +13,29 @@ import {
 import Colors from '../constant/Colors';
 import * as Location from 'expo-location';
 import { Rating, AirbnbRating } from 'react-native-ratings';
+import { useDispatch, useSelector } from 'react-redux';
+import * as BarsActions from '../store/actions/BarsActions';
 
 const BarFeed = props => {
   const [barliked, setbarliked] = useState(false);
-  const Likebar = (barname) => {
-    {barliked ? setbarliked(false) : setbarliked(true) }
-    {barliked ? Alert.alert("Baraka","Vous n'aimez plus ce bar") : Alert.alert("Baraka","Vous aimez ce bar")}
+  const dispatch = useDispatch();
+
+  const currentMealIsFavorite = useSelector(state => state.bars.favoriteBars.some(bar => bar._id === props.id));
+  const Likebar = () => {
+    if (barliked) {
+      setbarliked(false);
+      dispatch(BarsActions.removeBarToFavorite(props.id));
+    } else {
+      setbarliked(true)
+      dispatch(BarsActions.addBarToFavorite(props.id));
+    }
   };
+
+  useEffect(() => {
+    if(currentMealIsFavorite){
+      setbarliked(true);
+    }
+}, []);
 
   return (
     <TouchableOpacity onPress={props.onSelectBar} >
@@ -34,7 +50,7 @@ const BarFeed = props => {
         <View style={styles.cardFooter}>
           <View style={styles.socialBarContainer}>
             <View style={styles.socialBarSection}>
-              <TouchableOpacity style={styles.socialBarButton} onPress={ () => Likebar(props.name) }>
+              <TouchableOpacity style={styles.socialBarButton} onPress={ () => Likebar(props.id) }>
                 <Image style={styles.icon} source={barliked ? require('../images/hearts.png') : require('../images/heartsempty.png')}/>
                 <Text style={styles.socialBarLabel}>{props.numberLike}</Text>
               </TouchableOpacity>

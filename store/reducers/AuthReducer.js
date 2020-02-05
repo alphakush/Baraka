@@ -37,7 +37,7 @@ const authReducer = (state = initialState, action) => {
               userlongitude: action.payloaduserlongitude
             }
         case TOGGLE_TRY_LOCAL_SIGN:
-            return {
+            return { ...state,
               token: action.payload,
               email: action.payloademail,
               username: action.payloadusername,
@@ -45,7 +45,7 @@ const authReducer = (state = initialState, action) => {
               userlongitude : action.payloaduserlongitude
             }
         case GET_USERLOCATION:
-            return {
+            return { ...state,
               userlatitude : action.payloaduserlatitude,
               userlongitude : action.payloaduserlongitude
             }
