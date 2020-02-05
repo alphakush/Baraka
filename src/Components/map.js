@@ -39,9 +39,12 @@ class Map extends Component {
         };
         navigator.geolocation.getCurrentPosition(this.success.bind(this), this.error.bind(this), options)
     }
+    itineraireTo(bar) {
+        alert("Yo");
+    }
+
     map() {
         const [selectedBar, setSelectedBar] = useState(null);
-        var rows = []
         const { nombre_de_bars } = this.state
         if (nombre_de_bars === null)
             return (
@@ -49,21 +52,22 @@ class Map extends Component {
                     Problème API
                 </div>
             )
-        for (var i = 0; i < nombre_de_bars.length; i++) {
-            rows.push(<Marker key={nombre_de_bars[i].id}
-                position={{
-                    lat: nombre_de_bars[i].latitude,
-                    lng: nombre_de_bars[i].longitude
-                }}
-                onClick={() => {
-                    setSelectedBar(nombre_de_bars[i]);
-                }}
-                icon={{
+
+            const rows = nombre_de_bars.map(bar => 
+                <Marker key={bar._id}
+                  position={{
+                    lat: bar.latitude,
+                    lng: bar.longitude
+                  }}
+                  onClick={() => {
+                    setSelectedBar(bar);
+                  }}
+                  icon={{
                     url: '/images/biere_logo.png',
                     scaledSize: new window.google.maps.Size(25, 25)
-                }}
-            />);
-        }
+                  }}
+                />
+              );    
         return (
             <GoogleMap
                 defaultZoom={14}
@@ -95,7 +99,9 @@ class Map extends Component {
                         }}
                     >
                         <div>
-                            <h1>{selectedBar.name}</h1><br />
+                            <p>{selectedBar.name}</p>
+                            <p>{selectedBar.description}</p>
+                            <button >Je m'y rend</button>
                         </div>
                     </InfoWindow>
                 )}
