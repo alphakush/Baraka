@@ -111,6 +111,10 @@ const BarInformations = props => {
               <Image style={styles.like} source={barliked ? require('../images/hearts.png') : require('../images/heartsempty.png')} />
             </TouchableOpacity>
             <Text style={styles.descriptionBar}>{barDescription}</Text>
+            <View style={styles.socialBarButton}>
+              <Image style={styles.icon} source={require('../images/clock.png')}/>
+              <Text rkType='primary4 hintColor' style={styles.socialBarLabel}>Horaires : 10:00h - 02:00h</Text>
+            </View>
           </View>
         </View>
 
@@ -199,6 +203,16 @@ const styles = StyleSheet.create({
     borderBottomRightRadius : 15,
     borderTopRightRadius : 15,
     backgroundColor: 'transparent',
+  },
+  socialBarButton:{
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 8,
+  },
+  socialBarlabel: {
+    alignSelf: 'flex-end',
+    justifyContent: 'center',
   },
   commentButton: {
     backgroundColor: Colors.Gold,

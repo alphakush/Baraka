@@ -28,6 +28,10 @@ const CreateAccount = props => {
   const [username, setUsername] = useState('');
   const [conntected, setConntected] = useState(false);
 
+  const [textInputHolder, settextInputHolder] = useState(0);
+  const [captchaHolder, setcaptchaHolder] = useState(0);
+  const [randomNumberOne, setrandomNumberOne] = useState(0);
+
   const setUsernameHandler = (enteredText) => {
     setUsername(enteredText);
   };
@@ -42,9 +46,16 @@ const CreateAccount = props => {
 
   useEffect(() => {
     signUpHandler();
+    generateCaptcha();
   }, [connexionStatus]);
 
   const signUpHandler = () => {
+    var temp = randomNumberOne;
+    if (textInputHolder != temp) {
+      Alert.alert("Captcha incorrecte");
+      generateCaptcha();
+      return;
+    }
     if (email != '') {
       if (username != '') {
         if (password != '') {
@@ -70,6 +81,23 @@ const CreateAccount = props => {
     } else {
       return;
     }
+  };
+
+  const generateCaptcha = () => {
+      var numberOne = Math.floor(Math.random() * 1000000) + 1;
+      var captchaCode = numberOne ;
+      setrandomNumberOne(numberOne);
+      setcaptchaHolder(captchaCode);
+  };
+  const validateCaptchaCode = () => {
+    var temp = randomNumberOne;
+    if (textInputHolder == temp) {
+      Alert.alert("Captcha Matched");
+    }
+    else {
+      Alert.alert("Captcha NOT Matched");
+    }
+    generateCaptcha();
   };
 
   return (
@@ -116,11 +144,29 @@ const CreateAccount = props => {
           onChangeText={setConfirmpassword} />
         <Image style={styles.inputIcon} source={require('../images/password.png')} />
       </View>
+      <View style={styles.captchaContainerView}>
+         <View style={ styles.captchaChildContainer}>
+           <Image
+             style={{ width: 180, height: 60, resizeMode: 'contain' }}
+             source={{ uri: 'https://dummyimage.com/150x40/0091ea/fafafa.png&text=' + randomNumberOne }}
+           />
+           <TouchableOpacity onPress={generateCaptcha} >
+             <Image source={require('../images/refresh.png')}
+               style={{ width: 40, height: 35, resizeMode: 'contain', margin: 20 }} />
+           </TouchableOpacity>
+         </View>
+         <View style={styles.inputContainer}>
+           <TextInput style={styles.inputs}
+             placeholder="Entrer le Captcha"
+             underlineColorAndroid='transparent'
+             onChangeText={settextInputHolder} />
+         </View>
+         <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={signUpHandler}>
+           <Text style={styles.loginText}>Créer un compte</Text>
+         </TouchableOpacity>
+       </View>
+      </View>
 
-      <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={signUpHandler}>
-        <Text style={styles.loginText}>Créer un compte</Text>
-      </TouchableOpacity>
-    </View>
     </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
@@ -133,6 +179,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.Gainsboro,
   },
+
+  captchaContainerView: {
+    height: 100,
+  },
+  captchaChildContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+
   inputContainer: {
     borderBottomColor: Colors.BlueSky,
     backgroundColor: Colors.White,

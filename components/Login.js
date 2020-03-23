@@ -73,6 +73,10 @@ const Login = props => {
     }
   };
 
+  const createaccount = () => {
+    props.navigation.navigate('CreateAccount')
+  };
+
   const ForgotPassword = () => {
     Alert.alert("Baraka", "Un email vous a été envoyé");
   };
@@ -124,6 +128,10 @@ const Login = props => {
 
       <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={showDialog}>
         <Text style={styles.loginText}>Mot de passe oublié</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={createaccount}>
+        <Text style={styles.loginText}>Créer un compte</Text>
       </TouchableOpacity>
 
     </View>
