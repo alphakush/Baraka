@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from "react-google-maps";
 import Api from "../api/api.js";
 import '../index.css';
-//import { positions } from '@material-ui/system';
+import mapStyles from "./mapStyles";
 import { useState } from "react";
 
 class Map extends Component {
@@ -11,12 +11,13 @@ class Map extends Component {
         this.state = {
             latitude: 0,
             longitude: 0,
-            nombre_de_bars: null
+            barsFromServeur: null,
+            selected_bar:null
         }
     }
     async componentDidMount() {
         await Api.get('/allbars').then(userData => {
-            this.setState({ nombre_de_bars: userData.data })
+            this.setState({ barsFromServeur: userData.data })
         });
     }
     success(pos) {
@@ -33,52 +34,48 @@ class Map extends Component {
     getLocation() {
         var options = {
             enableHighAccuracy: true,
-            timeout: 5000,
+            timeout: 0,
             maximumAge: 0
         };
         navigator.geolocation.getCurrentPosition(this.success.bind(this), this.error.bind(this), options)
     }
-    itineraireTo(bar) {
-        alert("Yo");
+    itineraireTo() {
+        
     }
 
-    map() {
+    initMap() {
         const [selectedBar, setSelectedBar] = useState(null);
-        const { nombre_de_bars } = this.state
-        if (nombre_de_bars === null)
+        const { barsFromServeur } = this.state
+        if (barsFromServeur === null)
             return (
                 <div>
                     Problème API
                 </div>
             )
-
-            const rows = nombre_de_bars.map(bar => 
-                <Marker key={bar._id}
-                  position={{
-                    lat: bar.latitude,
-                    lng: bar.longitude
-                  }}
-                  onClick={() => {
+        const mapBars = barsFromServeur.map(bar => 
+            <Marker 
+                key={bar._id}
+                position={{lat: bar.latitude,lng: bar.longitude}}
+                onClick={() => {
                     setSelectedBar(bar);
-                  }}
-                  icon={{
-                    url: '/images/biere_logo.png',
-                    scaledSize: new window.google.maps.Size(25, 25)
-                  }}
-                />
-              );    
+                    this.state.selected_bar = bar;
+                }}
+                icon={{
+                url: '/images/biere_logo.png',
+                scaledSize: new window.google.maps.Size(25, 25)
+                }}
+            />
+        );  
         return (
             <GoogleMap
                 defaultZoom={14}
                 defaultCenter={{ lat: this.state.latitude, lng: this.state.longitude }}
-                defaultOptions={{
-                    zoomControl: false,
-                    mapTypeControl: false,
-                    scaleControl: false,
-                    streetViewControl: false,
-                    rotateControl: false,
-                    fullscreenControl: false
-                }}>
+                defaultOptions={{ 
+                    styles: mapStyles,
+                    disableDefaultUI: true
+                 }}
+                >
+                
                 <Marker
                 position={{ lat: this.state.latitude, lng: this.state.longitude }} 
                 icon={{
@@ -86,7 +83,7 @@ class Map extends Component {
                     scaledSize: new window.google.maps.Size(50, 50)
                 }}
                 />
-                {rows}
+                {mapBars}
                 {selectedBar && (
                     <InfoWindow
                         position={{
@@ -95,12 +92,13 @@ class Map extends Component {
                         }}
                         onCloseClick={() => {
                             setSelectedBar(null);
+                            this.state.selected_bar = null;
                         }}
                     >
                         <div>
                             <p>{selectedBar.name}</p>
                             <p>{selectedBar.description}</p>
-                            <button >Je m'y rend</button>
+                            <button onClick={() => this.itineraireTo()}>Je m'y rend</button>
                         </div>
                     </InfoWindow>
                 )}
@@ -112,10 +110,10 @@ class Map extends Component {
 
     render() {
         this.getLocation()
-        const WrappedMap = withScriptjs(withGoogleMap(this.map.bind(this)));
+        const WrappedMap = withScriptjs(withGoogleMap(this.initMap.bind(this)));
         return (
             <WrappedMap
-                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCARoALGnORPsB-faLx61kr2zFqnKYtwEs&callback"
+                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCARoALGnORPsB-faLx61kr2zFqnKYtwEs"
                 loadingElement={<div style={{ height: `100%`, width: '100%' }} />}
                 containerElement={<div style={{ height: `100%`, width: '100%' }} />}
                 mapElement={<div style={{ height: `100%`, width: '100%' }} />}
