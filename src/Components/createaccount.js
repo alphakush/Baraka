@@ -28,14 +28,14 @@ class CreateAccount extends Component {
                 console.log(error);
             });
         this.props.history.push('/bars');
-    }
+    };
 
 
     myChangeHandler = (event) => {
         let nam = event.target.name;
         let val = event.target.value;
         this.setState({ [nam]: val });
-    }
+    };
 
     render() {
         return (
