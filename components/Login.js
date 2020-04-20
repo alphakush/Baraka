@@ -51,7 +51,15 @@ const Login = props => {
     //Envoi d'email pour le reset du mot de passe
     if(emailreset != ""){
       dispatch(AuthActions.resetPassword(emailreset.toLowerCase()));
-      Alert.alert("Baraka","Reset du mot de passe du compte : "+emailreset)  
+      Alert.alert(
+      "Baraka",
+      "Reset du mot de passe du compte : "+emailreset+" effectué avec succès",
+      [
+        { text: "OK", onPress: () => handleCancel() }
+      ],
+      { cancelable: false }
+    )
+
     } else {
       Alert.alert("Baraka","Merci d'indiquer un mot de passse ")
     }
@@ -124,7 +132,7 @@ const Login = props => {
         <Dialog.Description>
           Entrez votre adresse email pour réinitialiser votre mot de passe
         </Dialog.Description>
-        <Dialog.Input  placeholder="e-mail" value={emailreset} onChangeText={setEmailResetHandler}>
+        <Dialog.Input value={emailreset} onChangeText={setEmailResetHandler}>
         </Dialog.Input>
         <Dialog.Button label="Annuler" onPress={handleCancel} />
         <Dialog.Button label="Réinitialiser" onPress={handleReset} />
