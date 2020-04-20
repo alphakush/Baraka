@@ -4,6 +4,7 @@ export const TOGGLE_SIGNOUT = "TOGGLE_SIGNOUT";
 export const TOGGLE_TRY_LOCAL_SIGN = "TOGGLE_TRY_LOCAL_SIGN";
 export const TOGGLE_ERROR = "TOGGLE_ERROR";
 export const GET_USERLOCATION = "GET_USERLOCATION";
+export const TOGGLE_RESET_PASSWORD = "TOGGLE_RESET_PASSWORD";
 
 import Api from '../../api/api';
 import { AsyncStorage } from 'react-native';
@@ -29,7 +30,7 @@ export const signIn = (email, password) => {
               payloaduserlongitude : longitude
             });
         } catch (error) {
-            dispatch({ type: TOGGLE_ERROR, payload: "Merci de bien vérifier votre E-mail ou votre mot de passe" });
+            dispatch({ type: TOGGLE_ERROR, payload: "Merci de bien vérifier votre E-mail ou votre mot de passe." });
         }
     };
 };
@@ -54,7 +55,7 @@ export const signUp = (username, email, password) => {
               payloaduserlongitude: longitude
             });
         } catch (error) {
-            dispatch({ type: TOGGLE_ERROR, payload: "Merci de bien vérifier votre E-mail ou votre mot de passe" });
+            dispatch({ type: TOGGLE_ERROR, payload: "Merci de bien vérifier votre E-mail ou votre mot de passe." });
         }
     };
 };
@@ -64,7 +65,7 @@ export const contactEmail = (email, objet, message) => {
         try {
             const response = await Api.post('/contact-us', { email, objet, message });
         } catch (error) {
-            dispatch({ type: TOGGLE_ERROR, payload: "Merci de remplir tous les champs" });
+            dispatch({ type: TOGGLE_ERROR, payload: "Merci de remplir tous les champs." });
         }
     };
 };
@@ -88,7 +89,21 @@ export const GetUserLocation = (latitude, longitude) => {
               payloaduserlongitude: longitude
             });
         } catch (error) {
-            dispatch({ type: TOGGLE_ERROR, payload: "Impossible de récuperer la localisation" });
+            dispatch({ type: TOGGLE_ERROR, payload: "Impossible de récuperer la localisation." });
+        }
+    };
+};
+
+export const resetPassword = (email) => {
+    return async dispatch => {
+        try {
+            const response = await Api.post('/rest-password', { email });
+            console.log(response.data.status);
+            dispatch({ type: TOGGLE_RESET_PASSWORD,
+              payload: response.data.status,
+            });
+        } catch (error) {
+            dispatch({ type: TOGGLE_ERROR, payload: "Une erreur s'est produite pour reinitiliser votre mot de passe." });
         }
     };
 };

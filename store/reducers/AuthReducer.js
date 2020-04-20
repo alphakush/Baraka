@@ -4,7 +4,8 @@ import {
     TOGGLE_SIGNUP,
     TOGGLE_SIGNOUT,
     TOGGLE_TRY_LOCAL_SIGN,
-    GET_USERLOCATION
+    GET_USERLOCATION,
+    TOGGLE_RESET_PASSWORD
 } from '../actions/AuthAction';
 
 const initialState = {
@@ -13,7 +14,8 @@ const initialState = {
     username : '',
     email : '',
     userlatitude : null,
-    userlongitude : null
+    userlongitude : null,
+    stateRequest: null
 }
 
 const authReducer = (state = initialState, action) => {
@@ -56,6 +58,10 @@ const authReducer = (state = initialState, action) => {
               username : null,
               userlatitude: null,
               userlongitude: null
+            }
+          case TOGGLE_RESET_PASSWORD:
+            return {...state,
+              stateRequest : action.payload
             }
         default:
             return state;

@@ -49,7 +49,12 @@ const Login = props => {
 
   handleReset = () => {
     //Envoi d'email pour le reset du mot de passe
-    Alert.alert("Baraka","Reset du mot de passe du compte : "+emailreset)
+    if(emailreset != ""){
+      dispatch(AuthActions.resetPassword(emailreset.toLowerCase()));
+      Alert.alert("Baraka","Reset du mot de passe du compte : "+emailreset)  
+    } else {
+      Alert.alert("Baraka","Merci d'indiquer un mot de passse ")
+    }
   };
 
   useEffect(() => {
