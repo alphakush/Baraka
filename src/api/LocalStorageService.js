@@ -10,10 +10,28 @@ const LocalStorageService = (function () {
         return localStorage.getItem('token');
     }  function _clearToken() {
         localStorage.removeItem('token');
-    } return {
+    } function _setEmail(email) {
+        localStorage.setItem('email', email);
+    } function _getEmail() {
+        return localStorage.getItem('email');
+    }  function _clearEmail() {
+        localStorage.removeItem('email');
+    } function _setUsername(username) {
+        localStorage.setItem('username', username);
+    } function _getUsername() {
+        return localStorage.getItem('username');
+    }  function _clearUsername() {
+        localStorage.removeItem('username');
+    }return {
         getService: _getService,
         setToken: _setToken,
         getToken: _getToken,
-        clearToken: _clearToken
+        clearToken: _clearToken,
+        setEmail: _setEmail,
+        getEmail: _getEmail,
+        clearEmail: _clearEmail,
+        setUsername: _setUsername,
+        getUsername: _getUsername,
+        clearUsername: _clearUsername
     }
 })(); export default LocalStorageService;

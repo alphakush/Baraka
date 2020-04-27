@@ -3,6 +3,7 @@ import React, { Component } from "react";
     import Button from 'react-bootstrap/Button'
     import Api from "../api/api.js";
     import 'react-bootstrap';
+import LocalStorageService from "../api/LocalStorageService";
 
     export default class Login extends Component {
       constructor(props) {
@@ -29,12 +30,16 @@ import React, { Component } from "react";
           Api.post('/signin', this.state)
           .then(function (response) {
               console.log(response);
+              const localStorageService = LocalStorageService.getService();
+              localStorageService.setToken(response.data.token);
+              localStorageService.setUsername(response.data.user.username);
+              localStorageService.setEmail(response.data.user.email);
               alert(response.statusText);
           })
           .catch(function (error) {
               console.log(error);
           });
-      this.props.history.push('/');
+        this.props.history.push('/');
       }
 
       render() {

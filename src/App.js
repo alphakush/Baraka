@@ -5,16 +5,22 @@ import Contact from './Components/contact.js';
 import bars from './Components/bars.js'
 import parcours from './Components/parcours.js'
 import login from './Components/Login.js'
+import logout from './Components/Logout.js'
 import AddBar from './Components/AddBar.js'
 import Suscribe from './Components/Suscribe.js'
 import { Route, NavLink, HashRouter } from "react-router-dom";
+import LocalStorageService from "./api/LocalStorageService";
 //import 'bootstrap/dist/css/bootstrap.css';
 
 
 class Main extends Component {
 
   Header() {
-    var utilisateur_est_connecte = true;
+    let localStorageService = LocalStorageService.getService();
+      let username = localStorageService.getUsername();
+      let utilisateur_est_connecte = false;
+      if (username !== null)
+        utilisateur_est_connecte = true;
     return (
       <div className="row bg-dark">
           <button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/">Home </NavLink></button>
@@ -23,9 +29,9 @@ class Main extends Component {
           <button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/parcours"> Liste des parcours</NavLink></button>
           <button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/contact"> Contact </NavLink></button>
           <div className="col-lg"></div>
-          <button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/suscribe"> Créer un compte </NavLink></button>
-          {utilisateur_est_connecte ? (<button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="./connexion">Se connecter</NavLink></button>)
-           : (<NavLink to="./connexion">Créer un compte</NavLink>)}
+          {utilisateur_est_connecte ? (<button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/logout">Hello {username}</NavLink></button>)
+              : (<button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/suscribe"> Créer un compte </NavLink></button>)}
+          {utilisateur_est_connecte === false ? (<button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/connexion">Se connecter</NavLink></button>):null}
         </div>)
   }
   
@@ -44,6 +50,7 @@ class Main extends Component {
             <Route path="/addbar" component={AddBar} />
             <Route path="/parcours" component={parcours} />
             <Route path="/connexion" component={login} />
+            <Route path="/logout" component={logout} />
           </div>
         </div>
       </HashRouter>
