@@ -23,6 +23,7 @@ import ContactScreen from '../screens/ContactScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import tryLocalSigninScreen from '../screens/TryLocalSigninScreen';
 import BarRouteScreen from '../screens/BarRoute';
+import PromotionScreen from '../screens/PromotionScreen';
 
 import Colors from '../constant/Colors';
 
@@ -265,6 +266,25 @@ const MyAccountNavigator = createStackNavigator(
     }
 );
 
+const PromotionNavigator = createStackNavigator(
+    {
+        Logout: {
+            screen: PromotionScreen
+        },
+    },
+    {
+        defaultNavigationOptions: defaultStackNavOptions,
+        navigationOptions: {
+            drawerLabel: 'Mes Promotions  ',
+            drawerIcon: drawerConfig =>
+                <SimpleLineIcons
+                    name="present"
+                    size={20}
+                    color={drawerConfig.tintColor}
+                />
+        }
+    }
+);
 const ContactNavigator = createStackNavigator(
     {
         Contact: ContactScreen,
@@ -330,6 +350,7 @@ const switchNavigator = createSwitchNavigator({
             Findbar: FindBarNavigator,
             Geolocate: GeolocateNavigator,
             Contact: ContactNavigator,
+            Promotions: PromotionNavigator
         }, {
         contentOptions: {
             activeTintColor: Colors.primary,
