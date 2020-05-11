@@ -10,28 +10,21 @@ import AddBar from './Components/AddBar.js'
 import Suscribe from './Components/Suscribe.js'
 import { Route, NavLink, HashRouter } from "react-router-dom";
 import LocalStorageService from "./api/LocalStorageService";
-//import 'bootstrap/dist/css/bootstrap.css';
-
 
 class Main extends Component {
-
-  Header() {
+    Header() {
     let localStorageService = LocalStorageService.getService();
-      let username = localStorageService.getUsername();
-      let utilisateur_est_connecte = false;
-      if (username !== null)
-        utilisateur_est_connecte = true;
     return (
       <div className="row bg-dark">
           <button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/">Home </NavLink></button>
-          <button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/Addbar">Ajouter un bar </NavLink></button>
+          {localStorageService.getUsername() !== null ? (<button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/Addbar">Ajouter un bar </NavLink></button>):null}
           <button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/bars"> Liste des bars </NavLink></button>
-          <button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/parcours"> Liste des parcours</NavLink></button>
-          <button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/contact"> Contact </NavLink></button>
-          <div className="col-lg"></div>
-          {utilisateur_est_connecte ? (<button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/logout">Hello {username}</NavLink></button>)
+          {localStorageService.getUsername() !== null ? (<button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/parcours"> Liste des parcours</NavLink></button>):null}
+          {localStorageService.getUsername() !== null ? (<button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/contact"> Contact </NavLink></button>):null}
+          <div className="col-lg"/>
+          {localStorageService.getUsername() !== null ? (<button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/logout">Hello {localStorageService.getUsername()}</NavLink></button>)
               : (<button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/suscribe"> Créer un compte </NavLink></button>)}
-          {utilisateur_est_connecte === false ? (<button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/connexion">Se connecter</NavLink></button>):null}
+          {localStorageService.getUsername() === null ? (<button type="button" className="btn btn-dark btn-lg col-lg"><NavLink to="/connexion">Se connecter</NavLink></button>):null}
         </div>)
   }
   

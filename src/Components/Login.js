@@ -39,7 +39,7 @@ import LocalStorageService from "../api/LocalStorageService";
           .catch(function (error) {
               console.log(error);
           });
-        this.props.history.push('/');
+         this.props.history.push('/');
       }
 
       render() {
