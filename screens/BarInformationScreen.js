@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback , ActivityIndicator} from 'react';
 import {
   View,
   Text,
@@ -12,8 +12,6 @@ import {
   ScrollView,
   Keyboard
 } from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import HeaderButton from '../components/HeaderButton';
 import Colors from '../constant/Colors';
 import { useDispatch, useSelector } from 'react-redux';
 import * as BarsActions from '../store/actions/BarsActions';
@@ -37,22 +35,25 @@ const BarInformations = props => {
   const [rating, setrating] = useState(3); //3 par default
   const dispatch = useDispatch();
   const getComment = useSelector(state => state.bars.commentBars);
+  const [isLoading, setIsLoading] = useState(false);
 
   const setcommentHandler = (enteredText) => {
     setcomment(enteredText);
   };
+
   const setratingHandler = (enteredText) => {
     setrating(enteredText);
   };
-  const sendcomment = () => {
+
+  const sendcomment = async () => {
     if (comment != ''){
-      dispatch(BarsActions.postComment(barID,comment, rating))
+      dispatch(BarsActions.postComment(barID,comment, rating)).then(() =>{
       {errormsg ? Alert.alert("Baraka",errormsg) : null }
-      Alert.alert("Baraka","votre message a été posté");
       dispatch(BarsActions.getComment(barID));
        setcomment('');
+      })
      } else{
-       Alert.alert("Baraka","Veuillez entrer un commentaire correcte")
+       Alert.alert("Baraka","Veuillez entrer un commentaire correcte");
        return;
      }
   };
@@ -68,21 +69,38 @@ const BarInformations = props => {
   };
 
   // Vérifie que le bar est en favoris de cet utilsateur
-  const currentMealIsFavorite = useSelector(state => state.bars.favoriteBars.some(bar => bar._id === barID));
+  const currentBarIsFavorite = useSelector(state => state.bars.favoriteBars.some(bar => bar._id === barID));
 
   // On affiche le coeur j'aime de l'utilsateur
   useEffect(() => {
-    if(currentMealIsFavorite){
+    if(currentBarIsFavorite){
       setbarliked(true);
     }
 }, []);
 
+const loadComment = useCallback(async () => {
+  try {
+    dispatch(BarsActions.getComment(barID));
+  } catch (err) {
+    setError(err.message);
+  }
+}, [dispatch, setIsLoading]);
+
   // On récupère les commentaires du bar
   useEffect(() => {
-    dispatch(BarsActions.getComment(barID));
-}, []);
+    loadComment();
+}, [dispatch, loadComment]);
 
+useEffect(() => {
+  const willFocusSub = props.navigation.addListener(
+    'willFocus',
+    loadComment
+  );
 
+  return () => {
+    willFocusSub.remove();
+  };
+}, [loadComment]);
 
   return (
     <KeyboardAwareScrollView>
@@ -150,16 +168,12 @@ const BarInformations = props => {
               <Text style={styles.commentButtonText}>Envoyer</Text>
             </TouchableOpacity>
           </View>
-
-        <FlatList
+            <FlatList
           style={styles.rootCom}
           data={getComment}
           ItemSeparatorComponent={() => {
             return (<View style={styles.separatorCom} />)
           }}
-          //keyExtractor={(item) => {
-            //console.log("ici ", item._id);
-            //return item._id.toString();
           keyExtractor={(item, index) => item._id}
 
           renderItem={(item) => {
