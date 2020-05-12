@@ -24,7 +24,6 @@ class Suscribe extends Component {
                 localStorageService.setToken(response.data.token);
                 localStorageService.setUsername(response.data.user.username);
                 localStorageService.setEmail(response.data.user.email);
-                alert('Le compte a été crée.');
                 window.location.href=document.location.href.replace("suscribe", "");
             })
             .catch(function (error) {
@@ -32,14 +31,14 @@ class Suscribe extends Component {
                 window.location.href=document.location.href.replace("suscribe", "");
             });
 
-    }
+    };
 
 
     myChangeHandler = (event) => {
         let nam = event.target.name;
         let val = event.target.value;
         this.setState({ [nam]: val });
-    }
+    };
 
     render() {
         return (

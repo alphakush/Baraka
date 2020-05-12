@@ -11,9 +11,8 @@ export default class Logout extends Component {
         localStorageService.clearToken();
         localStorageService.clearUsername();
         localStorageService.clearEmail();
-        alert("logout succesfully");
         window.location.href=document.location.href.replace("logout", "");
-    }
+    };
 
     render() {
         return (
@@ -21,7 +20,8 @@ export default class Logout extends Component {
                 <Form onSubmit={this.handleSubmit}>
                     <Button
                         block
-                        type="submit">
+                        type="submit"
+                        style={{ marginTop: 50, width: 300, marginLeft: 'auto', marginRight: 'auto'}}>
                         Logout
                     </Button>
                 </Form>

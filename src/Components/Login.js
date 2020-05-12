@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-    import Form from 'react-bootstrap/Form'
-    import Button from 'react-bootstrap/Button'
-    import Api from "../api/api.js";
-    import 'react-bootstrap';
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import Api from "../api/api.js";
+import 'react-bootstrap';
 import LocalStorageService from "../api/LocalStorageService";
 
     export default class Login extends Component {
@@ -23,7 +23,7 @@ import LocalStorageService from "../api/LocalStorageService";
         this.setState({
           [event.target.id]: event.target.value
         });
-      }
+      };
 
       handleSubmit = event => {
           event.preventDefault();
@@ -34,14 +34,13 @@ import LocalStorageService from "../api/LocalStorageService";
               localStorageService.setToken(response.data.token);
               localStorageService.setUsername(response.data.user.username);
               localStorageService.setEmail(response.data.user.email);
-              alert(response.statusText);
               window.location.href=document.location.href.replace("connexion", "");
           })
           .catch(function (error) {
               console.log(error);
               window.location.href=document.location.href.replace("connexion", "");
           });
-      }
+      };
 
       render() {
         return (
