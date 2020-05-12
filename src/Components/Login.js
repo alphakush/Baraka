@@ -35,11 +35,12 @@ import LocalStorageService from "../api/LocalStorageService";
               localStorageService.setUsername(response.data.user.username);
               localStorageService.setEmail(response.data.user.email);
               alert(response.statusText);
+              window.location.href=document.location.href.replace("connexion", "");
           })
           .catch(function (error) {
               console.log(error);
+              window.location.href=document.location.href.replace("connexion", "");
           });
-         this.props.history.push('/');
       }
 
       render() {

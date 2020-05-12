@@ -12,7 +12,7 @@ export default class Logout extends Component {
         localStorageService.clearUsername();
         localStorageService.clearEmail();
         alert("logout succesfully");
-        this.props.history.push('/');
+        window.location.href=document.location.href.replace("logout", "");
     }
 
     render() {

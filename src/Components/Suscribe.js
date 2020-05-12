@@ -24,12 +24,14 @@ class Suscribe extends Component {
                 localStorageService.setToken(response.data.token);
                 localStorageService.setUsername(response.data.user.username);
                 localStorageService.setEmail(response.data.user.email);
+                alert('Le compte a été crée.');
+                window.location.href=document.location.href.replace("suscribe", "");
             })
             .catch(function (error) {
                 console.log(error);
+                window.location.href=document.location.href.replace("suscribe", "");
             });
-        alert('Le compte a été crée.');
-        this.props.history.push('/');
+
     }
 
 
