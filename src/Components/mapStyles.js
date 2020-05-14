@@ -1,10 +1,5 @@
 export default [
     {
-        "scaleControl": "false",
-        "streetViewControl": "false",
-        "fullscreenControl": "false"
-    },
-    {
       "featureType": "administrative.land_parcel",
       "elementType": "labels",
       "stylers": [

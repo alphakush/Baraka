@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from "react-google-maps";
+import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow, DirectionsRenderer } from "react-google-maps";
 import Api from "../api/api.js";
 import '../index.css';
 import mapStyles from "./mapStyles";
@@ -12,17 +12,20 @@ class Map extends Component {
             latitude: 0,
             longitude: 0,
             barsFromServeur: null,
-            selected_bar:null
+            selected_bar:null,
+            itineraireToBar:null,
+            directions:null
         }
     }
-    async componentDidMount() {
+    async UNSAFE_componentWillMount() {
         await Api.get('/allbars').then(userData => {
             this.setState({ barsFromServeur: userData.data })
         });
+        this.setState({ directionsService: new window.google.maps.DirectionsService() })
     }
     success(pos) {
         var crd = pos.coords;
-        this.setState({
+        this.setState({            
             latitude: crd.latitude,
             longitude: crd.longitude
         })
@@ -39,12 +42,26 @@ class Map extends Component {
         };
         navigator.geolocation.getCurrentPosition(this.success.bind(this), this.error.bind(this), options)
     }
-    itineraireTo() {
-        
+    itineraireTo() {    
+                const directionService = new window.google.maps.DirectionsService()    
+                directionService.route({
+                    destination: new window.google.maps.LatLng(this.state.selected_bar.latitude, this.state.selected_bar.longitude),
+                    origin: new window.google.maps.LatLng(this.state.latitude, this.state.longitude),
+                    travelMode: window.google.maps.TravelMode.WALKING,
+                }, (result, status) => {
+                    if (status === window.google.maps.DirectionsStatus.OK) {
+                        this.setState({
+                            directions: result,
+                        });
+                    } else {
+                        console.log(`error fetching directions ${result}`);
+                    }
+                });
     }
 
     initMap() {
         const [selectedBar, setSelectedBar] = useState(null);
+        const [itineraireToBar, setItineraireToBar] = useState(null);
         const { barsFromServeur } = this.state
         if (barsFromServeur === null)
             return (
@@ -84,6 +101,12 @@ class Map extends Component {
                 }}
                 />
                 {mapBars}
+                {itineraireToBar && (
+                    <DirectionsRenderer
+                        directions={this.state.directions}
+                    />
+
+                )}
                 {selectedBar && (
                     <InfoWindow
                         position={{
@@ -98,7 +121,11 @@ class Map extends Component {
                         <div>
                             <p>{selectedBar.name}</p>
                             <p>{selectedBar.description}</p>
-                            <button onClick={() => this.itineraireTo()}>Je m'y rend</button>
+                            <button onClick={() => {
+                                this.itineraireTo();
+                                setItineraireToBar(selectedBar);
+                                this.state.itineraireToBar = selectedBar;                                
+                            }}>Je m'y rend</button>
                         </div>
                     </InfoWindow>
                 )}

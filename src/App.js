@@ -32,7 +32,7 @@ class Main extends Component {
   render() {
     return (
       <HashRouter>
-        <div style={{ background: '#dceafd', width: '100vw', height: '100vh' }}>
+        <div style={{ background: '#dceafd', width: '99.2vw', height: '100vh' }}>
           <div style={{ width: '100%', height: '0%' }}>
             <this.Header />
           </div>
