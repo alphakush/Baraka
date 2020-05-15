@@ -14,7 +14,7 @@
     "splash": {
       "image": "./assets/splash_baraka.png",
       "backgroundColor": "#FFFFFF",
-      "resizeMode": "conver"
+      "resizeMode": "contain"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
