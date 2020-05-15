@@ -5,6 +5,8 @@ export const TOGGLE_ERROR_BARS = "TOGGLE_ERROR_BARS";
 export const GET_FAVORITES_BARS = "GET_FAVORITES_BARS";
 export const GET_COMMENT = "GET_COMMENT";
 export const POST_COMMENT = "POST_COMMENT";
+export const POST_NOTE = "POST_NOTE";
+export const CHECK_NOTE = "CHECK_NOTE";
 export const SET_FILTERS ='SET_FILTERS';
 
 import Api from '../../api/api';
@@ -86,6 +88,34 @@ export const postComment = (barID, comment) => {
             const response = await Api.post('/bar/add-comment',{barID, comment});
             dispatch({ type: POST_COMMENT,
               payload: response.data,
+            });
+        } catch (error) {
+            dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite pour poster le commentaire." });
+        }
+    };
+};
+
+//Function permettant de poster un commentaire sur un bar.
+export const addRating = (barID, userNote) => {
+    return async dispatch => {
+        try {
+            const response = await Api.patch('/bar/add-note',{barID, userNote});
+            dispatch({ type: POST_NOTE,
+              payload: response.data.success,
+            });
+        } catch (error) {
+            dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite pour poster le commentaire." });
+        }
+    };
+};
+
+//Function permettant de vérifier si on a poster une note.
+export const checkRating = (barID, userNote) => {
+    return async dispatch => {
+        try {
+            const response = await Api.get('/bar/check-note/'+barID);
+            dispatch({ type: CHECK_NOTE,
+              payload: response.data.success,
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite pour poster le commentaire." });

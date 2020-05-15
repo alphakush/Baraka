@@ -31,11 +31,13 @@ const BarInformations = props => {
   const barlatitude = props.navigation.getParam('barlatitude');
   const barlongitude = props.navigation.getParam('barlongitude');
   const errormsg = useSelector(state => state.auth.errorMessage);
+  const responseRatingNote = useSelector(state => state.bars.response);
   const [comment, setcomment] = useState('');
   const [rating, setrating] = useState(3); //3 par default
   const dispatch = useDispatch();
   const getComment = useSelector(state => state.bars.commentBars);
   const [isLoading, setIsLoading] = useState(false);
+  const conditionForRatingBar = "Vous n'avez pas encore noté ce bar.";
 
   const setcommentHandler = (enteredText) => {
     setcomment(enteredText);
@@ -43,6 +45,11 @@ const BarInformations = props => {
 
   const setratingHandler = (enteredText) => {
     setrating(enteredText);
+    if(typeof responseRatingNote !== 'undefined'){
+      if(responseRatingNote === conditionForRatingBar){
+        dispatch(BarsActions.addRating(barID,rating));
+      }
+    }
   };
 
   const sendcomment = async () => {
@@ -77,6 +84,11 @@ const BarInformations = props => {
       setbarliked(true);
     }
 }, []);
+
+// On affiche le coeur j'aime de l'utilsateur
+useEffect(() => {
+  dispatch(BarsActions.checkRating(barID));
+}, [setratingHandler]);
 
 const loadComment = useCallback(async () => {
   try {

@@ -6,6 +6,8 @@ import {
   REMOVE_TO_FAVORITE,
   GET_COMMENT,
   POST_COMMENT,
+  POST_NOTE,
+  CHECK_NOTE,
   SET_FILTERS
 } from '../actions/BarsActions';
 
@@ -17,7 +19,8 @@ const initialState = {
     errorMessage: '',
     filterByLike: false,
     filterByDistance: false,
-    filterByDate: false
+    filterByDate: false,
+    response: ''
 }
 
 const barsReducer = (state = initialState, action) => {
@@ -33,6 +36,10 @@ const barsReducer = (state = initialState, action) => {
         case GET_COMMENT:
             return { ...state, commentBars: action.payload }
         case POST_COMMENT:
+            return { ...state, response: action.payload }
+        case POST_NOTE:
+            return { ...state, response: action.payload }
+        case CHECK_NOTE:
             return { ...state, response: action.payload }
         case SET_FILTERS:
             return { ...state,
