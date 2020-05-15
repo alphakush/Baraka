@@ -94,7 +94,7 @@ const FeedScreen = props => {
 FeedScreen.navigationOptions = navData => {
     return {
         headerTitle: 'Accueil ',
-        headerLeft: <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        headerLeft: (<HeaderButtons HeaderButtonComponent={HeaderButton}>
             <Item
                 title="Menu"
                 iconName="ios-menu"
@@ -103,6 +103,18 @@ FeedScreen.navigationOptions = navData => {
                 }}
             />
         </HeaderButtons>
+      ),
+      headerRight: (
+          <HeaderButtons HeaderButtonComponent={HeaderButton}>
+              <Item
+                  title="Filters"
+                  iconName="ios-settings"
+                  onPress={() => {
+                    navData.navigation.navigate('FilterScreen');
+                  }}
+              />
+          </HeaderButtons>
+      )
     };
 };
 

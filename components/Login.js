@@ -44,6 +44,7 @@ const Login = props => {
   };
 
   handleCancel = () => {
+    setEmailReset('');
     setdialogvisible(false);
   };
 
@@ -61,7 +62,7 @@ const Login = props => {
     )
 
     } else {
-      Alert.alert("Baraka","Merci d'indiquer un mot de passse ")
+      Alert.alert("Baraka","Merci d'indiquer une adresse email valide")
     }
   };
 

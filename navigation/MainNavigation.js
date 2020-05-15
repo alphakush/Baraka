@@ -24,6 +24,7 @@ import FavoritesScreen from '../screens/FavoritesScreen';
 import tryLocalSigninScreen from '../screens/TryLocalSigninScreen';
 import BarRouteScreen from '../screens/BarRoute';
 import PromotionScreen from '../screens/PromotionScreen';
+import FilterScreen from '../screens/FilterScreen';
 
 import Colors from '../constant/Colors';
 
@@ -51,6 +52,9 @@ const FeedNavigator = createStackNavigator(
         },
         BarRoute: {
           screen: BarRouteScreen
+        },
+        FilterScreen :{
+          screen: FilterScreen,
         }
     },
     {
@@ -261,6 +265,24 @@ const MyAccountNavigator = createStackNavigator(
                     name="user"
                     size={20}
                     color={drawerConfig.tintColor}
+                />
+        }
+    }
+);
+
+const MyFilterScreenNavigator = createStackNavigator(
+    {
+        MyFilterScreen: FilterScreen,
+    },
+    {
+        defaultNavigationOptions: defaultStackNavOptions,
+        navigationOptions: {
+            drawerLabel: 'Filtres  ',
+            drawerIcon: drawerConfig =>
+                <SimpleLineIcons
+                    name="user"
+                    size={20}
+
                 />
         }
     }

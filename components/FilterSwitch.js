@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Platform, StyleSheet, Switch } from 'react-native';
 import Colors from '../constant/Colors';
 
+
 const FilterSwitch = props => {
     return (
             <View style={styles.filterContainer}>
@@ -18,7 +19,7 @@ const FilterSwitch = props => {
 const styles = StyleSheet.create({
     title: {
         fontFamily: 'open-sans-bold',
-        fontSize: 22,
+        fontSize: 32,
         margin: 20,
         textAlign: 'center'
     },
