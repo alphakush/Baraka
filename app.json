@@ -2,18 +2,18 @@
   "expo": {
     "name": "Baraka",
     "slug": "baraka",
+    "description" : "Baraka est L'APPLICATION qui vous permet de trouver une bonne bière partout en France", 
     "privacy": "public",
     "platforms": [
       "ios",
-      "android",
-      "web"
+      "android"
     ],
-    "version": "1.0.0",
+    "version": "1.2.1",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/baraka_icon.png",
     "splash": {
-      "image": "./assets/splash.png",
-      "backgroundColor": "#FEF9B0",
+      "image": "./assets/splash_baraka.png",
+      "backgroundColor": "#FFFFFF",
       "resizeMode": "contain"
     },
     "updates": {
