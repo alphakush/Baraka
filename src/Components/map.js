@@ -12,9 +12,9 @@ class Map extends Component {
             latitude: 0,
             longitude: 0,
             barsFromServeur: null,
-            selected_bar:null,
             itineraireToBar:null,
-            directions:null
+            directions:null,
+            selected_bar:null
         }
     }
     async UNSAFE_componentWillMount() {
@@ -81,7 +81,7 @@ class Map extends Component {
                 position={{lat: bar.latitude,lng: bar.longitude}}
                 onClick={() => {
                     setSelectedBar(bar);
-                    this.state.selected_bar = bar;
+                    this.setState({selected_bar:bar})
                 }}
                 icon={{
                 url: '/images/biere_logo.png',
@@ -121,7 +121,7 @@ class Map extends Component {
                         }}
                         onCloseClick={() => {
                             setSelectedBar(null);
-                            this.state.selected_bar = null;
+                            this.setState({selected_bar: null})
                         }}
                     >
                         <div>
@@ -130,7 +130,7 @@ class Map extends Component {
                             <button onClick={() => {
                                 this.itineraireTo();
                                 setItineraireToBar(selectedBar);
-                                this.state.itineraireToBar = selectedBar;
+                                this.setState({itineraireToBar: selectedBar})
                             }}>Je m'y rend</button>
                         </div>
                     </InfoWindow>
