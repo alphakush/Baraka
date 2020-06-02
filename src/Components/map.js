@@ -130,7 +130,7 @@ class Map extends Component {
                             <button onClick={() => {
                                 this.itineraireTo();
                                 setItineraireToBar(selectedBar);
-                                this.setState({itineraireToBar: selectedBar})
+                                this.setState({itineraireToBar: selectedBar});
                             }}>Je m'y rend</button>
                         </div>
                     </InfoWindow>
