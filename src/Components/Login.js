@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-    import Form from 'react-bootstrap/Form'
-    import Button from 'react-bootstrap/Button'
-    import Api from "../api/api.js";
-    import 'react-bootstrap';
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import Api from "../api/api.js";
+import 'react-bootstrap';
+import LocalStorageService from "../api/LocalStorageService";
 
     export default class Login extends Component {
       constructor(props) {
@@ -22,20 +23,24 @@ import React, { Component } from "react";
         this.setState({
           [event.target.id]: event.target.value
         });
-      }
+      };
 
       handleSubmit = event => {
           event.preventDefault();
           Api.post('/signin', this.state)
           .then(function (response) {
               console.log(response);
-              alert(response.statusText);
+              const localStorageService = LocalStorageService.getService();
+              localStorageService.setToken(response.data.token);
+              localStorageService.setUsername(response.data.user.username);
+              localStorageService.setEmail(response.data.user.email);
+              window.location.href=document.location.href.replace("connexion", "");
           })
           .catch(function (error) {
               console.log(error);
+              window.location.href=document.location.href.replace("connexion", "");
           });
-      this.props.history.push('/');
-      }
+      };
 
       render() {
         return (
