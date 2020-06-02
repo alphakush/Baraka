@@ -37,10 +37,16 @@ class Map extends Component {
     getLocation() {
         var options = {
             enableHighAccuracy: true,
-            timeout: 0,
+            timeout: 5000,
             maximumAge: 0
         };
         navigator.geolocation.getCurrentPosition(this.success.bind(this), this.error.bind(this), options)
+    }
+    shouldComponentUpdate( nextProps, nextState ){
+        if ( this.state.latitude === 0 ){
+            return true
+        }
+        return false
     }
     itineraireTo() {    
                 const directionService = new window.google.maps.DirectionsService()    
@@ -124,7 +130,7 @@ class Map extends Component {
                             <button onClick={() => {
                                 this.itineraireTo();
                                 setItineraireToBar(selectedBar);
-                                this.state.itineraireToBar = selectedBar;                                
+                                this.state.itineraireToBar = selectedBar;
                             }}>Je m'y rend</button>
                         </div>
                     </InfoWindow>
