@@ -10,27 +10,32 @@ class Suscribe extends Component {
         this.state = {
             username: '',
             email: '',
-            password: ''
+            password: '',
+            passwordconfirm: ''
         };
     }
     
     mySubmitHandler = (event) => {
         event.preventDefault();
-        console.log(this.state);
-        Api.post('/signup', this.state)
-            .then(function (response) {
-                console.log(response);
-                const localStorageService = LocalStorageService.getService();
-                localStorageService.setToken(response.data.token);
-                localStorageService.setUsername(response.data.user.username);
-                localStorageService.setEmail(response.data.user.email);
-                window.location.href=document.location.href.replace("suscribe", "");
-            })
-            .catch(function (error) {
-                console.log(error);
-                window.location.href=document.location.href.replace("suscribe", "");
-            });
-
+        if (this.state.passwordconfirm !== this.state.password) {
+            alert("Vos mots de passe sont differents");
+        }
+        else {
+            console.log(this.state);
+            Api.post('/signup', this.state)
+                .then(function (response) {
+                    console.log(response);
+                    const localStorageService = LocalStorageService.getService();
+                    localStorageService.setToken(response.data.token);
+                    localStorageService.setUsername(response.data.user.username);
+                    localStorageService.setEmail(response.data.user.email);
+                    window.location.href=document.location.href.replace("suscribe", "");
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    window.location.href=document.location.href.replace("suscribe", "");
+                });
+        }
     };
 
 
@@ -59,6 +64,10 @@ class Suscribe extends Component {
                     <div className="form-group">
                         <label htmlFor="password">Mot de passe</label>
                         <input type='text' className="form-control" name='password' onChange={this.myChangeHandler} />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="password">Confirmer le mot de passe</label>
+                        <input type='text' className="form-control" name='passwordconfirm' onChange={this.myChangeHandler} />
                     </div>
                     <button type="submit" className="btn btn-primary btn-block">Envoyer</button>
                 </form>
