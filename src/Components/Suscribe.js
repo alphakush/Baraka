@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import styles from '../App.css';
 import Api from "../api/api.js";
+import LocalStorageService from "../api/LocalStorageService";
 
 class Suscribe extends Component {
     constructor(props) {
@@ -19,20 +20,25 @@ class Suscribe extends Component {
         Api.post('/signup', this.state)
             .then(function (response) {
                 console.log(response);
+                const localStorageService = LocalStorageService.getService();
+                localStorageService.setToken(response.data.token);
+                localStorageService.setUsername(response.data.user.username);
+                localStorageService.setEmail(response.data.user.email);
+                window.location.href=document.location.href.replace("suscribe", "");
             })
             .catch(function (error) {
                 console.log(error);
+                window.location.href=document.location.href.replace("suscribe", "");
             });
-        alert('Le compte a été crée.');
-        this.props.history.push('/');
-    }
+
+    };
 
 
     myChangeHandler = (event) => {
         let nam = event.target.name;
         let val = event.target.value;
         this.setState({ [nam]: val });
-    }
+    };
 
     render() {
         return (
