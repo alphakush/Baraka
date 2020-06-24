@@ -379,6 +379,23 @@ const switchNavigator = createSwitchNavigator({
         },
         drawerWidth: 220,
         contentComponent: DrawerWithLogoutButton
+    }),
+    barManagerMainFlow: createDrawerNavigator(
+        {
+            Home: FeedNavigator,
+            Myaccount: MyAccountNavigator,
+            Favorite: FavoriteNavigator,
+            Findbar: FindBarNavigator,
+            Geolocate: GeolocateNavigator,
+            Contact: ContactNavigator,
+            Promotions: PromotionNavigator,
+            Administration: MyAccountNavigator
+        }, {
+        contentOptions: {
+            activeTintColor: Colors.primary,
+        },
+        drawerWidth: 220,
+        contentComponent: DrawerWithLogoutButton
     })
 }, {
     contentOptions: {

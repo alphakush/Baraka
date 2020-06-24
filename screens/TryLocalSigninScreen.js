@@ -11,7 +11,8 @@ const tryLocalSigninScreen = props => {
       const token = await AsyncStorage.getItem('token');
       const email = await AsyncStorage.getItem('email');
       const username = await AsyncStorage.getItem('username');
-      if (token) {
+      const barManager = await AsyncStorage.getItem('barManager');;
+      if (token && barManager) {
         let location = await Location.getCurrentPositionAsync({});
         const userlatitude = location.coords.latitude.toString();
         const userlongitude = location.coords.longitude.toString();
@@ -22,11 +23,13 @@ const tryLocalSigninScreen = props => {
           payloaduserlatitude: userlatitude,
           payloaduserlongitude: userlongitude
         });
+        props.navigation.navigate('barManagerMainFlow');
+      }else if (token) {
         props.navigation.navigate('mainFlow');
       } else {
         props.navigation.navigate("loginFlow");
       }
-    }
+    };
     TryLogin();
   }, []);
 
