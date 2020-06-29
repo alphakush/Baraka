@@ -11,7 +11,8 @@ const tryLocalSigninScreen = props => {
       const token = await AsyncStorage.getItem('token');
       const email = await AsyncStorage.getItem('email');
       const username = await AsyncStorage.getItem('username');
-      const barManager = await AsyncStorage.getItem('barManager');;
+      //const barManager = await AsyncStorage.getItem('barManager');
+      const barManager = true;
       if (token && barManager) {
         let location = await Location.getCurrentPositionAsync({});
         const userlatitude = location.coords.latitude.toString();
