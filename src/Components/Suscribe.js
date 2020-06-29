@@ -3,16 +3,37 @@ import 'bootstrap/dist/css/bootstrap.css';
 import styles from '../App.css';
 import Api from "../api/api.js";
 import LocalStorageService from "../api/LocalStorageService";
+import { ReCaptcha } from 'react-recaptcha-google'
 
 class Suscribe extends Component {
     constructor(props) {
         super(props);
+        this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
+        this.verifyCallback = this.verifyCallback.bind(this);
         this.state = {
             username: '',
             email: '',
             password: '',
             passwordconfirm: ''
         };
+    }
+
+    componentDidMount() {
+        if (this.captchaDemo) {
+            console.log("started, just a second...")
+            this.captchaDemo.reset();
+        }
+    }
+
+    onLoadRecaptcha() {
+        if (this.captchaDemo) {
+            this.captchaDemo.reset();
+        }
+    }
+
+    verifyCallback(recaptchaToken) {
+        // Here you will get the final recaptchaToken!!!
+        console.log(recaptchaToken, "<= your recaptcha token")
     }
     
     mySubmitHandler = (event) => {
@@ -69,6 +90,16 @@ class Suscribe extends Component {
                         <label htmlFor="password">Confirmer le mot de passe</label>
                         <input type='text' className="form-control" name='passwordconfirm' onChange={this.myChangeHandler} />
                     </div>
+                    <ReCaptcha
+                        ref={(el) => {this.captchaDemo = el;}}
+                        size="normal"
+                        data-theme="dark"
+                        render="explicit"
+                        sitekey="6Ld_ZwAVAAAAAMipdT3gK508WuDLkjtg3gbANiDo"
+                        onloadCallback={this.onLoadRecaptcha}
+                        verifyCallback={this.verifyCallback}
+                        style={{display: "center"}}
+                    />
                     <button type="submit" className="btn btn-primary btn-block">Envoyer</button>
                 </form>
             </div>)
