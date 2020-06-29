@@ -13,8 +13,7 @@ class Suscribe extends Component {
         this.state = {
             username: '',
             email: '',
-            password: '',
-            passwordconfirm: ''
+            password: ''
         };
     }
 
@@ -38,25 +37,21 @@ class Suscribe extends Component {
     
     mySubmitHandler = (event) => {
         event.preventDefault();
-        if (this.state.passwordconfirm !== this.state.password) {
-            alert("Vos mots de passe sont differents");
-        }
-        else {
-            console.log(this.state);
-            Api.post('/signup', this.state)
-                .then(function (response) {
-                    console.log(response);
-                    const localStorageService = LocalStorageService.getService();
-                    localStorageService.setToken(response.data.token);
-                    localStorageService.setUsername(response.data.user.username);
-                    localStorageService.setEmail(response.data.user.email);
-                    window.location.href=document.location.href.replace("suscribe", "");
-                })
-                .catch(function (error) {
-                    console.log(error);
-                    window.location.href=document.location.href.replace("suscribe", "");
-                });
-        }
+        console.log(this.state);
+        Api.post('/signup', this.state)
+            .then(function (response) {
+                console.log(response);
+                const localStorageService = LocalStorageService.getService();
+                localStorageService.setToken(response.data.token);
+                localStorageService.setUsername(response.data.user.username);
+                localStorageService.setEmail(response.data.user.email);
+                window.location.href=document.location.href.replace("suscribe", "");
+            })
+            .catch(function (error) {
+                console.log(error);
+                window.location.href=document.location.href.replace("suscribe", "");
+            });
+
     };
 
 
