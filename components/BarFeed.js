@@ -21,9 +21,10 @@ const BarFeed = props => {
   const dispatch = useDispatch();
 
   const currentMealIsFavorite = useSelector(state => state.bars.favoriteBars.some(bar => bar._id === props.id));
+
   const Likebar = () => {
     if (barliked) {
-      setbarliked(false);
+      setbarliked(false)
       dispatch(BarsActions.removeBarToFavorite(props.id));
     } else {
       setbarliked(true)

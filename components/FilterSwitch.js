@@ -6,7 +6,7 @@ import Colors from '../constant/Colors';
 const FilterSwitch = props => {
     return (
             <View style={styles.filterContainer}>
-                <Text> {props.label}</Text>
+                <Text style={styles.title}> {props.label}</Text>
                 <Switch
                 trackColor = {{ true: Colors.primary}}
                 thumbColor = { Platform.OS === 'android' ? Colors.Burgudy : ''}
@@ -19,15 +19,14 @@ const FilterSwitch = props => {
 const styles = StyleSheet.create({
     title: {
         fontFamily: 'open-sans-bold',
-        fontSize: 32,
-        margin: 20,
+        fontSize: 16,
         textAlign: 'center'
     },
     filterContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        width : '80%',
+        width : '90%',
         marginVertical: 15
     }
 });

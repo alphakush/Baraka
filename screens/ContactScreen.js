@@ -60,15 +60,14 @@ const ContactScreen = props => {
   };
 
     return (
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior="padding"
-      >
       <TouchableWithoutFeedback onPress={() =>
         {Keyboard.dismiss(); }} >
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+      >
         <View style={styles.container}>
           <Image style={styles.bgImage} source={require('../images/contact.png')} />
-
           <View style={styles.inputContainer}>
             <TextInput style={styles.inputs}
               placeholder="e-mail"
@@ -104,8 +103,8 @@ const ContactScreen = props => {
                 <Text style={styles.loginText}>Envoyer</Text>
               </TouchableOpacity>
         </View>
-      </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
     );
 };
 
