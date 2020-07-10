@@ -21,6 +21,7 @@ const CreateAccount = props => {
 
   const connexionStatus = useSelector(state => state.auth.token);
   const errormsg = useSelector(state => state.auth.errorMessage);
+  const userLevel = useSelector(state => state.auth.userLevel);
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -63,7 +64,16 @@ const CreateAccount = props => {
             dispatch(AuthActions.signUp(username, email, password));
             {errormsg ? Alert.alert("Baraka",errormsg) : null }
             if (connexionStatus !== null) {
-              props.navigation.navigate('mainFlow');
+              if(userLevel == 1) { //L'utilisateur est un Administrateur si userLevel est égal à 1
+                props.navigation.navigate('barManagerMainFlow');
+              }
+              else if(userLevel == 2) { //L'utilisateur est un responsable de bar si userLevel est égal à 2
+                props.navigation.navigate('barManagerMainFlow');
+              }
+              else {
+                console.log(" CREATE ACCOUNT userLevels : " + userLevel); 
+                props.navigation.navigate('mainFlow');
+              }
             }
             return;
           } else {

@@ -35,7 +35,7 @@ const BarManagerScreen = props => {
               </View>
               <View style={styles.ButtonContainer}>
                 <TouchableOpacity style={styles.Button} onPress={() => {
-                 alert("Feature dispo prochainement :D")
+                 alert("")
                 }}>
             <Text style={styles.ButtonText}>Modifier les informations du bar </Text>
           </TouchableOpacity>

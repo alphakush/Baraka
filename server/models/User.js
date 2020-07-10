@@ -18,6 +18,14 @@ const userFavoriteBarSchena = new mongoose.Schema({
 });
 
 const userSchema = new mongoose.Schema({
+    managerBarId: {
+        type: mongoose.Schema.Types.ObjectId
+    },
+    userLevel: {
+        type:Number,
+        required:true,
+        default: 0
+    },
     username: {
       type: String,
       required: true,
