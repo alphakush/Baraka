@@ -25,6 +25,7 @@ import tryLocalSigninScreen from '../screens/TryLocalSigninScreen';
 import BarRouteScreen from '../screens/BarRoute';
 import PromotionScreen from '../screens/PromotionScreen';
 import FilterScreen from '../screens/FilterScreen';
+import FormulaireBarScreen from '../screens/FormulaireCreationBarScreen';
 
 import Colors from '../constant/Colors';
 
@@ -118,6 +119,26 @@ const CreateAccountNavigator = createStackNavigator(
             drawerIcon: drawerConfig =>
                 <SimpleLineIcons
                     name="user-follow"
+                    size={20}
+                    color={drawerConfig.tintColor}
+                />
+        }
+    }
+);
+
+const FormulaireBarNavigator = createStackNavigator(
+    {
+        FormulaireBar: {
+            screen: FormulaireBarScreen
+        },
+    },
+    {
+        defaultNavigationOptions: defaultStackNavOptions,
+        navigationOptions: {
+            drawerLabel: 'Creation de bar    ',
+            drawerIcon: drawerConfig =>
+                <SimpleLineIcons
+                    name="cloud-upload"
                     size={20}
                     color={drawerConfig.tintColor}
                 />
@@ -372,7 +393,8 @@ const switchNavigator = createSwitchNavigator({
             Findbar: FindBarNavigator,
             Geolocate: GeolocateNavigator,
             Contact: ContactNavigator,
-            Promotions: PromotionNavigator
+            Promotions: PromotionNavigator,
+            FormulaireBar: FormulaireBarNavigator
         }, {
         contentOptions: {
             activeTintColor: Colors.primary,

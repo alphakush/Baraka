@@ -16,6 +16,7 @@ import Colors from '../constant/Colors';
 import HeaderButton from '../components/HeaderButton';
 import { useDispatch,useSelector } from 'react-redux';
 import * as AuthActions from '../store/actions/AuthAction';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const ContactScreen = props => {
   const [email, setEmail] = useState('');
@@ -56,16 +57,16 @@ const ContactScreen = props => {
         Alert.alert("Baraka","Veuillez renseigner une adresse mail valide");
         return;
       }
-
   };
 
     return (
-      <TouchableWithoutFeedback onPress={() =>
-        {Keyboard.dismiss(); }} >
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS == "ios" ? "padding" : "height"}
+      <KeyboardAwareScrollView
+        style={{ backgroundColor: '#F4C52B' }}
+        resetScrollToCoords={{ x: 0, y: 0 }}
+        contentContainerStyle={styles.container}
+        scrollEnabled={true}
       >
+      <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss(); }} >
         <View style={styles.container}>
           <Image style={styles.bgImage} source={require('../images/contact.png')} />
           <View style={styles.inputContainer}>
@@ -103,8 +104,8 @@ const ContactScreen = props => {
                 <Text style={styles.loginText}>Envoyer</Text>
               </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
+    </KeyboardAwareScrollView>
     );
 };
 

@@ -2,7 +2,7 @@
   "expo": {
     "name": "Baraka",
     "slug": "baraka",
-    "description" : "Baraka est L'APPLICATION qui vous permet de trouver une bonne bière partout en France", 
+    "description": "",
     "privacy": "public",
     "platforms": [
       "ios",
@@ -25,6 +25,6 @@
     "ios": {
       "supportsTablet": true
     },
-    "description": ""
+    "sdkVersion": "37.0.0"
   }
 }
