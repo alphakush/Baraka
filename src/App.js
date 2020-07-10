@@ -10,6 +10,7 @@ import AddBar from './Components/AddBar.js'
 import Suscribe from './Components/Suscribe.js'
 import {Route, BrowserRouter, Link} from "react-router-dom";
 import LocalStorageService from "./api/LocalStorageService";
+import { loadReCaptcha } from 'react-recaptcha-google'
 
 class Main extends Component {
     Header() {
@@ -27,8 +28,12 @@ class Main extends Component {
           {localStorageService.getUsername() === null ? (<button type="button" className="btn btn-dark btn-lg col-lg"><Link to="/connexion">Se connecter</Link></button>):null}
         </div>)
   }
-  
-  render() {
+
+  componentDidMount() {
+        loadReCaptcha();
+  }
+
+    render() {
     return (
       <BrowserRouter>
         <div style={{ background: '#dceafd', width: '100vw', height: '100vh' }}>

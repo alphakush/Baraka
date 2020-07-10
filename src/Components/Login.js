@@ -4,15 +4,34 @@ import Button from 'react-bootstrap/Button'
 import Api from "../api/api.js";
 import 'react-bootstrap';
 import LocalStorageService from "../api/LocalStorageService";
+import { ReCaptcha } from 'react-recaptcha-google'
 
     export default class Login extends Component {
       constructor(props) {
         super(props);
-
+        this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
+        this.verifyCallback = this.verifyCallback.bind(this);
         this.state = {
           email: "",
           password: ""
         };
+      }
+
+      componentDidMount() {
+          if (this.captchaDemo) {
+              console.log("started, just a second ...");
+              this.captchaDemo.reset();
+          }
+      }
+
+      onLoadRecaptcha() {
+          if (this.captchaDemo) {
+              this.captchaDemo.reset();
+          }
+      }
+
+      verifyCallback(recaptchaToken) {
+          console.log(recaptchaToken, "<= your recaptcha token")
       }
 
       validateForm() {
@@ -61,6 +80,16 @@ import LocalStorageService from "../api/LocalStorageService";
                   type="password"
                 />
               </Form.Group>
+                <ReCaptcha
+                    ref={(el) => {this.captchaDemo = el;}}
+                    size="normal"
+                    data-theme="dark"
+                    render="explicit"
+                    sitekey="6Ld_ZwAVAAAAAMipdT3gK508WuDLkjtg3gbANiDo"
+                    onloadCallback={this.onLoadRecaptcha}
+                    verifyCallback={this.verifyCallback}
+                    style={{display: "center"}}
+                    />
               <Button
                 block
                 disabled={!this.validateForm()}
