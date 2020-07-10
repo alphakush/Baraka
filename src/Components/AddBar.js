@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import ImageUploader from 'react-images-upload';
+// import ImageUploader from 'react-images-upload';
 import styles from '../App.css'
 import Api from "../api/api.js";
 
@@ -8,35 +8,51 @@ class AddBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            'upload-bar': null,
             name: '',
-            adress: '',
-            number: '',
-            manager: '',
-            image: [],
+            description : '',
             tags: [],
-            note: 0,
-            products: {}
+            address: '',
+            products: [],
+            note: "4.5",
+            phone: ''
         };
-        this.onDrop = this.onDrop.bind(this);
-    }
+    this.onImageChange = this.onImageChange.bind(this);
+  }
 
-    onDrop(picture) {
-        this.setState({
-            image: this.state.image.concat(picture),
-        });
+  onImageChange = event => {
+    if (event.target.files && event.target.files[0]) {
+      let img = event.target.files[0];
+      this.setState({
+        'upload-bar': img
+      });
     }
+  };    
 
     mySubmitHandler = (event) => {
         event.preventDefault();
         console.log(this.state);
-        Api.post('/bar/create-bar', this.state)
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        this.props.history.push('/bars');
+        const fd = new FormData();
+        fd.append('upload-bar', this.state["upload-bar"]);
+        fd.append('name', this.state.name);
+        fd.append('description', this.state.descritpion);
+        fd.append('tags', this.state.tags);
+        fd.append('address', this.state.address);
+        fd.append('products', this.state.products);
+        fd.append('note', this.state.note);
+        fd.append('phone', this.state.phone);
+        Api.post('/bar/create-bar', fd, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
+        })
+        .then(res=> {
+            console.log(res);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+        this.props.history.push('/addbar');
     }
 
     myChangeHandler = (event) => {
@@ -44,12 +60,13 @@ class AddBar extends Component {
         let val = event.target.value;
         switch (nam) {
             case "tags":
-                val = "[" + val + "]"
-                this.state.tags.push(val);
+                let tmp = (val.split(','))
+                let split = tmp 
+                this.setState({ tags: split });
                 break
             case "products":
                 let list = (val.split(','))
-                let data = { list }
+                let data = list 
                 this.setState({ products: data });
                 break
             default:
@@ -71,19 +88,15 @@ class AddBar extends Component {
                             <label htmlFor="name">Nom du bar</label>
                             <input type='text' className="form-control" name='name' onChange={this.myChangeHandler} />
                         </div>
-                        <div className="col-lg">
-                            <label htmlFor="manager">Nom du responsable</label>
-                            <input type='text' className="form-control" name='manager' onChange={this.myChangeHandler} />
-                        </div>
                     </div>
                     <div className="row form-group">
                         <div className="col">
-                            <label htmlFor="adress">Adresse</label>
-                            <input type='text' className="form-control" name='adress' onChange={this.myChangeHandler} />
+                            <label htmlFor="address">Adresse</label>
+                            <input type='text' className="form-control" name='address' onChange={this.myChangeHandler} />
                         </div>
                         <div className="col">
                             <label htmlFor="number">Numéro</label>
-                            <input type='text' className="form-control" name='number' onChange={this.myChangeHandler} />
+                            <input type='text' className="form-control" name='phone' onChange={this.myChangeHandler} />
                         </div>
                     </div>
                     <div className="row form-group">
@@ -101,14 +114,10 @@ class AddBar extends Component {
                         <textarea className="form-control" rows="6" name='description' onChange={this.myChangeHandler}></textarea>
                     </div>
                     <br/>
-                        <ImageUploader
-                            withIcon={true}
-                            buttonText='Choose images'
-                            onChange={this.onDrop}
-                            imgExtension={['.jpg', '.png']}
-                            maxFileSize={5242880}
-                        />
-                    <button type="submit" className="btn btn-primary btn-block">Envoyer</button>
+                    <div className="form-group">
+                        <input type="file" className="btn btn-outline-primary" name="myImage" onChange={this.onImageChange} />
+                    </div>
+                     <button type="submit" className="btn btn-primary btn-block">Envoyer</button>
                 </form>
             </div>
         )

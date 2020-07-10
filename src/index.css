@@ -41,3 +41,10 @@ ul {
   color: #2d310b;
   text-decoration:underline;
   }  
+
+  .BarCards {
+    height: auto;
+    max-height: 250px;
+    width: auto;
+    max-width: 250px;
+  }

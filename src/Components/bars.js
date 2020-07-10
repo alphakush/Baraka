@@ -39,8 +39,10 @@ class Bars extends Component {
             />);
         }
         return (
-            <div>
-                {rows}
+            <div className="container-fluid">
+                <div className='row'>
+                    {rows}
+                </div>
             </div>
         )
     }

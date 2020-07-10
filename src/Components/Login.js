@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Api from "../api/api.js";
 import 'react-bootstrap';
+import { Redirect } from 'react-router-dom'
 import LocalStorageService from "../api/LocalStorageService";
 
     export default class Login extends Component {
@@ -42,11 +43,24 @@ import LocalStorageService from "../api/LocalStorageService";
           });
       };
 
+      setRedirect = () => {
+        this.setState({
+          redirect: true
+        })
+        this.renderRedirect()
+      }
+      renderRedirect = () => {
+        if (this.state.redirect) {
+          return <Redirect to='/suscribe' />
+        }
+      }
+
       render() {
         return (
           <div className="Login">
             <Form onSubmit={this.handleSubmit}>
               <Form.Group controlId="email">
+              <Form.Label column="text" >Adresse mail</Form.Label>
                 <Form.Control
                   autoFocus
                   type="email"
@@ -55,6 +69,7 @@ import LocalStorageService from "../api/LocalStorageService";
                 />
               </Form.Group>
               <Form.Group controlId="password">
+              <Form.Label column="text" >Mot de passe</Form.Label>
                 <Form.Control
                   value={this.state.password}
                   onChange={this.handleChange}
@@ -68,8 +83,16 @@ import LocalStorageService from "../api/LocalStorageService";
               >
                 Login
               </Button>
+              <Button
+                block
+                onClick={this.setRedirect}
+              >
+                {this.renderRedirect()}
+                Créer un compte
+              </Button>
             </Form>
           </div>
+
         );
       }
     }

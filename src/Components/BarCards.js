@@ -20,8 +20,8 @@ class BarCards extends Component  {
   
   render() {
   return (
-    <div style={{padding:'5px'}}>
-      <Card style={{width: "75%", margin: 'auto'}}>
+    <div style={{padding:'2vw'}}>
+      <Card style={{width: "20vw", margin: 'auto', maxWidth: '30vw', height: '40vh'}}>
         <CardActionArea>
           <CardMedia
             style={{height: 140}}
