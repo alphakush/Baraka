@@ -18,7 +18,7 @@ class Suscribe extends Component {
     mySubmitHandler = (event) => {
         event.preventDefault();
         console.log(this.state);
-        if (this.state.confirm === this.state.password)
+        if (this.state.confirm == this.state.password)
         {
             Api.post('/signup', this.state)
             .then(function (response) {
@@ -36,7 +36,7 @@ class Suscribe extends Component {
         }
         else 
         {
-            alert("Les mots de passes saisis ne sont pas identiques.");
+            alert("Les mots de passes saisis ne sont pas identiques");
         }
     };
 

@@ -47,7 +47,7 @@ import LocalStorageService from "../api/LocalStorageService";
         this.setState({
           redirect: true
         })
-        this.renderRedirect()
+        {this.renderRedirect()}
       }
       renderRedirect = () => {
         if (this.state.redirect) {
@@ -87,7 +87,7 @@ import LocalStorageService from "../api/LocalStorageService";
                 block
                 onClick={this.setRedirect}
               >
-                {this.renderRedirect()}
+                        {this.renderRedirect()}
                 Créer un compte
               </Button>
             </Form>
