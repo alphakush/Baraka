@@ -20,7 +20,7 @@ const Login = props => {
 
   const errormsg = useSelector(state => state.auth.errorMessage);
   const connexionStatus = useSelector(state => state.auth.token);
-  const userLevel = useSelector(state => state.auth.userLevel);
+  const accessLevel = useSelector(state => state.auth.accessLevel);
   const dispatch = useDispatch();
   const [emailreset,setEmailReset] = useState('');
   const [email, setEmail] = useState('');
@@ -77,10 +77,10 @@ const Login = props => {
         dispatch(AuthActions.signIn(email.toLowerCase(), password));
         {errormsg ? Alert.alert("Baraka",errormsg) : null }
         if (connexionStatus !== null) {
-          if(userLevel == 1) { //L'utilisateur est un Administrateur si userLevel est égal à 1
+          if(accessLevel == 1) { //L'utilisateur est un responsable de bar si accessLevel est égal à 1
           props.navigation.navigate('barManagerMainFlow');
           }
-        else if(userLevel == 2) { //L'utilisateur est un responsable de bar si userLevel est égal à 2
+        else if(accessLevel == 2) { //L'utilisateur est un Administrateur si accessLevel est égal à 2
           props.navigation.navigate('barManagerMainFlow');
         }
         else {

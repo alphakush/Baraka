@@ -11,7 +11,8 @@ const tryLocalSigninScreen = props => {
       const token = await AsyncStorage.getItem('token');
       const email = await AsyncStorage.getItem('email');
       const username = await AsyncStorage.getItem('username');
-      const userLevel = parseInt(await AsyncStorage.getItem('userLevel'));
+      //const accessLevel = parseInt(await AsyncStorage.getItem('accessLevel'));
+      const accessLevel = 1;
       if (token) {
         let location = await Location.getCurrentPositionAsync({});
         const userlatitude = location.coords.latitude.toString();
@@ -20,15 +21,15 @@ const tryLocalSigninScreen = props => {
           payload: token,
           payloademail: email,
           payloadusername: username,
-          payloaduserlevel: userLevel,
+          payloadaccesslevel: accessLevel,
           payloaduserlatitude: userlatitude,
           payloaduserlongitude: userlongitude
         });
-        if(userLevel == 1) { //L'utilisateur est un Administrateur si userLevel est égal à 1
+        if(accessLevel == 1) { //L'utilisateur est un responsable de bar si accessLevel est égal à 1
           props.navigation.navigate('barManagerMainFlow');
         }
-        else if(userLevel == 2) { //L'utilisateur est un responsable de bar si userLevel est égal à 2
-          props.navigation.navigate('barManagerMainFlow');
+        else if(accessLevel == 2) { //L'utilisateur est un administrateur si accessLevel est égal à 2
+          props.navigation.navigate('adminMainFlow');
         }
         else {
           props.navigation.navigate('mainFlow');

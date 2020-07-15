@@ -13,7 +13,7 @@ const initialState = {
     errorMessage: '',
     username : '',
     email : '',
-    userLevel : null,
+    accessLevel : null,
     userlatitude : null,
     userlongitude : null,
     stateRequest: null
@@ -28,7 +28,7 @@ const authReducer = (state = initialState, action) => {
               username: action.payloadusername,
               userlatitude : action.payloaduserlatitude,
               userlongitude : action.payloaduserlongitude,
-              userLevel : action.payloaduserlevel
+              accessLevel : action.payloadaccesslevel
             }
         case TOGGLE_ERROR:
             return { ...state, errorMessage: action.payload }
@@ -39,7 +39,7 @@ const authReducer = (state = initialState, action) => {
               username: action.payloadusername,
               userlatitude: action.payloaduserlatitude,
               userlongitude: action.payloaduserlongitude,
-              userLevel : action.payloaduserlevel
+              accessLevel : action.payloadaccesslevel
             }
         case TOGGLE_TRY_LOCAL_SIGN:
             return { ...state,
@@ -48,7 +48,7 @@ const authReducer = (state = initialState, action) => {
               username: action.payloadusername,
               userlatitude : action.payloaduserlatitude,
               userlongitude : action.payloaduserlongitude,
-              userLevel : action.payloaduserlevel
+              accessLevel : action.payloadaccesslevel
             }
         case GET_USERLOCATION:
             return { ...state,
@@ -62,7 +62,7 @@ const authReducer = (state = initialState, action) => {
               username : null,
               userlatitude: null,
               userlongitude: null,
-              userLevel: null
+              accessLevel: null
             }
           case TOGGLE_RESET_PASSWORD:
             return {...state,

@@ -18,17 +18,17 @@ export const signIn = (email, password) => {
             await AsyncStorage.setItem('username', response.data.user.username);
             await AsyncStorage.setItem('email', response.data.user.email);
             let location = await Location.getCurrentPositionAsync({});
-            const userLevel = response.data.user.userLevel.toString();
+            const accessLevel = response.data.user.accessLevel.toString();
             const latitude = location.coords.latitude.toString();
             const longitude = location.coords.longitude.toString();
-            await AsyncStorage.setItem('userLevel', userLevel);
+            await AsyncStorage.setItem('accessLevel', accessLevel);
             await AsyncStorage.setItem('userlatitude', latitude);
             await AsyncStorage.setItem('userlongitude', longitude);
             dispatch({ type: TOGGLE_SIGNIN,
                 payload: response.data.token,
                 payloademail: response.data.user.email,
                 payloadusername : response.data.user.username,
-                payloaduserlevel: userLevel,
+                payloadaccesslevel: accessLevel,
                 payloaduserlatitude : latitude,
                 payloaduserlongitude : longitude
             });
@@ -45,19 +45,19 @@ export const signUp = (username, email, password) => {
             await AsyncStorage.setItem('token', response.data.token);
             await AsyncStorage.setItem('email', response.data.user.email);
             await AsyncStorage.setItem('username', response.data.user.username);
-            await AsyncStorage.setItem('userLevel', response.data.user.userLevel);
+            await AsyncStorage.setItem('accessLevel', response.data.user.accessLevel);
             let location = await Location.getCurrentPositionAsync({});
-            const userLevel = response.data.user.userLevel.toString();
+            const accessLevel = response.data.user.accessLevel.toString();
             const latitude = location.coords.latitude.toString();
             const longitude = location.coords.longitude.toString();
-            await AsyncStorage.setItem('userLevel', userLevel);
+            await AsyncStorage.setItem('accessLevel', accessLevel);
             await AsyncStorage.setItem('userlatitude', latitude);
             await AsyncStorage.setItem('userlongitude', longitude);
             dispatch({ type: TOGGLE_SIGNIN,
               payload: response.data.token,
               payloademail: response.data.user.email,
               payloadusername : response.data.user.username,
-              payloaduserlevel: userLevel,
+              payloadaccesslevel: accessLevel,
               payloaduserlatitude: latitude,
               payloaduserlongitude: longitude
             });
@@ -84,7 +84,7 @@ export const SignOut = () => {
         await AsyncStorage.removeItem('username');
         await AsyncStorage.removeItem('userlatitude');
         await AsyncStorage.removeItem('userlongitude');
-        await AsyncStorage.removeItem('userLevel');
+        await AsyncStorage.removeItem('accessLevel');
         dispatch({ type: TOGGLE_SIGNOUT });
     };
 };

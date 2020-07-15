@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
     managerBarId: {
         type: mongoose.Schema.Types.ObjectId
     },
-    userLevel: {
+    accessLevel: {
         type:Number,
         required:true,
         default: 0

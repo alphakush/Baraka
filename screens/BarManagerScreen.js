@@ -17,11 +17,21 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Colors from '../constant/Colors';
 import HeaderButton from '../components/HeaderButton';
 import { useDispatch,useSelector } from 'react-redux';
-import * as AuthActions from '../store/actions/AuthAction';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-const BarManagerScreen = props => {
+import * as AuthActions from '../store/actions/AuthAction';
+import * as AuthBars from '../store/actions/BarsActions';
 
+
+
+const BarManagerScreen = props => {
+  const allbars = useSelector(state => state.bars.allbars);
+  //const userAccess = useSelector(state => state.bars.userAccess);
+  let managerBarId = "5e16f8c2e163d4001717d4ad";
+  // for (let i = 0; i < Object.keys(allbars).length; i++) {
+  //   console.log(allbars[i]._id.includes(managerBarId));
+  // }
+  console.log("TEST"+allbars.includes(managerBarId));
     return (
       <KeyboardAwareScrollView>
           <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss(); }} >
