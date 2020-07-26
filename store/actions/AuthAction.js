@@ -17,6 +17,7 @@ export const signIn = (email, password) => {
             await AsyncStorage.setItem('token', response.data.token);
             await AsyncStorage.setItem('username', response.data.user.username);
             await AsyncStorage.setItem('email', response.data.user.email);
+            await AsyncStorage.setItem('managerBarId', response.data.user.managerBarId);
             let location = await Location.getCurrentPositionAsync({});
             const accessLevel = response.data.user.accessLevel.toString();
             const latitude = location.coords.latitude.toString();
@@ -28,6 +29,7 @@ export const signIn = (email, password) => {
                 payload: response.data.token,
                 payloademail: response.data.user.email,
                 payloadusername : response.data.user.username,
+                payloadmanagerbarid : response.data.user.managerBarId,
                 payloadaccesslevel: accessLevel,
                 payloaduserlatitude : latitude,
                 payloaduserlongitude : longitude
@@ -46,6 +48,7 @@ export const signUp = (username, email, password) => {
             await AsyncStorage.setItem('email', response.data.user.email);
             await AsyncStorage.setItem('username', response.data.user.username);
             await AsyncStorage.setItem('accessLevel', response.data.user.accessLevel);
+            await AsyncStorage.setItem('managerBarId', response.data.user.managerBarId);
             let location = await Location.getCurrentPositionAsync({});
             const accessLevel = response.data.user.accessLevel.toString();
             const latitude = location.coords.latitude.toString();
@@ -57,6 +60,7 @@ export const signUp = (username, email, password) => {
               payload: response.data.token,
               payloademail: response.data.user.email,
               payloadusername : response.data.user.username,
+              payloadmanagerbarid : response.data.user.managerBarId,
               payloadaccesslevel: accessLevel,
               payloaduserlatitude: latitude,
               payloaduserlongitude: longitude
@@ -85,6 +89,7 @@ export const SignOut = () => {
         await AsyncStorage.removeItem('userlatitude');
         await AsyncStorage.removeItem('userlongitude');
         await AsyncStorage.removeItem('accessLevel');
+        await AsyncStorage.removeItem('managerBarId');
         dispatch({ type: TOGGLE_SIGNOUT });
     };
 };

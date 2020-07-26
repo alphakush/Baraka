@@ -24,6 +24,7 @@ import BarManagerScreen from '../screens/BarManagerScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import tryLocalSigninScreen from '../screens/TryLocalSigninScreen';
 import BarRouteScreen from '../screens/BarRoute';
+import ModifierInformationBarScreen from '../screens/ModifierInformationBarScreen';
 import PromotionScreen from '../screens/PromotionScreen';
 import FilterScreen from '../screens/FilterScreen';
 
@@ -56,6 +57,12 @@ const FeedNavigator = createStackNavigator(
         },
         FilterScreen :{
           screen: FilterScreen,
+        },
+        ModifierInformationBarScreen: {
+            screen: ModifierInformationBarScreen
+        },
+        BarManagerScreen: {
+            screen: BarManagerScreen
         }
     },
     {

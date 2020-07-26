@@ -11,6 +11,7 @@ const tryLocalSigninScreen = props => {
       const token = await AsyncStorage.getItem('token');
       const email = await AsyncStorage.getItem('email');
       const username = await AsyncStorage.getItem('username');
+      const managerBarId = await AsyncStorage.getItem('managerBarId');
       //const accessLevel = parseInt(await AsyncStorage.getItem('accessLevel'));
       const accessLevel = 1;
       if (token) {
@@ -22,6 +23,7 @@ const tryLocalSigninScreen = props => {
           payloademail: email,
           payloadusername: username,
           payloadaccesslevel: accessLevel,
+          payloadmanagerbarid: managerBarId,
           payloaduserlatitude: userlatitude,
           payloaduserlongitude: userlongitude
         });
