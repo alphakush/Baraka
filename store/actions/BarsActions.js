@@ -8,9 +8,24 @@ export const POST_COMMENT = "POST_COMMENT";
 export const POST_NOTE = "POST_NOTE";
 export const CHECK_NOTE = "CHECK_NOTE";
 export const SET_FILTERS ='SET_FILTERS';
+export const GET_ALL_BARS_ADMIN = "GET_ALL_BARS_ADMIN";
 
 import Api from '../../api/api';
 
+//ADMINISTRATION
+// Function pour OBTENIR TOUS LES  tous les bars.
+export const getAllBarAdmin = () => {
+    return async dispatch => {
+        try {
+            const response = await Api.get('/admin/allbars');
+            dispatch({ type: GET_ALL_BARS_ADMIN,
+              payload: response.data,
+            });
+        } catch (error) {
+            dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la récupération des données." });
+        }
+    };
+};
 // Function pour OBTENIR TOUS LES  tous les bars.
 export const getAllBar = () => {
     return async dispatch => {

@@ -4,7 +4,6 @@ import {
     View,
     FlatList
 } from 'react-native';
-import BarItems from './BarItems';
 import BarFeed from './BarFeed';
 
 const BarList = props => {

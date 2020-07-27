@@ -18,7 +18,7 @@ const userFavoriteBarSchena = new mongoose.Schema({
 });
 
 const userSchema = new mongoose.Schema({
-    managerBarId: {
+  managerBarId: {
         type: mongoose.Schema.Types.ObjectId
     },
     accessLevel: {
@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema({
         validate(value) {
            if(!validator.isEmail(value)){
                throw Error("L'e-mail est invalide");
-           } 
+           }
         }
     },
     password: {

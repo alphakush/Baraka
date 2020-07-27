@@ -17,7 +17,9 @@ const initialState = {
     managerBarId : null,
     userlatitude : null,
     userlongitude : null,
-    stateRequest: null
+    stateRequest: null,
+    accessLevel : null,
+    managerBarId : null
 }
 
 const authReducer = (state = initialState, action) => {

@@ -11,14 +11,16 @@ import {
   Button,
   Platform,
   Keyboard,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  ScrollView,
+  FlatList
 } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
 import Colors from '../constant/Colors';
 import * as AuthActions from '../store/actions/AuthAction';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
+import * as ImagePicker from 'expo-image-picker';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 
@@ -31,7 +33,8 @@ const FormulaireBar = props => {
   const [tags, setTags] = useState('');
   const [produit, setproduit] = useState('');
   const [siret, setSiret] = useState('');
-  const [coordonneesgps, setCoordonneesgps] = useState('');
+  const [phone, setPhone] = useState('');
+  const [adresse, setAdresse] = useState('');
   const [description, setDescription] = useState('');
   const [conntected, setConntected] = useState(false);
 
@@ -39,15 +42,32 @@ const FormulaireBar = props => {
   const [captchaHolder, setcaptchaHolder] = useState(0);
   const [randomNumberOne, setrandomNumberOne] = useState(0);
 
+  const [openHours, setopenHours] = useState(new Date(1598051730000));
+  const [endHours, setendHours] = useState(new Date(1598051730000));
+  const [barOpenHours, setbarOpenHours] = useState('');
+  const [barEndHours, setbarEndHours] = useState('');
+  const [showOpen, setShowOpen] = useState(false);
+  const [showEnd, setShowEnd] = useState(false);
 
-   const [openHours, setopenHours] = useState(new Date(1598051730000));
-   const [endHours, setendHours] = useState(new Date(1598051730000));
-   const [barOpenHours, setbarOpenHours] = useState('');
-   const [barEndHours, setbarEndHours] = useState('');
-   const [showOpen, setShowOpen] = useState(false);
-   const [showEnd, setShowEnd] = useState(false);
+   const [selectedImage, setSelectedImage] = useState('');
 
-   const onChangeOpen = (event, selectedTime) => {
+  const openImagePickerAsync = async () => {
+    let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera roll is required!");
+      return;
+    }
+
+    let pickerResult = await ImagePicker.launchImageLibraryAsync();
+
+    if (pickerResult.cancelled === true) {
+      return;
+    }
+
+    setSelectedImage({ localUri: pickerResult.uri });
+  }
+  const onChangeOpen = (event, selectedTime) => {
     const currentOpenHours = selectedTime;
     setShowOpen(Platform.OS === 'ios');
     setbarOpenHours(currentOpenHours.toString().substring(16, 21));
@@ -71,8 +91,8 @@ const FormulaireBar = props => {
       }
     };
 
-     const showTimepickerOpen = () => { showModeOpen('time'); };
-     const showTimepickerEnd = () => { showModeEnd('time'); };
+   const showTimepickerOpen = () => { showModeOpen('time'); };
+   const showTimepickerEnd = () => { showModeEnd('time'); };
 
   const setDescriptionHandler = (enteredText) => {
     setDescription(enteredText);
@@ -87,12 +107,14 @@ const FormulaireBar = props => {
   const setSiretHandler = (enteredText) => {
     setSiret(enteredText);
   };
-
+  const setPhoneHandler = (enteredText) => {
+    setPhone(enteredText);
+  };
   const setTagsHandler = (enteredText) => {
     setTags(enteredText);
   };
-  const setCoordonneesgpsHandler = (enteredText) => {
-    setCoordonneesgps(enteredText);
+  const setAdressHandler = (enteredText) => {
+    setAdresse(enteredText);
   };
 
   useEffect(() => {
@@ -117,11 +139,11 @@ const FormulaireBar = props => {
     if (namebar == ''){Alert.alert("Baraka", "Nom de bar obligatoire"); return; }
     if (tags == ''){Alert.alert("Baraka", "Tags obligatoire"); return;}
     if (produit == ''){Alert.alert("Baraka", "Produit obligatoire"); return;}
-    if (coordonneesgps == ''){Alert.alert("Baraka", "Coordonnées GPS obligatoire"); return;}
+    if (adresse == ''){Alert.alert("Baraka", "Adresse obligatoire"); return;}
     if (description == ''){Alert.alert("Baraka", "Description obligatoire"); return;}
     if (barOpenHours == '' || barEndHours == ''){Alert.alert("Baraka", "Horaires obligatoire"); return;}
     // on insert en base, il faut créer la route
-    Alert.alert("Récapitulatif","Nom du bar: "+namebar+"\n"+"Description: "+description+"\n"+"Tags: "+tags+"\n"+"Produit: "+produit+"\n"+"GPS: "+coordonneesgps+"\n"+"Siret: "+siret+"\n"+"Heure ouverture: "+barOpenHours+"\n"+"Heure fermeture: "+barEndHours);
+    Alert.alert("Récapitulatif","Nom du bar: "+namebar+"\n"+"Description: "+description+"\n"+"Tags: "+tags+"\n"+"Produit: "+produit+"\n"+"GPS: "+adresse+"\n"+"Siret: "+siret+"\n"+"Heure ouverture: "+barOpenHours+"\n"+"Heure fermeture: "+barEndHours);
     return;
   };
 
@@ -148,10 +170,15 @@ const FormulaireBar = props => {
       resetScrollToCoords={{ x: 0, y: 0 }}
       contentContainerStyle={styles.container}
       scrollEnabled={true}
+      enableAutomaticScroll
+      enableOnAndroid
+      extraScrollHeight={100}
     >
     <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss(); }} >
     <View style={styles.container}>
-    <Text style={styles.TitlePage}>Formulaire création de bar</Text>
+    <TouchableOpacity onPress={openImagePickerAsync} style={styles.buttonimage}>
+      <Text style={styles.buttonTextimage}>Choisir une photo</Text>
+     </TouchableOpacity>
       <View style={styles.inputContainer}>
         <TextInput style={styles.inputs}
           placeholder="Nom du bar"
@@ -175,10 +202,10 @@ const FormulaireBar = props => {
       </View>
       <View style={styles.inputContainer}>
         <TextInput style={styles.inputs}
-          placeholder="Coordonnées GPS"
+          placeholder="Adresse"
           keyboardType="default"
           underlineColorAndroid='transparent'
-          onChangeText={setCoordonneesgpsHandler} />
+          onChangeText={setAdressHandler} />
       </View>
       <View style={styles.inputContainer}>
         <TextInput style={styles.inputs}
@@ -194,9 +221,15 @@ const FormulaireBar = props => {
           underlineColorAndroid='transparent'
           onChangeText={setSiretHandler} />
       </View>
-
+      <View style={styles.inputContainer}>
+        <TextInput style={styles.inputs}
+          placeholder="N° Téléphone"
+          keyboardType="numeric"
+          underlineColorAndroid='transparent'
+          onChangeText={setPhoneHandler} />
+      </View>
         <View>
-        <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={showTimepickerOpen}>
+        <TouchableOpacity style={[styles.buttonContainer, styles.sendButton]} onPress={showTimepickerOpen}>
           <Text style={styles.openHoursText}>Horaires d'ouverture : {barOpenHours}</Text>
         </TouchableOpacity>
           {showOpen && (
@@ -211,7 +244,7 @@ const FormulaireBar = props => {
           )}
         </View>
         <View>
-        <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={showTimepickerEnd}>
+        <TouchableOpacity style={[styles.buttonContainer, styles.sendButton]} onPress={showTimepickerEnd}>
           <Text style={styles.openHoursText}>Horaires de fermeture : {barEndHours}</Text>
         </TouchableOpacity>
           {showEnd && (
@@ -242,25 +275,33 @@ const FormulaireBar = props => {
              underlineColorAndroid='transparent'
              onChangeText={settextCaptchaHolder} />
          </View>
-         <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={sendFormulaireHandler}>
+         <TouchableOpacity style={[styles.buttonContainer, styles.sendButton]} onPress={sendFormulaireHandler}>
            <Text style={styles.loginText}>Envoyer le formulaire</Text>
          </TouchableOpacity>
        </View>
       </View>
       </TouchableWithoutFeedback>
     </KeyboardAwareScrollView>
-
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
     alignItems: 'center',
     backgroundColor: Colors.Gold,
   },
-
+  buttonimage: {
+    backgroundColor: Colors.Green,
+    padding: 10,
+    borderRadius: 5,
+    marginBottom:10,
+    marginTop:10,
+  },
+  buttonTextimage: {
+    fontSize: 20,
+    color: '#fff',
+  },
   captchaContainerView: {
     height: 100,
   },
@@ -269,7 +310,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-
   inputContainer: {
     borderBottomColor: Colors.BlueSky,
     backgroundColor: Colors.White,
@@ -277,22 +317,19 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     width: 300,
     height: 45,
-    marginBottom: 10,
+    marginBottom: 5,
     flexDirection: 'row',
     alignItems: 'center',
-    shadowColor: Colors.Grey,
     shadowOffset: {
       width: 0,
       height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5,
+
   },
   Timerpicker: {
-
     alignItems: 'center',
-    shadowColor: Colors.Grey,
   },
   inputs: {
     height: 45,
@@ -321,16 +358,8 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     backgroundColor: 'transparent'
   },
-  loginButton: {
+  sendButton: {
     backgroundColor: Colors.Blue,
-    shadowColor: Colors.Grey,
-    shadowOffset: {
-      width: 0,
-      height: 9,
-    },
-    shadowOpacity: 0.50,
-    shadowRadius: 12.35,
-    elevation: 19,
   },
   loginText: {
     color: 'white',

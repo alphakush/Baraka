@@ -28,6 +28,9 @@ import ModifierInformationBarScreen from '../screens/ModifierInformationBarScree
 import PromotionScreen from '../screens/PromotionScreen';
 import FilterScreen from '../screens/FilterScreen';
 import FormulaireBarScreen from '../screens/FormulaireCreationBarScreen';
+import AdministrationBarScreen from '../screens/AdministrationBarScreen';
+import AdminBarInfoScreen from '../screens/AdminBarInfoScreen';
+import BarManagerScreen from '../screens/BarManagerScreen';
 
 import Colors from '../constant/Colors';
 
@@ -146,7 +149,32 @@ const FormulaireBarNavigator = createStackNavigator(
             drawerLabel: 'Creation de bar    ',
             drawerIcon: drawerConfig =>
                 <SimpleLineIcons
-                    name="cloud-upload"
+                    name="plus"
+                    size={20}
+                    color={drawerConfig.tintColor}
+                />
+        }
+    }
+);
+const AdministrationBarScreenNavigator = createStackNavigator(
+    {
+        AdministrationBar: {
+            screen: AdministrationBarScreen
+        },
+        AdminBarInfo: {
+            screen: AdminBarInfoScreen
+        },
+        BarRoute: {
+          screen: BarRouteScreen
+        }
+    },
+    {
+        defaultNavigationOptions: defaultStackNavOptions,
+        navigationOptions: {
+            drawerLabel: 'Administration des bars    ',
+            drawerIcon: drawerConfig =>
+                <SimpleLineIcons
+                    name="shield"
                     size={20}
                     color={drawerConfig.tintColor}
                 />
@@ -336,6 +364,24 @@ const PromotionNavigator = createStackNavigator(
         }
     }
 );
+const BarManagerNavigator = createStackNavigator(
+    {
+        BarManager: BarManagerScreen,
+    },
+    {
+        defaultNavigationOptions: defaultStackNavOptions,
+        navigationOptions: {
+            drawerLabel: 'Gérer mon bar',
+            drawerIcon: drawerConfig =>
+                <SimpleLineIcons
+                    name="settings"
+                    size={20}
+                    color={drawerConfig.tintColor}
+                />
+        }
+    }
+);
+
 const ContactNavigator = createStackNavigator(
     {
         Contact: ContactScreen,
@@ -420,7 +466,9 @@ const switchNavigator = createSwitchNavigator({
             Geolocate: GeolocateNavigator,
             Contact: ContactNavigator,
             Promotions: PromotionNavigator,
-            FormulaireBar: FormulaireBarNavigator
+            FormulaireBar: FormulaireBarNavigator,
+            AdministrationBar: AdministrationBarScreenNavigator,
+            BarManagerScreen: BarManagerNavigator
         }, {
         contentOptions: {
             activeTintColor: Colors.primary,

@@ -11,9 +11,8 @@ const tryLocalSigninScreen = props => {
       const token = await AsyncStorage.getItem('token');
       const email = await AsyncStorage.getItem('email');
       const username = await AsyncStorage.getItem('username');
-      const managerBarId = await AsyncStorage.getItem('managerBarId');
-      //const accessLevel = parseInt(await AsyncStorage.getItem('accessLevel'));
       const accessLevel = 1;
+      const managerBarId = await AsyncStorage.getItem('managerBarId');
       if (token) {
         let location = await Location.getCurrentPositionAsync({});
         const userlatitude = location.coords.latitude.toString();
@@ -25,7 +24,9 @@ const tryLocalSigninScreen = props => {
           payloadaccesslevel: accessLevel,
           payloadmanagerbarid: managerBarId,
           payloaduserlatitude: userlatitude,
-          payloaduserlongitude: userlongitude
+          payloaduserlongitude: userlongitude,
+          payloadaccesslevel: accessLevel,
+          payloadmanagerbarid: managerBarId
         });
         if(accessLevel == 1) { //L'utilisateur est un responsable de bar si accessLevel est égal à 1
           props.navigation.navigate('barManagerMainFlow');

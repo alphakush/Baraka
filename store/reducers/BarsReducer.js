@@ -8,7 +8,8 @@ import {
   POST_COMMENT,
   POST_NOTE,
   CHECK_NOTE,
-  SET_FILTERS
+  SET_FILTERS,
+  GET_ALL_BARS_ADMIN
 } from '../actions/BarsActions';
 
 const initialState = {
@@ -26,6 +27,8 @@ const initialState = {
 const barsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_ALL_BARS:
+            return { ...state, allbars: action.payload }
+        case GET_ALL_BARS_ADMIN:
             return { ...state, allbars: action.payload }
         case GET_FAVORITES_BARS:
             return { ...state, favoriteBars: action.payload }

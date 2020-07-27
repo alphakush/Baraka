@@ -17,6 +17,7 @@ export const signIn = (email, password) => {
             await AsyncStorage.setItem('token', response.data.token);
             await AsyncStorage.setItem('username', response.data.user.username);
             await AsyncStorage.setItem('email', response.data.user.email);
+            await AsyncStorage.setItem('accessLevel', accessLevel);
             await AsyncStorage.setItem('managerBarId', response.data.user.managerBarId);
             let location = await Location.getCurrentPositionAsync({});
             const accessLevel = response.data.user.accessLevel.toString();
@@ -26,13 +27,11 @@ export const signIn = (email, password) => {
             await AsyncStorage.setItem('userlatitude', latitude);
             await AsyncStorage.setItem('userlongitude', longitude);
             dispatch({ type: TOGGLE_SIGNIN,
-                payload: response.data.token,
-                payloademail: response.data.user.email,
-                payloadusername : response.data.user.username,
-                payloadmanagerbarid : response.data.user.managerBarId,
-                payloadaccesslevel: accessLevel,
-                payloaduserlatitude : latitude,
-                payloaduserlongitude : longitude
+              payload: response.data.token,
+              payloademail: response.data.user.email,
+              payloadusername : response.data.user.username,
+              payloaduserlatitude : latitude,
+              payloaduserlongitude : longitude
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR, payload: "Merci de bien vérifier votre E-mail ou votre mot de passe." });
