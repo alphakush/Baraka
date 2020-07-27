@@ -25,7 +25,8 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 const BarManagerScreen = props => {
   const allbars = useSelector(state => state.bars.allbars);
   //const managerBarId = useSelector(state => state.bars.managerbarid);
-  const managerBarId = "5e16f8c2e163d4001717d4ad";
+  const managerBarId = "5e16f77ce163d4001717d4aa";
+
   var bar;
   bar = getBarFromManagerBarId(allbars, managerBarId);
   return (
@@ -33,7 +34,6 @@ const BarManagerScreen = props => {
       <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss(); }} >
         <View style={styles.container}>
           <View style={{ marginHorizontal: 30 }}>
-            {/* <Image style={styles.bgImage} source={require('../images/background_without_words.png')} /> */}
             <Image resizeMode='contain' style={styles.image} source={{ uri: `data:image/png;base64,${bar.image}` }} />
             <View style={{ alignItems: 'center' }}>
               <View style={styles.ContainerInformationToChange}>
@@ -211,8 +211,11 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.Gold,
   },
   descriptionBar: {
+    marginLeft: "10%",
     fontSize: 18,
     color: Colors.Black,
+    textAlign : 'auto',
+    textAlignVertical:'auto'
   },
   nameBar: {
     fontSize: 28,

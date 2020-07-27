@@ -150,3 +150,17 @@ export const setFilters = (filterUser) => {
         }
     };
 };
+
+//Function permettant de metttre a jour une information d'un bar
+export const updateContentBar = (barId, nomVariable, contenu) => {
+    return async dispatch => {
+        try {
+            const response = await Api.post('/bar/updateContentBar',{barId, nomVariable, contenu});
+            dispatch({ type: POST_NOTE,
+              payload: response.data.success,
+            });
+        } catch (error) {
+            dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite pour poster le commentaire." });
+        }
+    };
+};
