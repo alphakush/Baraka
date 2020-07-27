@@ -24,13 +24,11 @@ import BarManagerScreen from '../screens/BarManagerScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import tryLocalSigninScreen from '../screens/TryLocalSigninScreen';
 import BarRouteScreen from '../screens/BarRoute';
-import ModifierInformationBarScreen from '../screens/ModifierInformationBarScreen';
 import PromotionScreen from '../screens/PromotionScreen';
 import FilterScreen from '../screens/FilterScreen';
 import FormulaireBarScreen from '../screens/FormulaireCreationBarScreen';
 import AdministrationBarScreen from '../screens/AdministrationBarScreen';
 import AdminBarInfoScreen from '../screens/AdminBarInfoScreen';
-import BarManagerScreen from '../screens/BarManagerScreen';
 
 import Colors from '../constant/Colors';
 
@@ -61,9 +59,6 @@ const FeedNavigator = createStackNavigator(
         },
         FilterScreen :{
           screen: FilterScreen,
-        },
-        ModifierInformationBarScreen: {
-            screen: ModifierInformationBarScreen
         },
         BarManagerScreen: {
             screen: BarManagerScreen
@@ -458,6 +453,23 @@ const switchNavigator = createSwitchNavigator({
         drawerWidth: 220,
     }),
     mainFlow: createDrawerNavigator(
+        {
+            Home: FeedNavigator,
+            Myaccount: MyAccountNavigator,
+            Favorite: FavoriteNavigator,
+            Findbar: FindBarNavigator,
+            Geolocate: GeolocateNavigator,
+            Contact: ContactNavigator,
+            Promotions: PromotionNavigator,
+            FormulaireBar: FormulaireBarNavigator
+        }, {
+        contentOptions: {
+            activeTintColor: Colors.primary,
+        },
+        drawerWidth: 220,
+        contentComponent: DrawerWithLogoutButton
+    }),
+    adminMainFlow: createDrawerNavigator(
         {
             Home: FeedNavigator,
             Myaccount: MyAccountNavigator,

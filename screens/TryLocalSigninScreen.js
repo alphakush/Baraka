@@ -11,12 +11,15 @@ const tryLocalSigninScreen = props => {
       const token = await AsyncStorage.getItem('token');
       const email = await AsyncStorage.getItem('email');
       const username = await AsyncStorage.getItem('username');
-      const accessLevel = 1;
+      // const accessLevel = await AsyncStorage.getItem('accessLevel');
+      const accessLevel = 2;
       const managerBarId = await AsyncStorage.getItem('managerBarId');
+
       if (token) {
         let location = await Location.getCurrentPositionAsync({});
         const userlatitude = location.coords.latitude.toString();
         const userlongitude = location.coords.longitude.toString();
+
         dispatch({ type: TOGGLE_TRY_LOCAL_SIGN,
           payload: token,
           payloademail: email,
