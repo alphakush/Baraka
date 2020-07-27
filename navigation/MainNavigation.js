@@ -20,9 +20,11 @@ import FeedScreen from '../screens/FeedScreen';
 import BarInfoScreen from '../screens/BarInformationScreen';
 import FindBarScreen from '../screens/FindBarsScreen';
 import ContactScreen from '../screens/ContactScreen';
+import BarManagerScreen from '../screens/BarManagerScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import tryLocalSigninScreen from '../screens/TryLocalSigninScreen';
 import BarRouteScreen from '../screens/BarRoute';
+import ModifierInformationBarScreen from '../screens/ModifierInformationBarScreen';
 import PromotionScreen from '../screens/PromotionScreen';
 import FilterScreen from '../screens/FilterScreen';
 import FormulaireBarScreen from '../screens/FormulaireCreationBarScreen';
@@ -56,6 +58,12 @@ const FeedNavigator = createStackNavigator(
         },
         FilterScreen :{
           screen: FilterScreen,
+        },
+        ModifierInformationBarScreen: {
+            screen: ModifierInformationBarScreen
+        },
+        BarManagerScreen: {
+            screen: BarManagerScreen
         }
     },
     {
@@ -346,6 +354,24 @@ const ContactNavigator = createStackNavigator(
     }
 );
 
+const BarManagerNavigation = createStackNavigator(
+    {
+        BarManager: BarManagerScreen,
+    },
+    {
+        defaultNavigationOptions: defaultStackNavOptions,
+        navigationOptions: {
+            drawerLabel: 'Gérer mon bar',
+            drawerIcon: drawerConfig =>
+                <SimpleLineIcons
+                    name="settings"
+                    size={20}
+                    color={drawerConfig.tintColor}
+                />
+        }
+    }
+);
+
 export const DrawerWithLogoutButton = props => {
     const dispatch = useDispatch();
     return(
@@ -395,6 +421,23 @@ const switchNavigator = createSwitchNavigator({
             Contact: ContactNavigator,
             Promotions: PromotionNavigator,
             FormulaireBar: FormulaireBarNavigator
+        }, {
+        contentOptions: {
+            activeTintColor: Colors.primary,
+        },
+        drawerWidth: 220,
+        contentComponent: DrawerWithLogoutButton
+    }),
+    barManagerMainFlow: createDrawerNavigator(
+        {
+            Home: FeedNavigator,
+            Myaccount: MyAccountNavigator,
+            Favorite: FavoriteNavigator,
+            Findbar: FindBarNavigator,
+            Geolocate: GeolocateNavigator,
+            Contact: ContactNavigator,
+            Promotions: PromotionNavigator,
+            BarManager: BarManagerNavigation
         }, {
         contentOptions: {
             activeTintColor: Colors.primary,

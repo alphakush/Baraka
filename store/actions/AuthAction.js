@@ -15,19 +15,24 @@ export const signIn = (email, password) => {
         try {
             const response = await Api.post('/signin', { email, password });
             await AsyncStorage.setItem('token', response.data.token);
-            await AsyncStorage.setItem('email', response.data.user.email);
             await AsyncStorage.setItem('username', response.data.user.username);
+            await AsyncStorage.setItem('email', response.data.user.email);
+            await AsyncStorage.setItem('managerBarId', response.data.user.managerBarId);
             let location = await Location.getCurrentPositionAsync({});
+            const accessLevel = response.data.user.accessLevel.toString();
             const latitude = location.coords.latitude.toString();
             const longitude = location.coords.longitude.toString();
+            await AsyncStorage.setItem('accessLevel', accessLevel);
             await AsyncStorage.setItem('userlatitude', latitude);
             await AsyncStorage.setItem('userlongitude', longitude);
             dispatch({ type: TOGGLE_SIGNIN,
-              payload: response.data.token,
-              payloademail: response.data.user.email,
-              payloadusername : response.data.user.username,
-              payloaduserlatitude : latitude,
-              payloaduserlongitude : longitude
+                payload: response.data.token,
+                payloademail: response.data.user.email,
+                payloadusername : response.data.user.username,
+                payloadmanagerbarid : response.data.user.managerBarId,
+                payloadaccesslevel: accessLevel,
+                payloaduserlatitude : latitude,
+                payloaduserlongitude : longitude
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR, payload: "Merci de bien vérifier votre E-mail ou votre mot de passe." });
@@ -42,15 +47,21 @@ export const signUp = (username, email, password) => {
             await AsyncStorage.setItem('token', response.data.token);
             await AsyncStorage.setItem('email', response.data.user.email);
             await AsyncStorage.setItem('username', response.data.user.username);
+            await AsyncStorage.setItem('accessLevel', response.data.user.accessLevel);
+            await AsyncStorage.setItem('managerBarId', response.data.user.managerBarId);
             let location = await Location.getCurrentPositionAsync({});
+            const accessLevel = response.data.user.accessLevel.toString();
             const latitude = location.coords.latitude.toString();
             const longitude = location.coords.longitude.toString();
+            await AsyncStorage.setItem('accessLevel', accessLevel);
             await AsyncStorage.setItem('userlatitude', latitude);
             await AsyncStorage.setItem('userlongitude', longitude);
             dispatch({ type: TOGGLE_SIGNIN,
               payload: response.data.token,
               payloademail: response.data.user.email,
               payloadusername : response.data.user.username,
+              payloadmanagerbarid : response.data.user.managerBarId,
+              payloadaccesslevel: accessLevel,
               payloaduserlatitude: latitude,
               payloaduserlongitude: longitude
             });
@@ -77,6 +88,8 @@ export const SignOut = () => {
         await AsyncStorage.removeItem('username');
         await AsyncStorage.removeItem('userlatitude');
         await AsyncStorage.removeItem('userlongitude');
+        await AsyncStorage.removeItem('accessLevel');
+        await AsyncStorage.removeItem('managerBarId');
         dispatch({ type: TOGGLE_SIGNOUT });
     };
 };
