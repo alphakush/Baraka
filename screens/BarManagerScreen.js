@@ -26,22 +26,32 @@ const BarManagerScreen = props => {
   const allbars = useSelector(state => state.bars.allbars);
   //const managerBarId = useSelector(state => state.bars.managerbarid);
   const managerBarId = "5e16f77ce163d4001717d4aa";
-
   var bar;
   bar = getBarFromManagerBarId(allbars, managerBarId);
   return (
     <KeyboardAwareScrollView>
       <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss(); }} >
         <View style={styles.container}>
-          <View style={{ marginHorizontal: 30 }}>
-            <Image resizeMode='contain' style={styles.image} source={{ uri: `data:image/png;base64,${bar.image}` }} />
-            <View style={{ alignItems: 'center' }}>
-              <View style={styles.ContainerInformationToChange}>
-                <Text style={styles.nameBar}>{bar.name}</Text>
+          <View style={styles.informationsCard}>
+            <View style={styles.ContainerInformationToChange}>
+              <View style={styles.containerSeparator}>
+                <View style={styles.containerLeftPart}>
+                  <View style={styles.dataName}>
+                    <Text style={{ marginLeft: 10, fontSize: 18, color: "#808080" }}>
+                      Nom du bar
+                    </Text>
+                  </View>
+                  <View style={styles.containCircleContent}>
+                    <View style={styles.circle}>
+                      <SimpleLineIcons style={styles.iconsInCircle} name="user" size={20} />
+                    </View>
+                    <Text style={styles.nameBar}>{bar.name}</Text>
+                  </View>
+                </View>
                 <View style={styles.ButtonContainer}>
                   <TouchableOpacity style={styles.Button} onPress={() => {
                     props.navigation.navigate({
-                      routeName: 'ModifierInformationBarScreen',
+                      routeName: 'ModifierInformationBar',
                       params: {
                         label: "Nom du bar",
                         contenuBdd: bar.name,
@@ -53,78 +63,170 @@ const BarManagerScreen = props => {
                   </TouchableOpacity>
                 </View>
               </View>
-              <View style={styles.ContainerInformationToChange}>
-              <Text style={styles.descriptionBar}>{bar.description}</Text>
-              <View style={styles.ButtonContainer}>
-                <TouchableOpacity style={styles.Button} onPress={() => {
-                  props.navigation.navigate({
-                    routeName: 'ModifierInformationBarScreen',
-                    params: {
-                      label: "Description du bar",
-                      contenuBdd: bar.description,
-                      consigne: ""
-                    }
-                  });
-                }}>
-                  <SimpleLineIcons name="pencil" size={20} />
-                </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                borderBottomColor: 'black',
+                borderBottomWidth: 1,
+                marginTop: 20
+              }}
+            />
+          </View>
+          <View style={styles.informationsCard}>
+            <View style={styles.ContainerInformationToChange}>
+              <View style={styles.containerSeparator}>
+                <View style={styles.containerLeftPart}>
+                  <View style={styles.dataName}>
+                    <Text style={{ marginLeft: 10, fontSize: 18, color: "#808080" }}>
+                      Description
+                    </Text>
+                  </View>
+                  <View style={styles.containCircleContent}>
+                    <View style={styles.circle}>
+                      <SimpleLineIcons style={styles.iconsInCircle} name="options" size={20} />
+                    </View>
+                    <Text style={styles.textFromBdd}>{bar.description}</Text>
+                  </View>
+                </View>
+                <View style={styles.ButtonContainer}>
+                  <TouchableOpacity style={styles.Button} onPress={() => {
+                    props.navigation.navigate({
+                      routeName: 'ModifierInformationBar',
+                      params: {
+                        label: "Description du bar",
+                        contenuBdd: bar.description,
+                        consigne: ""
+                      }
+                    });
+                  }}>
+                    <SimpleLineIcons name="pencil" size={20} />
+                  </TouchableOpacity>
                 </View>
               </View>
-              <View style={styles.ContainerInformationToChange}>
-              <Text style={styles.policeStyle}>{bar.tags}</Text>
-              <View style={styles.ButtonContainer}>
-                <TouchableOpacity style={styles.Button} onPress={() => {
-                  props.navigation.navigate({
-                    routeName: 'ModifierInformationBarScreen',
-                    params: {
-                      label: "Tags de votre bar",
-                      contenuBdd: bar.tags,
-                      consigne: ""
-                    }
-                  });
-                }}>
-                  <SimpleLineIcons name="pencil" size={20} />
-                </TouchableOpacity>
-              </View>
-              </View>
-              <View style={styles.ContainerInformationToChange}>
-              <Text style={styles.policeStyle}>{bar.phone}</Text>
-              <View style={styles.ButtonContainer}>
-                <TouchableOpacity style={styles.Button} onPress={() => {
-                  props.navigation.navigate({
-                    routeName: 'ModifierInformationBarScreen',
-                    params: {
-                      label: "Numéro de téléphone",
-                      contenuBdd: bar.phone,
-                      consigne: ""
-                    }
-                  });
-                }}>
-                  <SimpleLineIcons name="pencil" size={20} />
-                </TouchableOpacity>
-              </View>
-              </View>
-              <View style={styles.ContainerInformationToChange}>
-              <Text style={styles.policeStyle}>{bar.address}</Text>
-              <View style={styles.ButtonContainer}>
-                <TouchableOpacity style={styles.Button} onPress={() => {
-                  props.navigation.navigate({
-                    routeName: 'ModifierInformationBarScreen',
-                    params: {
-                      label: "Adresse du bar",
-                      contenuBdd: bar.address,
-                      consigne: ""
-                    }
-                  });
-                }}>
-                  <SimpleLineIcons name="pencil" size={20} />
-                </TouchableOpacity>
-              </View>
+            </View>
+            <View
+              style={{
+                borderBottomColor: 'black',
+                borderBottomWidth: 1,
+                marginTop: 20
+              }}
+            />
+          </View>
+          <View style={styles.informationsCard}>
+            <View style={styles.ContainerInformationToChange}>
+              <View style={styles.containerSeparator}>
+                <View style={styles.containerLeftPart}>
+                  <View style={styles.dataName}>
+                    <Text style={{ marginLeft: 10, fontSize: 18, color: "#808080" }}>
+                      Tags
+                    </Text>
+                  </View>
+                  <View style={styles.containCircleContent}>
+                    <View style={styles.circle}>
+                      <SimpleLineIcons style={styles.iconsInCircle} name="tag" size={20} />
+                    </View>
+                    <Text style={styles.textFromBdd}>{bar.tags}</Text>
+                  </View>
+                </View>
+                <View style={styles.ButtonContainer}>
+                  <TouchableOpacity style={styles.Button} onPress={() => {
+                    props.navigation.navigate({
+                      routeName: 'ModifierInformationBar',
+                      params: {
+                        label: "Tags de votre bar",
+                        contenuBdd: bar.tags,
+                        consigne: ""
+                      }
+                    });
+                  }}>
+                    <SimpleLineIcons name="pencil" size={20} />
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
-
+            <View
+              style={{
+                borderBottomColor: 'black',
+                borderBottomWidth: 1,
+                marginTop: 20
+              }}
+            />
+          </View>
+          <View style={styles.informationsCard}>
+            <View style={styles.ContainerInformationToChange}>
+              <View style={styles.containerSeparator}>
+                <View style={styles.containerLeftPart}>
+                  <View style={styles.dataName}>
+                    <Text style={{ marginLeft: 10, fontSize: 18, color: "#808080" }}>
+                      Numéro de téléphone
+                    </Text>
+                  </View>
+                  <View style={styles.containCircleContent}>
+                    <View style={styles.circle}>
+                      <SimpleLineIcons style={styles.iconsInCircle} name="phone" size={20} />
+                    </View>
+                    <Text style={styles.textFromBdd}>{bar.phone}</Text>
+                  </View>
+                </View>
+                <View style={styles.ButtonContainer}>
+                  <TouchableOpacity style={styles.Button} onPress={() => {
+                    props.navigation.navigate({
+                      routeName: 'ModifierInformationBar',
+                      params: {
+                        label: "Numéro de téléphone",
+                        contenuBdd: bar.phone,
+                        consigne: ""
+                      }
+                    });
+                  }}>
+                    <SimpleLineIcons name="pencil" size={20} />
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <View
+                style={{
+                  borderBottomColor: 'black',
+                  borderBottomWidth: 1,
+                  marginTop: 20
+                }}
+              />
+            </View>
+          </View>
+          <View style={styles.informationsCard}>
+            <View style={styles.ContainerInformationToChange}>
+              <View style={styles.containerSeparator}>
+                <View style={styles.containerLeftPart}>
+                  <View style={styles.dataName}>
+                    <Text style={{ marginLeft: 10, fontSize: 18, color: "#808080" }}>
+                      Adresse
+                    </Text>
+                  </View>
+                  <View style={styles.containCircleContent}>
+                    <View style={styles.circle}>
+                      <SimpleLineIcons style={styles.iconsInCircle} name="map" size={20} />
+                    </View>
+                    <Text style={styles.textFromBdd}>{bar.address}</Text>
+                  </View>
+                </View>
+                <View style={styles.ButtonContainer}>
+                  <TouchableOpacity style={styles.Button} onPress={() => {
+                    props.navigation.navigate({
+                      routeName: 'ModifierInformationBar',
+                      params: {
+                        label: "Adresse du bar",
+                        contenuBdd: bar.address,
+                        consigne: ""
+                      }
+                    });
+                  }}>
+                    <SimpleLineIcons name="pencil" size={20} />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
           </View>
         </View>
+
       </TouchableWithoutFeedback>
     </KeyboardAwareScrollView>
   );
@@ -132,6 +234,8 @@ const BarManagerScreen = props => {
 
 function getBarFromManagerBarId(p_listeDesBars, p_managerBarId) {
   var barManager;
+  console.log(p_listeDesBars);
+  console.log(p_managerBarId);
   for (let i = 0; i < Object.keys(p_listeDesBars).length; i++) {
     if (p_listeDesBars[i]._id.includes(p_managerBarId)) {
       barManager = p_listeDesBars[i];
@@ -160,14 +264,12 @@ BarManagerScreen.navigationOptions = navData => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: Colors.Gainsboro,
+  },
+  informationsCard: {
   },
   ContainerInformationToChange: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 10,
+    flexDirection: 'column',
+    marginTop: 30,
   },
   inputIcon: {
     width: 30,
@@ -190,38 +292,58 @@ const styles = StyleSheet.create({
     color: Colors.White,
     fontWeight: 'bold'
   },
-  policeStyle: {
-    fontSize: 18,
-    marginTop: 10,
-    color: Colors.Black,
-  },
   ButtonText: {
     color: Colors.Black,
     fontSize: 20,
   },
   Button: {
-    marginTop: 10,
-    marginLeft: 30,
+    marginTop: 50,
+    marginLeft: 20,
     marginHorizontal: '7%',
     height: 25,
-    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 30,
+    borderRadius: 15,
     backgroundColor: Colors.Gold,
   },
-  descriptionBar: {
-    marginLeft: "10%",
+  textFromBdd: {
+    alignSelf: "center",
+    maxWidth: '80%',
     fontSize: 18,
     color: Colors.Black,
-    textAlign : 'auto',
-    textAlignVertical:'auto'
   },
   nameBar: {
+    alignSelf : 'center',
     fontSize: 28,
     color: Colors.Black,
     fontWeight: 'bold'
 
+  },
+  circle: {
+    flexDirection: "row",
+    justifyContent: "center",
+    width: 45,
+    height: 45,
+    borderRadius: 100 / 2,
+    backgroundColor: '#e4e5ea',
+    marginRight: 15
+  },
+  iconsInCircle: {
+    alignSelf: "center",
+  },
+  containCircleContent: {
+    marginLeft:5,
+    marginTop: 10,
+    flexDirection: "row",
+  },
+  dataName: {
+    height: 30,
+  },
+  containerLeftPart: {
+    width: "80%"
+  },
+  containerSeparator: {
+    flexDirection: "row"
   }
 });
 

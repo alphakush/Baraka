@@ -20,7 +20,6 @@ import FeedScreen from '../screens/FeedScreen';
 import BarInfoScreen from '../screens/BarInformationScreen';
 import FindBarScreen from '../screens/FindBarsScreen';
 import ContactScreen from '../screens/ContactScreen';
-import BarManagerScreen from '../screens/BarManagerScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import tryLocalSigninScreen from '../screens/TryLocalSigninScreen';
 import BarRouteScreen from '../screens/BarRoute';
@@ -29,6 +28,8 @@ import FilterScreen from '../screens/FilterScreen';
 import FormulaireBarScreen from '../screens/FormulaireCreationBarScreen';
 import AdministrationBarScreen from '../screens/AdministrationBarScreen';
 import AdminBarInfoScreen from '../screens/AdminBarInfoScreen';
+import BarManagerScreen from '../screens/BarManagerScreen';
+import ModifierInformationBarScreen from '../screens/ModifierInformationBarScreen';
 
 import Colors from '../constant/Colors';
 
@@ -60,9 +61,6 @@ const FeedNavigator = createStackNavigator(
         FilterScreen :{
           screen: FilterScreen,
         },
-        BarManagerScreen: {
-            screen: BarManagerScreen
-        }
     },
     {
         defaultNavigationOptions: defaultStackNavOptions,
@@ -359,23 +357,6 @@ const PromotionNavigator = createStackNavigator(
         }
     }
 );
-const BarManagerNavigator = createStackNavigator(
-    {
-        BarManager: BarManagerScreen,
-    },
-    {
-        defaultNavigationOptions: defaultStackNavOptions,
-        navigationOptions: {
-            drawerLabel: 'Gérer mon bar',
-            drawerIcon: drawerConfig =>
-                <SimpleLineIcons
-                    name="settings"
-                    size={20}
-                    color={drawerConfig.tintColor}
-                />
-        }
-    }
-);
 
 const ContactNavigator = createStackNavigator(
     {
@@ -397,7 +378,12 @@ const ContactNavigator = createStackNavigator(
 
 const BarManagerNavigation = createStackNavigator(
     {
-        BarManager: BarManagerScreen,
+        BarManager: {
+            screen : BarManagerScreen
+        },
+        ModifierInformationBar: {
+            screen: ModifierInformationBarScreen
+        }
     },
     {
         defaultNavigationOptions: defaultStackNavOptions,
@@ -480,7 +466,7 @@ const switchNavigator = createSwitchNavigator({
             Promotions: PromotionNavigator,
             FormulaireBar: FormulaireBarNavigator,
             AdministrationBar: AdministrationBarScreenNavigator,
-            BarManagerScreen: BarManagerNavigator
+            BarManagerScreen: BarManagerNavigation
         }, {
         contentOptions: {
             activeTintColor: Colors.primary,
