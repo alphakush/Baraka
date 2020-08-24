@@ -33,7 +33,7 @@ const BarManagerScreen = props => {
       <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss(); }} >
         <View style={styles.container}>
           <View style={styles.informationsCard}>
-            <View style={styles.ContainerInformationToChange}>
+            <View>
               <View style={styles.containerSeparator}>
                 <View style={styles.containerLeftPart}>
                   <View style={styles.dataName}>
