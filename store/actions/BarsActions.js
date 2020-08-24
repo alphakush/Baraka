@@ -9,6 +9,7 @@ export const POST_NOTE = "POST_NOTE";
 export const CHECK_NOTE = "CHECK_NOTE";
 export const SET_FILTERS ='SET_FILTERS';
 export const GET_ALL_BARS_ADMIN = "GET_ALL_BARS_ADMIN";
+export const CREAT_BAR_MANAGER = "CREAT_BAR_MANAGER";
 
 import Api from '../../api/api';
 
@@ -176,6 +177,20 @@ export const updateContentBar = (barId, nomVariable, contenu) => {
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite pour poster le commentaire." });
+        }
+    };
+};
+
+//Function permettant de créer un bar manager
+export const createBarManager = (name, description, tags, adress, note, products, siret, phone, openhours, closehours) => {
+    return async dispatch => {
+        try {
+            const response = await Api.post('/bar/creat-bar',{name, description, tags, adress, note, products, siret, phone, openhours, closehours});
+            dispatch({ type: CREAT_BAR_MANAGER,
+              payload: response.data.success,
+            });
+        } catch (error) {
+            dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la creation du bar." });
         }
     };
 };
