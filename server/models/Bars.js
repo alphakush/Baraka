@@ -34,6 +34,22 @@ const barSchema = new mongoose.Schema({
     product:{
         Array
     },
+    siret: {
+        type: String,
+        required: true,
+    },
+    phone: {
+        type: String,
+        required: true,
+    },
+    openhours: {
+        type: String,
+        required: true,
+    },
+    closehours: {
+        type: String,
+        required: true,
+    },
     managerID: {
         type: mongoose.Schema.Types.ObjectId,
         required: false

@@ -29,7 +29,7 @@ import FormulaireBarScreen from '../screens/FormulaireCreationBarScreen';
 import AdministrationBarScreen from '../screens/AdministrationBarScreen';
 import AdminBarInfoScreen from '../screens/AdminBarInfoScreen';
 import BarManagerScreen from '../screens/BarManagerScreen';
-import ModifierInformationBarScreen from '../screens/ModifierInformationBarScreen';
+//import ModifierInformationBarScreen from '../screens/ModifierInformationBarScreen';
 
 import Colors from '../constant/Colors';
 
@@ -380,10 +380,11 @@ const BarManagerNavigation = createStackNavigator(
     {
         BarManager: {
             screen : BarManagerScreen
-        },
-        ModifierInformationBar: {
-            screen: ModifierInformationBarScreen
         }
+        // ,
+        // ModifierInformationBar: {
+        //     screen: ModifierInformationBarScreen
+        // }
     },
     {
         defaultNavigationOptions: defaultStackNavOptions,

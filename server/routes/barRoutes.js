@@ -13,7 +13,7 @@ const router = express.Router();
 //router.use(checkingAuth);
 
 // methods format
-function createresponse(data) { 
+function createresponse(data) {
     var result = [];
 
     for (const k in data) {
@@ -33,7 +33,7 @@ function createresponse(data) {
         }
     }
     return result;
-} 
+}
 
 // get all bars
 router.get(config.rootAPI + '/allbars', async (req, res) => {
@@ -65,12 +65,13 @@ const upload = multer({
     }
 });
 
+// route pour créer un bar
 router.post(config.rootAPI + '/bar/create-bar', upload.single('upload-bar'), async (req, res) => {
     try {
-        const {name, description, tags, adress, note, products } = req.body;
+        const {name, description, tags, adress, note, products, siret, phone, openhours, closehours } = req.body;
         const image = req.file.buffer;
         const imageCrop = await sharp(image).resize({ width: 250, height: 250 }).png().toBuffer();
-        const bar = new Bar({'name':name, description, tags, adress, note, 'image': imageCrop, products });
+        const bar = new Bar({'name':name, description, tags, adress, note, 'image': imageCrop, products, siret, phone, openhours, closehours });
         await bar.save();
         res.status(201).send(bar);
     } catch (err) {
