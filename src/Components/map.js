@@ -38,9 +38,6 @@ class Map extends Component {
         };
         navigator.geolocation.getCurrentPosition(this.success.bind(this), this.error.bind(this), options)
     }
-    itineraireTo(bar) {
-        alert("Yo");
-    }
 
     map() {
         const [selectedBar, setSelectedBar] = useState(null);

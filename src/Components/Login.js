@@ -32,6 +32,7 @@ import { ReCaptcha } from 'react-recaptcha-google'
 
       verifyCallback(recaptchaToken) {
           console.log(recaptchaToken, "<= your recaptcha token")
+          this.token = recaptchaToken;
       }
 
       validateForm() {
@@ -46,6 +47,11 @@ import { ReCaptcha } from 'react-recaptcha-google'
 
       handleSubmit = event => {
           event.preventDefault();
+          if (this.token === undefined)
+          {
+              alert("captcha not validated");
+              return;
+          }
           Api.post('/signin', this.state)
           .then(function (response) {
               console.log(response);
@@ -57,6 +63,7 @@ import { ReCaptcha } from 'react-recaptcha-google'
           })
           .catch(function (error) {
               console.log(error);
+              alert("username or password incorrect");
               window.location.href=document.location.href.replace("connexion", "");
           });
       };

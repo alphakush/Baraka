@@ -32,10 +32,16 @@ class Suscribe extends Component {
 
     verifyCallback(recaptchaToken) {
         console.log(recaptchaToken, "<= your recaptcha token")
+        this.token = recaptchaToken;
     }
     
     mySubmitHandler = (event) => {
         event.preventDefault();
+        if (this.token === undefined)
+        {
+            alert("captcha not validated");
+            return;
+        }
         console.log(this.state);
         Api.post('/signup', this.state)
             .then(function (response) {
@@ -48,6 +54,7 @@ class Suscribe extends Component {
             })
             .catch(function (error) {
                 console.log(error);
+                alert("This user already exist");
                 window.location.href=document.location.href.replace("suscribe", "");
             });
 

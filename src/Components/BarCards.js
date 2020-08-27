@@ -6,20 +6,39 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-
+import LocalStorageService from "../api/LocalStorageService";
+import Api from "../api/api.js";
 
 class BarCards extends Component  {
   constructor(props) {
     super(props);
+    this.state = {
+      barID: ''
+    };
     this.sayHello = this.sayHello.bind(this);
-      this.position = props.position;
+    this.addToFavorite = this.addToFavorite.bind(this);
+    this.position = props.position;
   }
+
   sayHello(){
     alert(this.props.phone)
   }
+
+  addToFavorite() {
+    this.setState({barID: this.props.id,})
+    console.log(this.state);
+    Api.post('/bar/add-favorite', this.state)
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+  }
   
   render() {
-  return (
+    let localStorageService = LocalStorageService.getService();
+    return (
     <div style={{padding:'5px'}}>
       <Card style={{width: "75%", margin: 'auto'}}>
         <CardActionArea>
@@ -46,7 +65,8 @@ class BarCards extends Component  {
           <Button size="small" color="primary" onClick={this.sayHello}>
             Voir le numéro du bar
         </Button>
-        <Typography variant="body2" color="textSecondary" component="p">Note : {this.props.note}/5</Typography>
+          {localStorageService.getUsername() !== null ? (<Button size="small" color="primary" onClick={this.addToFavorite}>Ajouter aux favoris</Button>):null}
+          <Typography variant="body2" color="textSecondary" component="p">Note : {this.props.note}/5</Typography>
         </CardActions>
       </Card>
     </div>

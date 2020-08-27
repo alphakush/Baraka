@@ -36,6 +36,7 @@ class Bars extends Component {
                 note={nombre_de_bars[i].note}
                 phone={nombre_de_bars[i].phone}
                 position={i}
+                id={nombre_de_bars[i]._id}
             />);
         }
         return (
