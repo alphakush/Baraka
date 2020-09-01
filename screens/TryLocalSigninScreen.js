@@ -8,34 +8,30 @@ const tryLocalSigninScreen = props => {
   const dispatch = useDispatch();
   useEffect(() => {
     const TryLogin = async () => {
+
       const token = await AsyncStorage.getItem('token');
       const email = await AsyncStorage.getItem('email');
       const username = await AsyncStorage.getItem('username');
-      // const accessLevel = await AsyncStorage.getItem('accessLevel');
-      const accessLevel = 2;
+      const accessLevel = await AsyncStorage.getItem('accessLevel');
       const managerBarId = await AsyncStorage.getItem('managerBarId');
-
       if (token) {
         let location = await Location.getCurrentPositionAsync({});
         const userlatitude = location.coords.latitude.toString();
         const userlongitude = location.coords.longitude.toString();
-
         dispatch({ type: TOGGLE_TRY_LOCAL_SIGN,
           payload: token,
           payloademail: email,
           payloadusername: username,
-          payloadaccesslevel: accessLevel,
-          payloadmanagerbarid: managerBarId,
           payloaduserlatitude: userlatitude,
           payloaduserlongitude: userlongitude,
           payloadaccesslevel: accessLevel,
-          payloadmanagerbarid: managerBarId
+          payloadmanagerBarId : managerBarId
         });
-        if(accessLevel == 1) { //L'utilisateur est un responsable de bar si accessLevel est égal à 1
+        if(accessLevel == "1") { //L'utilisateur est un responsable de bar si accessLevel est égal à 1
           props.navigation.navigate('barManagerMainFlow');
         }
-        else if(accessLevel == 2) { //L'utilisateur est un administrateur si accessLevel est égal à 2
-          props.navigation.navigate('adminMainFlow');
+        else if(accessLevel == "2") { //L'utilisateur est un administrateur si accessLevel est égal à 2
+          props.navigation.navigate('baradminMainFlow');
         }
         else {
           props.navigation.navigate('mainFlow');

@@ -9,7 +9,12 @@ export const POST_NOTE = "POST_NOTE";
 export const CHECK_NOTE = "CHECK_NOTE";
 export const SET_FILTERS ='SET_FILTERS';
 export const GET_ALL_BARS_ADMIN = "GET_ALL_BARS_ADMIN";
-export const CREAT_BAR_MANAGER = "CREAT_BAR_MANAGER";
+export const CREATE_BAR_MANAGER = "CREATE_BAR_MANAGER";
+export const VALIDE_BAR_ADMIN = "VALIDE_BAR_ADMIN";
+export const MODIFY_STATUT_BAR_ADMIN = "MODIFY_STATUT_BAR_ADMIN";
+export const GET_MY_BAR_MANAGER = "GET_MY_BAR_MANAGER";
+export const UPDATE_MY_BAR_MANAGER = "UPDATE_MY_BAR_MANAGER";
+export const CREATE_BAR_ADMIN = "CREATE_BAR_ADMIN";
 
 import Api from '../../api/api';
 
@@ -32,6 +37,7 @@ export const getAllBar = () => {
     return async dispatch => {
         try {
             const response = await Api.get('/allbars');
+            console.log("test")
             dispatch({ type: GET_ALL_BARS,
               payload: response.data,
             });
@@ -182,15 +188,88 @@ export const updateContentBar = (barId, nomVariable, contenu) => {
 };
 
 //Function permettant de créer un bar manager
-export const createBarManager = (name, description, tags, adress, note, products, siret, phone, openhours, closehours) => {
+export const createBarManager = (data) => {
     return async dispatch => {
         try {
-            const response = await Api.post('/bar/creat-bar',{name, description, tags, adress, note, products, siret, phone, openhours, closehours});
-            dispatch({ type: CREAT_BAR_MANAGER,
-              payload: response.data.success,
+            const response = await Api.post('/bar/create-bar', data);
+            dispatch({ type: CREATE_BAR_MANAGER,
+              payload: response.data,
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la creation du bar." });
+        }
+    };
+};
+
+//Function permettant de créer un bar manager
+export const createBarAdmin = (data) => {
+    return async dispatch => {
+        try {
+          console.log("1")
+            const response = await Api.post('/admin/bar/create-bar', data);
+            console.log("2")
+            dispatch({ type: CREATE_BAR_ADMIN,
+              payload: response.data,
+            });
+        } catch (error) {
+            dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la creation du bar." });
+        }
+    };
+};
+//Function permettant de valider un bar
+export const validebaradmin = (data) => {
+    return async dispatch => {
+        try {
+          console.log("1")
+            const response = await Api.patch('/admin/validation-bar', data);
+            console.log("2")
+            dispatch({ type: VALIDE_BAR_ADMIN,
+              payload: response.data,
+            });
+        } catch (error) {
+            dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la validation du bar." });
+        }
+    };
+};
+
+//Function permettant de modifier le statut d'un bar
+export const modifystatutbaradmin = (data) => {
+    return async dispatch => {
+        try {
+            const response = await Api.patch('/admin/bar/modify-statut', data);
+            dispatch({ type: MODIFY_STATUT_BAR_ADMIN,
+              payload: response.data,
+            });
+        } catch (error) {
+            dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la validation du bar." });
+        }
+    };
+};
+
+//Function permettant de récupérer un bar
+export const getmybarmanager = (barID) => {
+    return async dispatch => {
+        try {
+            const response = await Api.get('/barfindone/'+barID);
+            dispatch({ type: GET_MY_BAR_MANAGER,
+              payload: response.data,
+            });
+        } catch (error) {
+            dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la validation du bar." });
+        }
+    };
+};
+
+//Function permettant de récupérer un bar
+export const updatemybarmanager = (data) => {
+    return async dispatch => {
+        try {
+            const response = await Api.patch('/bar/modifymybar', data);
+            dispatch({ type: UPDATE_MY_BAR_MANAGER,
+              payload: response.data,
+            });
+        } catch (error) {
+            dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la validation du bar." });
         }
     };
 };

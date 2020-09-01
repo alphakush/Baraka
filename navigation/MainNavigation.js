@@ -31,6 +31,8 @@ import AdminBarInfoScreen from '../screens/AdminBarInfoScreen';
 import BarManagerScreen from '../screens/BarManagerScreen';
 import ModifierInformationBarScreen from '../screens/ModifierInformationBarScreen';
 
+import ManagerBarScreen from '../screens/ManagerListBarsScreen';
+
 import Colors from '../constant/Colors';
 
 const defaultStackNavOptions = {
@@ -59,7 +61,7 @@ const FeedNavigator = createStackNavigator(
           screen: BarRouteScreen
         },
         FilterScreen :{
-          screen: FilterScreen,
+          screen: FilterScreen
         },
     },
     {
@@ -168,6 +170,29 @@ const AdministrationBarScreenNavigator = createStackNavigator(
             drawerIcon: drawerConfig =>
                 <SimpleLineIcons
                     name="shield"
+                    size={20}
+                    color={drawerConfig.tintColor}
+                />
+        }
+    }
+);
+
+const ManagerBarScreenNavigator = createStackNavigator(
+    {
+        ManagerBar: {
+            screen: ManagerBarScreen
+        },
+        ManagerBarInfo:{
+          screen: BarManagerScreen
+        },
+    },
+    {
+        defaultNavigationOptions: defaultStackNavOptions,
+        navigationOptions: {
+            drawerLabel: 'Gérer mes bars  ',
+            drawerIcon: drawerConfig =>
+                <SimpleLineIcons
+                    name="settings"
                     size={20}
                     color={drawerConfig.tintColor}
                 />
@@ -456,7 +481,7 @@ const switchNavigator = createSwitchNavigator({
         drawerWidth: 220,
         contentComponent: DrawerWithLogoutButton
     }),
-    adminMainFlow: createDrawerNavigator(
+    baradminMainFlow: createDrawerNavigator(
         {
             Home: FeedNavigator,
             Myaccount: MyAccountNavigator,
@@ -466,8 +491,7 @@ const switchNavigator = createSwitchNavigator({
             Contact: ContactNavigator,
             Promotions: PromotionNavigator,
             FormulaireBar: FormulaireBarNavigator,
-            AdministrationBar: AdministrationBarScreenNavigator,
-            BarManagerScreen: BarManagerNavigation
+            AdministrationBar: AdministrationBarScreenNavigator
         }, {
         contentOptions: {
             activeTintColor: Colors.primary,
@@ -484,7 +508,7 @@ const switchNavigator = createSwitchNavigator({
             Geolocate: GeolocateNavigator,
             Contact: ContactNavigator,
             Promotions: PromotionNavigator,
-            BarManager: BarManagerNavigation
+            ManagerBar: ManagerBarScreenNavigator
         }, {
         contentOptions: {
             activeTintColor: Colors.primary,

@@ -15,9 +15,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Colors from '../constant/Colors';
 import * as AuthActions from '../store/actions/AuthAction';
 import Dialog from 'react-native-dialog';
-
+import axios from 'axios';
 const Login = props => {
-
   const errormsg = useSelector(state => state.auth.errorMessage);
   const connexionStatus = useSelector(state => state.auth.token);
   const accessLevel = useSelector(state => state.auth.accessLevel);
@@ -68,26 +67,37 @@ const Login = props => {
   };
 
   useEffect(() => {
+    setEmail("admin@gmail.com")
+    setPassword("test")
     signinHandler();
   }, [connexionStatus]);
 
   const signinHandler = () => {
     if (email != '') {
       if (password != '') {
-        dispatch(AuthActions.signIn(email.toLowerCase(), password));
-        {errormsg ? Alert.alert("Baraka",errormsg) : null }
+        // dispatch(AuthActions.signIn(email.toLowerCase(), password));
+        axios.post('http://localhost:3000/api/v1/signin', {
+            email: 'admin@gmail.com',
+            password: 'test'
+          })
+          .then(function (response) {
+            console.log("eeeeee"+response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        // {errormsg ? Alert.alert("Baraka",errormsg) : null }
         if (connexionStatus !== null) {
-          if(accessLevel == 1) { //L'utilisateur est un responsable de bar si accessLevel est égal à 1
+          if(accessLevel == "1") { //L'utilisateur est un responsable de bar si accessLevel est égal à 1
           props.navigation.navigate('barManagerMainFlow');
           }
-        else if(accessLevel == 2) { //L'utilisateur est un Administrateur si accessLevel est égal à 2
-          props.navigation.navigate('barManagerMainFlow');
+        else if(accessLevel == "2") { //L'utilisateur est un Administrateur si accessLevel est égal à 2
+          props.navigation.navigate('baradminMainFlow');
         }
         else {
           props.navigation.navigate('mainFlow');
         }
         }
-        return;
       } else {
         Alert.alert("Baraka", "Le mot de passe ne peut pas être vide");
       }

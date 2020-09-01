@@ -22,14 +22,18 @@ const BarInformations = props => {
 
   //Informations spécifiques pour populer FlatList
   const barPicturesUrls = props.navigation.getParam('barPicturesUrls');
+  // const barAverageNotation = Number(props.navigation.getParam('barAverageNotation'));
   const barAverageNotation = Number(props.navigation.getParam('barAverageNotation'));
   const barTags = props.navigation.getParam('barTags');
+  const barProducts = props.navigation.getParam('barProduct');
   const barDescription = props.navigation.getParam('barDescription');
   const barName = props.navigation.getParam('barName');
   const barID = props.navigation.getParam('barID');
   const [barliked, setbarliked] = useState(false);
   const barlatitude = props.navigation.getParam('barlatitude');
   const barlongitude = props.navigation.getParam('barlongitude');
+  const baropenhours = props.navigation.getParam('baropenhours');
+  const barendhours = props.navigation.getParam('barendhours');
   const errormsg = useSelector(state => state.auth.errorMessage);
   const responseRatingNote = useSelector(state => state.bars.response);
   const [comment, setcomment] = useState('');
@@ -103,6 +107,16 @@ const loadComment = useCallback(async () => {
     loadComment();
 }, [dispatch, loadComment]);
 
+//**
+// <Rating
+//   type='star'
+//   ratingCount={5}
+//   imageSize={35}
+//   readonly={true}
+//   fractions={1}
+//   startingValue={barAverageNotation}
+// />
+
 useEffect(() => {
   const willFocusSub = props.navigation.addListener(
     'willFocus',
@@ -115,39 +129,35 @@ useEffect(() => {
 }, [loadComment]);
 
   return (
-    <KeyboardAwareScrollView>
     <ScrollView>
-    <TouchableWithoutFeedback onPress={() =>
-      {Keyboard.dismiss(); }} >
+    <KeyboardAwareScrollView
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      contentContainerStyle={styles.container}
+      scrollEnabled={true}
+      enableOnAndroid={true}
+      enableAutomaticScroll={(Platform.OS === 'ios')}
+      extraScrollHeight={100}
+    >
+    <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss(); }} >
       <View style={styles.container}>
         <View style={{ marginHorizontal: 30 }}>
           <Image resizeMode='contain' style={styles.image} source={{ uri: `data:image/png;base64,${barPicturesUrls}` }} />
           <View style={{ alignItems: 'center' }}>
             <Text style={styles.nameBar}>{barName}</Text>
-            <View style={styles.aligntext}>
-            <Rating
-              type='star'
-              ratingCount={5}
-              imageSize={35}
-              readonly={true}
-              fractions={1}
-              startingValue={barAverageNotation}
-            />
+            <View style={{ alignItems: 'center' }}>
+            <Text style={styles.descriptionBar}>{barTags}</Text>
+            <Text style={styles.descriptionBar}>{barProducts}</Text>
             </View>
-            {barTags.map((item, key) => (
-              <Text key={key} style={styles.descriptionBar}>{item}</Text>
-            ))}
             <TouchableOpacity onPress={() => Likebar()}>
               <Image style={styles.like} source={barliked ? require('../images/hearts.png') : require('../images/heartsempty.png')} />
             </TouchableOpacity>
             <Text style={styles.descriptionBar}>{barDescription}</Text>
             <View style={styles.socialBarButton}>
               <Image style={styles.icon} source={require('../images/clock.png')}/>
-              <Text rkType='primary4 hintColor' style={styles.socialBarLabel}>Horaires : 10:00h - 02:00h</Text>
+              <Text rkType='primary4 hintColor' style={styles.socialBarLabel}>Horaires : {baropenhours}h - {barendhours}h</Text>
             </View>
           </View>
         </View>
-
         <View style={styles.ButtonContainer}>
           <TouchableOpacity style={styles.Button} onPress={() => {
               props.navigation.navigate({
@@ -181,13 +191,13 @@ useEffect(() => {
             </TouchableOpacity>
           </View>
             <FlatList
-          style={styles.rootCom}
-          data={getComment}
-          ItemSeparatorComponent={() => {
-            return (<View style={styles.separatorCom} />)
-          }}
-          keyExtractor={(item, index) => item._id}
 
+              style={styles.rootCom}
+              data={getComment}
+              ItemSeparatorComponent={() => {
+                return (<View style={styles.separatorCom} />)
+              }}
+          keyExtractor={(item, index) => item._id}
           renderItem={(item) => {
             const Commentaire = item.item;
             return (
@@ -204,8 +214,8 @@ useEffect(() => {
           }} />
       </View>
       </TouchableWithoutFeedback>
-    </ScrollView>
     </KeyboardAwareScrollView>
+    </ScrollView>
   );
 };
 

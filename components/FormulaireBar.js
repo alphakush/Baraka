@@ -1,3 +1,4 @@
+// import React, { useState, useCallback, useEffect } from 'react';
 import React, { useState, useCallback, useEffect } from 'react';
 import {
   StyleSheet,
@@ -23,10 +24,13 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import * as ImagePicker from 'expo-image-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as BarsActions from '../store/actions/BarsActions';
+
 const FormulaireBar = props => {
 
   const connexionStatus = useSelector(state => state.auth.token);
+
   const errormsg = useSelector(state => state.auth.errorMessage);
+  const accessLevel = useSelector(state => state.auth.accessLevel);
   const dispatch = useDispatch();
   const [namebar, setnamebar] = useState('');
   const [tags, setTags] = useState('');
@@ -47,7 +51,10 @@ const FormulaireBar = props => {
   const [showOpen, setShowOpen] = useState(false);
   const [showEnd, setShowEnd] = useState(false);
 
-  const [selectedImage, setSelectedImage] = useState('');
+  const [selectedImageuri, setSelectedImageuri] = useState('');
+  const [selectedImagetype, setSelectedImagetype] = useState('');
+
+  const email = useSelector(state => state.auth.email);
 
   const openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
@@ -57,13 +64,13 @@ const FormulaireBar = props => {
       return;
     }
     let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
         aspect: [4, 3],
         quality: 1,
       });
       if (!result.cancelled) {
-        setSelectedImage(result.uri);
+        setSelectedImageuri(result.uri);
       }
   }
   const onChangeOpen = (event, selectedTime) => {
@@ -118,9 +125,16 @@ const FormulaireBar = props => {
 
   useEffect(() => {
     generateCaptcha();
+    // setnamebar("Wallace");
+    // setDescription("Le meilleur bar pour prendre une bière à Lyon");
+    // setproduit("Kronenbourg, Mont Blanc Verte, Carlsberg Elephant");
+    // setSiret("785678378327827");
+    // setPhone("04 78 42 59 56");
+    // setTags("Cool,sympa, magnifique");
+    // setAdresse("2 Rue Octavio Mey, 69005 Lyon");
   }, [connexionStatus]);
 
-  const sendFormulaireHandler = () => {
+  const sendFormulaireHandler = async() => {
     var temp = randomNumberOne;
     if (textCaptchaHolder == ''){
       Alert.alert("Baraka","Le Captcha ne peut être vide");
@@ -134,15 +148,44 @@ const FormulaireBar = props => {
         return;
       }
     }
-
+    if (selectedImageuri == ''){Alert.alert("Baraka", "Image obligatoire"); return; }
     if (namebar == ''){Alert.alert("Baraka", "Nom de bar obligatoire"); return; }
     if (tags == ''){Alert.alert("Baraka", "Tags obligatoire"); return;}
     if (produit == ''){Alert.alert("Baraka", "Produit obligatoire"); return;}
     if (adresse == ''){Alert.alert("Baraka", "Adresse obligatoire"); return;}
     if (description == ''){Alert.alert("Baraka", "Description obligatoire"); return;}
     if (barOpenHours == '' || barEndHours == ''){Alert.alert("Baraka", "Horaires obligatoire"); return;}
-    // on insert en base, il faut créer la route
-    Alert.alert("Récapitulatif","Nom du bar: "+namebar+"\n"+"Description: "+description+"\n"+"Tags: "+tags+"\n"+"Produit: "+produit+"\n"+"GPS: "+adresse+"\n"+"Siret: "+siret+"\n"+"Heure ouverture: "+barOpenHours+"\n"+"Heure fermeture: "+barEndHours);
+    const data = new FormData();
+    let mimetype = selectedImageuri.slice((selectedImageuri.lastIndexOf('.') - 1 >>> 0) + 2);
+    data.append('uploadbar', {
+      uri:
+      Platform.OS === "android" ? selectedImageuri : selectedImageuri.replace("file://", ""),
+      type: mimetype,
+      name:namebar+".jpg"
+    });
+    data.append('name',namebar);
+    data.append('tags',tags);
+    data.append('products',produit);
+    data.append('address',adresse);
+    data.append('description',description);
+    data.append('note','0.0');
+    data.append('phone',phone);
+    data.append('siret',siret);
+    data.append('baropenhours',barOpenHours);
+    data.append('barendhours',barEndHours);
+    data.append('manager', email);
+    if (accessLevel=="2"){
+      dispatch(BarsActions.createBarAdmin(data)).then(() =>{
+        {errormsg ? Alert.alert("Baraka",errormsg) : null }
+        })
+        props.navigation.navigate('baradminMainFlow');
+    } else if (accessLevel == "0" || accessLevel == "-1") {
+      dispatch(BarsActions.createBarManager(data)).then(() =>{
+        {errormsg ? Alert.alert("Baraka",errormsg) : null }
+        })
+        props.navigation.navigate('barManagerMainFlow');
+    }
+
     return;
   };
 
@@ -182,12 +225,13 @@ const FormulaireBar = props => {
         </TouchableOpacity>
         </View>
         <View>
-          {selectedImage ? ( selectedImage && <Image source={{ uri: selectedImage }} style={styles.image} /> ) : <View /> }
+          {selectedImageuri ? ( selectedImageuri && <Image source={{ uri: selectedImageuri }} style={styles.image} /> ) : <View /> }
       </View>
       <View style={styles.inputContainer}>
         <TextInput style={styles.inputs}
           placeholder="Nom du bar"
           keyboardType="default"
+          defaultValue=""
           underlineColorAndroid='transparent'
           onChangeText={setBarnameHandler} />
       </View>
@@ -195,6 +239,7 @@ const FormulaireBar = props => {
         <TextInput style={styles.inputs}
           placeholder="Description"
           keyboardType="default"
+          defaultValue=""
           underlineColorAndroid='transparent'
           onChangeText={setDescriptionHandler} />
       </View>
@@ -202,6 +247,7 @@ const FormulaireBar = props => {
         <TextInput style={styles.inputs}
           placeholder="Tags"
           keyboardType="default"
+          defaultValue=""
           underlineColorAndroid='transparent'
           onChangeText={setTagsHandler} />
       </View>
@@ -209,6 +255,7 @@ const FormulaireBar = props => {
         <TextInput style={styles.inputs}
           placeholder="Adresse"
           keyboardType="default"
+          defaultValue=""
           underlineColorAndroid='transparent'
           onChangeText={setAdressHandler} />
       </View>
@@ -216,6 +263,7 @@ const FormulaireBar = props => {
         <TextInput style={styles.inputs}
           placeholder="Produits"
           keyboardType="default"
+          defaultValue=""
           underlineColorAndroid='transparent'
           onChangeText={setProduitHandler} />
       </View>
@@ -223,6 +271,7 @@ const FormulaireBar = props => {
         <TextInput style={styles.inputs}
           placeholder="N° SIRET"
           keyboardType="numeric"
+          defaultValue=""
           underlineColorAndroid='transparent'
           onChangeText={setSiretHandler} />
       </View>
@@ -230,6 +279,7 @@ const FormulaireBar = props => {
         <TextInput style={styles.inputs}
           placeholder="N° Téléphone"
           keyboardType="numeric"
+          defaultValue=""
           underlineColorAndroid='transparent'
           onChangeText={setPhoneHandler} />
       </View>
@@ -295,6 +345,7 @@ const styles = StyleSheet.create({
   image: {
     width: 200,
     height: 200,
+    marginBottom:10,
   },
   container: {
     flex: 1,

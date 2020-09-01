@@ -4,12 +4,12 @@ import {
     View,
     FlatList
 } from 'react-native';
-import AdminFeedBar from './AdminFeedBar';
+import ManagerFeedBar from './ManagerFeedBar';
 
-const AdminListBars = props => {
+const ManagerListBars = props => {
     const _renderItem = itemData => {
         return (
-            <AdminFeedBar
+            <ManagerFeedBar
             id={itemData.item._id}
             name={itemData.item.name}
             description={itemData.item.description}
@@ -20,7 +20,7 @@ const AdminListBars = props => {
             statut={itemData.item.statut}
                 onSelectBar={() => {
                     props.navigation.navigate({
-                        routeName: 'AdminBarInfo',
+                        routeName: 'ManagerBarInfo',
                         params: {
                             barID: itemData.item._id,
                             barName: itemData.item.name,
@@ -30,12 +30,11 @@ const AdminListBars = props => {
                             barPhone: itemData.item.phone,
                             barManager: itemData.item.manager,
                             barPicturesUrls: itemData.item.image,
-                            barlatitude: itemData.item.latitude,
-                            barlongitude: itemData.item.longitude,
                             barproducts: itemData.item.products,
                             baropenhours: itemData.item.baropenhours,
                             barendhours: itemData.item.barendhours,
-                            barstatut: itemData.item.statut
+                            barstatut: itemData.item.statut,
+                            barsiret: itemData.item.siret,
                         }
                     });
                 }}
@@ -61,4 +60,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default AdminListBars;
+export default ManagerListBars;

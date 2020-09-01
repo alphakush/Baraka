@@ -13,13 +13,11 @@ const initialState = {
     errorMessage: '',
     username : '',
     email : '',
-    accessLevel : null,
-    managerBarId : null,
     userlatitude : null,
     userlongitude : null,
     stateRequest: null,
-    accessLevel : null,
-    managerBarId : null
+    accessLevel : '',
+    managerBarId : '',
 }
 
 const authReducer = (state = initialState, action) => {
@@ -32,7 +30,7 @@ const authReducer = (state = initialState, action) => {
               userlatitude : action.payloaduserlatitude,
               userlongitude : action.payloaduserlongitude,
               accessLevel : action.payloadaccesslevel,
-              managerBarId : action.payloadmanagerbarid
+              managerBarId : action.payloadmanagerBarId
             }
         case TOGGLE_ERROR:
             return { ...state, errorMessage: action.payload }
@@ -44,7 +42,7 @@ const authReducer = (state = initialState, action) => {
               userlatitude: action.payloaduserlatitude,
               userlongitude: action.payloaduserlongitude,
               accessLevel : action.payloadaccesslevel,
-              managerBarId : action.payloadmanagerbarid
+              managerBarId : action.payloadmanagerBarId
             }
         case TOGGLE_TRY_LOCAL_SIGN:
             return { ...state,
@@ -54,7 +52,7 @@ const authReducer = (state = initialState, action) => {
               userlatitude : action.payloaduserlatitude,
               userlongitude : action.payloaduserlongitude,
               accessLevel : action.payloadaccesslevel,
-              managerBarId : action.payloadmanagerbarid
+              managerBarId : action.payloadmanagerBarId
             }
         case GET_USERLOCATION:
             return { ...state,
@@ -64,12 +62,12 @@ const authReducer = (state = initialState, action) => {
         case TOGGLE_SIGNOUT:
             return {
               token: null,
-              email : null,
-              username : null,
+              email : '',
+              username : '',
               userlatitude: null,
               userlongitude: null,
-              accessLevel: null,
-              managerBarId : null
+              accessLevel: '',
+              managerBarId: '',
             }
           case TOGGLE_RESET_PASSWORD:
             return {...state,

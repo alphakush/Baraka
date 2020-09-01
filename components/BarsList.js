@@ -24,11 +24,14 @@ const BarList = props => {
                             barID: itemData.item._id,
                             barName: itemData.item.name,
                             barDescription: itemData.item.description,
+                            barProduct: itemData.item.products,
                             barTags: itemData.item.tags,
                             barAverageNotation: itemData.item.note,
                             barPicturesUrls: itemData.item.image,
                             barlatitude: itemData.item.latitude,
-                            barlongitude: itemData.item.longitude
+                            barlongitude: itemData.item.longitude,
+                            baropenhours: itemData.item.baropenhours,
+                            barendhours: itemData.item.barendhours
                         }
                     });
                 }}

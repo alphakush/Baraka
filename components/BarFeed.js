@@ -68,7 +68,6 @@ const BarFeed = props => {
             </View>
             <View style={styles.socialBarSection}>
               <View style={styles.socialBarButton}>
-                <Image style={styles.icon} source={{uri: 'https://png.icons8.com/ios-glyphs/75/2ecc71/comments.png'}}/>
                 <Text rkType='primary4 hintColor' style={styles.socialBarLabel}>{props.numbercomment}</Text>
               </View>
             </View>

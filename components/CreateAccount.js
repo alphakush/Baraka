@@ -9,13 +9,14 @@ import {
   Image,
   Alert,
   Keyboard,
+  ScrollView,
   KeyboardAvoidingView
 } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
 import Colors from '../constant/Colors';
 import * as AuthActions from '../store/actions/AuthAction';
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const CreateAccount = props => {
 
@@ -64,14 +65,13 @@ const CreateAccount = props => {
             dispatch(AuthActions.signUp(username, email, password));
             {errormsg ? Alert.alert("Baraka",errormsg) : null }
             if (connexionStatus !== null) {
-              if(accessLevel == 1) { //L'utilisateur est un responsable de bar si accessLevel est égal à 1
+              if(accessLevel == "1") { //L'utilisateur est un responsable de bar si accessLevel est égal à 1
                 props.navigation.navigate('barManagerMainFlow');
               }
-              else if(accessLevel == 2) { //L'utilisateur est Administrateur si accessLevel est égal à 2
-                props.navigation.navigate('barManagerMainFlow');
+              else if(accessLevel == "2") { //L'utilisateur est Administrateur si accessLevel est égal à 2
+                props.navigation.navigate('baradminMainFlow');
               }
               else {
-                console.log(" CREATE ACCOUNT accessLevel : " + accessLevel); 
                 props.navigation.navigate('mainFlow');
               }
             }
@@ -111,13 +111,16 @@ const CreateAccount = props => {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior="padding"
+    <KeyboardAwareScrollView
+      style={{ backgroundColor: '#F4C52B' }}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      contentContainerStyle={styles.container}
+      scrollEnabled={true}
+      enableOnAndroid={true}
+      enableAutomaticScroll={(Platform.OS === 'ios')}
+      extraScrollHeight={100}
     >
-    <TouchableWithoutFeedback onPress={() =>{
-      Keyboard.dismiss();
-    }}>
+    <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss(); }} >
     <View style={styles.container}>
       <Image style={styles.bgImage} source={require('../images/background.png')} />
       <View style={styles.inputContainer}>
@@ -176,9 +179,8 @@ const CreateAccount = props => {
          </TouchableOpacity>
        </View>
       </View>
-
-    </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
+      </KeyboardAwareScrollView>
   );
 }
 

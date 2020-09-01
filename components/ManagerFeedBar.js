@@ -17,8 +17,9 @@ import { Rating, AirbnbRating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
 import * as BarsActions from '../store/actions/BarsActions';
 
-const AdminFeedBar = props => {
-    const [barstatutrefused, setbarstatutrefused] = useState(false);
+const ManagerFeedBar = props => {
+  const [barstatutrefused, setbarstatutrefused] = useState(false);
+  const [statutname, setstatutname] = useState('');
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -26,9 +27,14 @@ const AdminFeedBar = props => {
 }, []);
 
   const statut = () => {
-    if (props.statut == 1){
+    if (props.statut == '1'){
+      setstatutname("Refusé")
       setbarstatutrefused(true)
+    } else if (props.statut =='0'){
+      setstatutname("En attente")
+      setbarstatutrefused(false)
     } else{
+      setstatutname("Accepté")
       setbarstatutrefused(false)
     }
   };
@@ -88,4 +94,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AdminFeedBar;
+export default ManagerFeedBar;

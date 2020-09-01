@@ -3,8 +3,17 @@ import {
   StyleSheet,
   Text,
   View,
+  TextInput,
+  TouchableWithoutFeedback,
+  TouchableOpacity,
   Image,
   Alert,
+  Button,
+  Platform,
+  Keyboard,
+  KeyboardAvoidingView,
+  ScrollView,
+  FlatList
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,6 +21,7 @@ import HeaderButton from '../components/HeaderButton';
 import Colors from '../constant/Colors';
 import FilterSwitch from '../components/FilterSwitch';
 import * as BarsActions from '../store/actions/BarsActions';
+import * as ImagePicker from 'expo-image-picker';
 
 const MyAccountScreen = props => {
   const { navigation } = props;
@@ -19,49 +29,72 @@ const MyAccountScreen = props => {
   const [isLike, setIsLike] = useState(false);
   const [isDistance, setIsDistance] = useState(false);
   const [isDate, setIsDate] = useState(false);
-
+  const connexionStatus = useSelector(state => state.auth.token);
+  const errormsg = useSelector(state => state.auth.errorMessage);
   const username = useSelector(state => state.auth.username);
   const email = useSelector(state => state.auth.email);
-  const saveFilters = useCallback(() => {
-    const appliedFilters = {
-      Like: isLike,
-      Distance: isDistance,
-      Date: isDate,
-    };
-    dispatch(BarsActions.setFilters(appliedFilters));
+  const [selectedImageuri, setSelectedImageuri] = useState('');
+  const [selectedImagetype, setSelectedImagetype] = useState('');
+  // const infouser = useSelector(state => state.user.userinfo);
 
-  }, [isLike, isDistance, isDate, dispatch]);
+  const openImagePickerAsync = async () => {
+    let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera roll is required!");
+      return;
+    }
+    let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+      if (!result.cancelled) {
+        setSelectedImageuri(result.uri);
+      }
+  }
 
   useEffect(() => {
-    navigation.setParams({ save: saveFilters });
-  }, [saveFilters]);
+    // dispatch(UserActions.getinfouser(email));
+    // console.log(infouser)
+  }, []);
+  saveprofile = () => {
+    const data = new FormData();
+    let mimetype = selectedImageuri.slice((selectedImageuri.lastIndexOf('.') - 1 >>> 0) + 2);
+    data.append('uploaduser', {
+      uri:
+      Platform.OS === "android" ? selectedImageuri : selectedImageuri.replace("file://", ""),
+      type: mimetype,
+      name:username+".jpg"
+    });
+    return;
+    dispatch(UserActions.updatepictureprofileuser(data)).then(() =>{
+      {errormsg ? Alert.alert("Baraka",errormsg) : null }
+      })
+    return;
+   }
 
     return (
       <View style={styles.container}>
           <View style={styles.header}>
           <Text style={styles.info}>Mes informations  </Text>
           </View>
-          <Image style={styles.avatar} source={{uri: 'https://bootdey.com/img/Content/avatar/avatar1.png'}}/>
+          {selectedImageuri ? ( selectedImageuri &&
+            <Image source={{ uri: selectedImageuri }} style={styles.avatar} /> ) :
+            <Image style={styles.avatar} source={{uri: 'https://bootdey.com/img/Content/avatar/avatar1.png'}}/> }
             <View style={styles.body}>
                 <View style={styles.bodyContent}>
                   <Text style={styles.name}>{username}</Text>
                   <Text style={styles.email}>{email}</Text>
+                  <View>
+                    <TouchableOpacity onPress={openImagePickerAsync} style={styles.buttonimage}>
+                      <Text style={styles.buttonTextimage}>Changer ma photo</Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View>
+                  </View>
                 </View>
-                <Text style={styles.title} >Filtrer les bars par : </Text>
-                <FilterSwitch
-                    label="NOMBRE DE J'AIME"
-                    state={isLike}
-                    onChange={newvalue1 => setIsLike(newvalue1)}
-                />
-                <FilterSwitch
-                    label='DISTANCE (-1KM)'
-                    state={isDistance}
-                    onChange={newvalue => setIsDistance(newvalue)}
-                />
-                <FilterSwitch
-                    label='DATE (plus récent)'
-                    state={isDate}
-                    onChange={newvalue => setIsDate(newvalue)} />
             </View>
       </View>
     );
@@ -86,7 +119,7 @@ MyAccountScreen.navigationOptions = navData => {
               <Item
                   title="Save"
                   iconName="ios-save"
-                  onPress={ navData.navigation.getParam('save')}
+                  onPress={() => {this.saveprofile()}}
               />
           </HeaderButtons>
       )
@@ -94,6 +127,18 @@ MyAccountScreen.navigationOptions = navData => {
 };
 
 const styles = StyleSheet.create({
+  buttonimage: {
+    backgroundColor: Colors.Blue,
+    padding: 10,
+    borderRadius: 5,
+    marginBottom:10,
+    marginTop:10,
+    borderRadius: 30,
+  },
+  buttonTextimage: {
+    fontSize: 20,
+    color: '#fff',
+  },
   header:{
     backgroundColor: Colors.Gold,
     height:150,
@@ -114,11 +159,6 @@ const styles = StyleSheet.create({
       fontSize: 22,
       margin: 20,
       textAlign: 'center'
-  },
-  name:{
-    fontSize:22,
-    color:Colors.White,
-    fontWeight:'600',
   },
   info:{
     fontSize:28,

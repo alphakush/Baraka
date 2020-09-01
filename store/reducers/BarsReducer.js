@@ -9,11 +9,18 @@ import {
   POST_NOTE,
   CHECK_NOTE,
   SET_FILTERS,
-  GET_ALL_BARS_ADMIN
+  GET_ALL_BARS_ADMIN,
+  CREATE_BAR_MANAGER,
+  VALIDE_BAR_ADMIN,
+  MODIFY_STATUT_BAR_ADMIN,
+  GET_MY_BAR_MANAGER,
+  UPDATE_MY_BAR_MANAGER,
+  CREATE_BAR_ADMIN
 } from '../actions/BarsActions';
 
 const initialState = {
     allbars: [],
+    mybarmanager:[],
     filteredBars: [],
     favoriteBars: [],
     commentBars: [],
@@ -40,9 +47,21 @@ const barsReducer = (state = initialState, action) => {
             return { ...state, commentBars: action.payload }
         case POST_COMMENT:
             return { ...state, response: action.payload }
+        case VALIDE_BAR_ADMIN:
+            return { ...state, response: action.payload }
         case POST_NOTE:
             return { ...state, response: action.payload }
+        case GET_MY_BAR_MANAGER:
+            return { ...state, allbars: action.payload }
+        case MODIFY_STATUT_BAR_ADMIN:
+            return { ...state, response: action.payload }
+        case UPDATE_MY_BAR_MANAGER:
+            return { ...state, response: action.payload }
         case CHECK_NOTE:
+            return { ...state, response: action.payload }
+        case CREATE_BAR_MANAGER:
+            return { ...state, response: action.payload }
+        case CREATE_BAR_ADMIN:
             return { ...state, response: action.payload }
         case SET_FILTERS:
             return { ...state,

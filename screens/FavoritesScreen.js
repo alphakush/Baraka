@@ -31,7 +31,7 @@ const FavoritesScreen = props => {
         </View>)
     }
 
-    
+
     return (
         <View style={styles.container}>
             <BarsList data={myfavorite} navigation={props.navigation} />
@@ -63,8 +63,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1, paddingTop: 20
     },
-    centered: { 
-        flex: 1, 
+    centered: {
+        flex: 1,
         justifyContent: 'center',
          alignItems: 'center' }
 });
