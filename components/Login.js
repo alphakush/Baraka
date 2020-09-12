@@ -75,18 +75,8 @@ const Login = props => {
   const signinHandler = () => {
     if (email != '') {
       if (password != '') {
-        // dispatch(AuthActions.signIn(email.toLowerCase(), password));
-        axios.post('http://localhost:3000/api/v1/signin', {
-            email: 'admin@gmail.com',
-            password: 'test'
-          })
-          .then(function (response) {
-            console.log("eeeeee"+response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        // {errormsg ? Alert.alert("Baraka",errormsg) : null }
+        dispatch(AuthActions.signIn(email.toLowerCase(), password));
+        {errormsg ? Alert.alert("Baraka",errormsg) : null }
         if (connexionStatus !== null) {
           if(accessLevel == "1") { //L'utilisateur est un responsable de bar si accessLevel est égal à 1
           props.navigation.navigate('barManagerMainFlow');

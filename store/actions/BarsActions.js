@@ -9,6 +9,7 @@ export const POST_NOTE = "POST_NOTE";
 export const CHECK_NOTE = "CHECK_NOTE";
 export const SET_FILTERS ='SET_FILTERS';
 export const GET_ALL_BARS_ADMIN = "GET_ALL_BARS_ADMIN";
+export const GET_ALL_USERS_ADMIN = "GET_ALL_USERS_ADMIN";
 export const CREATE_BAR_MANAGER = "CREATE_BAR_MANAGER";
 export const VALIDE_BAR_ADMIN = "VALIDE_BAR_ADMIN";
 export const MODIFY_STATUT_BAR_ADMIN = "MODIFY_STATUT_BAR_ADMIN";
@@ -270,6 +271,20 @@ export const updatemybarmanager = (data) => {
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la validation du bar." });
+        }
+    };
+};
+
+//Function permettant de recevoir tous les utilisateurs
+export const getAllUsersAdmin = () => {
+    return async dispatch => {
+        try {
+            const response = await Api.get('/admin/allUsers');
+            dispatch({ type: GET_ALL_USERS_ADMIN,
+              payload: response.data,
+            });
+        } catch (error) {
+            dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la récupération des données." });
         }
     };
 };
