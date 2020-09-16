@@ -125,8 +125,6 @@ const BarManagerScreen = props => {
       // props.navigation.navigate('barManagerMainFlow');
       // Alert.alert("Baraka","Modifications envoyé avec succès")
     return;
-    console.log("pas de changement")
-    return;
   };
 
   return (

@@ -20,6 +20,7 @@ import FeedScreen from '../screens/FeedScreen';
 import BarInfoScreen from '../screens/BarInformationScreen';
 import FindBarScreen from '../screens/FindBarsScreen';
 import ContactScreen from '../screens/ContactScreen';
+import UsersScreen from '../screens/ListOfAllUsers';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import tryLocalSigninScreen from '../screens/TryLocalSigninScreen';
 import BarRouteScreen from '../screens/BarRoute';
@@ -425,6 +426,24 @@ const BarManagerNavigation = createStackNavigator(
     }
 );
 
+const ListOfAllUsers = createStackNavigator(
+    {
+        userScreen: UsersScreen,
+    },
+    {
+        defaultNavigationOptions: defaultStackNavOptions,
+        navigationOptions: {
+            drawerLabel: 'Liste des utilisateurs',
+            drawerIcon: drawerConfig =>
+                <SimpleLineIcons
+                    name="list"
+                    size={20}
+                    color={drawerConfig.tintColor}
+                />
+        }
+    }
+);
+
 export const DrawerWithLogoutButton = props => {
     const dispatch = useDispatch();
     return(
@@ -491,7 +510,8 @@ const switchNavigator = createSwitchNavigator({
             Contact: ContactNavigator,
             Promotions: PromotionNavigator,
             FormulaireBar: FormulaireBarNavigator,
-            AdministrationBar: AdministrationBarScreenNavigator
+            AdministrationBar: AdministrationBarScreenNavigator,
+            userScreen: ListOfAllUsers
         }, {
         contentOptions: {
             activeTintColor: Colors.primary,
