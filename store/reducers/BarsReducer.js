@@ -16,6 +16,7 @@ import {
     MODIFY_STATUT_BAR_ADMIN,
     GET_MY_BAR_MANAGER,
     UPDATE_MY_BAR_MANAGER,
+    DELETE_USER,
     CREATE_BAR_ADMIN
 } from '../actions/BarsActions';
 
@@ -67,6 +68,8 @@ const barsReducer = (state = initialState, action) => {
             return { ...state, response: action.payload }
         case CREATE_BAR_ADMIN:
             return { ...state, response: action.payload }
+        case DELETE_USER:
+            return { ...state }
         case SET_FILTERS:
             return {
                 ...state,

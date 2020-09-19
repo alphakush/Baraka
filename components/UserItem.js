@@ -5,19 +5,23 @@ import {
     FlatList
 } from 'react-native';
 import UserRow from './UserRow';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const UserItem = props => {
     const _renderItem = itemData => {
         return (
-            <UserRow
-            username={"Nicolas"}
-            email={"itemData.item.email@gmail.com"}
-            accessLevel={"2"}
-            />
+            <ScrollView>
+                <UserRow
+                    image={itemData.item.image}
+                    username={itemData.item.username}
+                    email={itemData.item.email}
+                    accessLevel={itemData.item.accessLevel}
+                />
+            </ScrollView>
         );
     };
     return (
-        <View style={styles.list}>
+        <View >
             <FlatList
                 data={props.data}
                 renderItem={_renderItem}
@@ -26,13 +30,5 @@ const UserItem = props => {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    list: {
-      flex: 1,
-      paddingHorizontal: 10,
-      backgroundColor:"#EEEEEE",
-    },
-});
 
 export default UserItem;

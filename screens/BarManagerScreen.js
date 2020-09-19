@@ -8,12 +8,9 @@ import {
   TouchableOpacity,
   Image,
   Alert,
-  Button,
   Platform,
   Keyboard,
-  KeyboardAvoidingView,
   ScrollView,
-  FlatList
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Colors from '../constant/Colors';
@@ -226,7 +223,6 @@ const BarManagerScreen = props => {
       </KeyboardAwareScrollView>
   </ScrollView>
   );
-
 };
 
 BarManagerScreen.navigationOptions = navData => {

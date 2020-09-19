@@ -10,13 +10,13 @@ const BarList = props => {
     const _renderItem = itemData => {
         return (
             <BarFeed
-            id={itemData.item._id}
-            name={itemData.item.name}
-            description={itemData.item.description}
-            averageNotation={itemData.item.note}
-            picturesUrls={itemData.item.image}
-            numbercomment={itemData.item.counterComment}
-            numberLike={itemData.item.counterLike}
+                id={itemData.item._id}
+                name={itemData.item.name}
+                description={itemData.item.description}
+                averageNotation={itemData.item.note}
+                picturesUrls={itemData.item.image}
+                numbercomment={itemData.item.counterComment}
+                numberLike={itemData.item.counterLike}
                 onSelectBar={() => {
                     props.navigation.navigate({
                         routeName: 'BarInfo',
@@ -51,9 +51,9 @@ const BarList = props => {
 
 const styles = StyleSheet.create({
     list: {
-      flex: 1,
-      paddingHorizontal: 10,
-      backgroundColor:"#E6E6E6",
+        flex: 1,
+        paddingHorizontal: 10,
+        backgroundColor: "#E6E6E6",
     },
 });
 

@@ -16,6 +16,7 @@ export const MODIFY_STATUT_BAR_ADMIN = "MODIFY_STATUT_BAR_ADMIN";
 export const GET_MY_BAR_MANAGER = "GET_MY_BAR_MANAGER";
 export const UPDATE_MY_BAR_MANAGER = "UPDATE_MY_BAR_MANAGER";
 export const CREATE_BAR_ADMIN = "CREATE_BAR_ADMIN";
+export const DELETE_USER = "DELETE_USER";
 
 import Api from '../../api/api';
 
@@ -38,7 +39,6 @@ export const getAllBar = () => {
     return async dispatch => {
         try {
             const response = await Api.get('/allbars');
-            console.log("test")
             dispatch({ type: GET_ALL_BARS,
               payload: response.data,
             });
@@ -281,6 +281,20 @@ export const getAllUsersAdmin = () => {
         try {
             const response = await Api.get('/admin/allUsers');
             dispatch({ type: GET_ALL_USERS_ADMIN,
+              payload: response.data,
+            });
+        } catch (error) {
+            dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la récupération des données." });
+        }
+    };
+};
+
+//Function permettant de recevoir tous les utilisateurs
+export const deleteUser = (username) => {
+    return async dispatch => {
+        try {
+            const response = await Api.delete('/admin/deleteUser/'+username);
+            dispatch({ type: DELETE_USER,
               payload: response.data,
             });
         } catch (error) {
