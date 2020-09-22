@@ -16,8 +16,6 @@ import * as BarsActions from '../store/actions/BarsActions';
 const UserRow = props => {
 
     const dispatch = useDispatch();
-
-
     const sendDeleteOrder = async () => {
         dispatch(BarsActions.deleteUser(props.username));
         Alert.alert("Suppression effectuée");
@@ -39,6 +37,29 @@ const UserRow = props => {
     )
     };
 
+    function AfficherUser(){
+        return <Text style={styles.informationText}> Utilisateur</Text>
+    }
+
+    function AfficherAdmin(){
+        return <Text style={styles.informationText}> Administrateur</Text>
+    }
+
+    function AfficherManager(){
+        return <Text style={styles.informationText}> Manager</Text>
+    }
+
+    function AfficherAccessLevel(props) {
+        const l_accessLevel = props.accessLevel;
+        switch(l_accessLevel) {
+            case '-1':
+                return <AfficherUser/>
+            case '1':
+                return <AfficherManager/>  
+            case '2':
+                return <AfficherAdmin/>
+        }
+      }
 
     return (
         <View style={styles.separator}>
@@ -53,11 +74,11 @@ const UserRow = props => {
                         <View style={styles.emailAcesslevelContainer}>
                             <View style={styles.grayInformation}>
                                 <SimpleLineIcons name="envelope" size={20} />
-                                <Text style={styles.emailText}>{props.email}</Text>
+                                <Text style={styles.informationText}>{props.email}</Text>
                             </View>
                             <View style={styles.grayInformation}>
                                 <SimpleLineIcons name="graduation" size={20} />
-                                <Text style={styles.accessLevelText}>{props.accessLevel}</Text>
+                                <Text style={styles.accessLevelText}> <AfficherAccessLevel style={styles.informationText} accessLevel={props.accessLevel} /></Text>
                             </View>
                         </View>
                     </View >
@@ -95,12 +116,7 @@ const styles = StyleSheet.create({
         fontSize: 17, 
         fontWeight: 'bold'
     },
-    emailText: {
-        fontSize: 15,
-        color: Colors.GreyDark,
-        marginHorizontal: 10,
-    },
-    accessLevelText: {
+    informationText: {
         fontSize: 15,
         color: Colors.GreyDark,
         marginHorizontal: 10,
