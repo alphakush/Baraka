@@ -42,6 +42,8 @@ const BarInformations = props => {
   const getComment = useSelector(state => state.bars.commentBars);
   const [isLoading, setIsLoading] = useState(false);
   const conditionForRatingBar = "Vous n'avez pas encore noté ce bar.";
+  const [connected, setconnected] = useState(false);
+  const email = useSelector(state => state.auth.email);
 
   const setcommentHandler = (enteredText) => {
     setcomment(enteredText);
@@ -86,6 +88,11 @@ const BarInformations = props => {
   useEffect(() => {
     if(currentBarIsFavorite){
       setbarliked(true);
+    }
+    if (email != ""){
+      setconnected(true)
+    }else{
+      setconnected(false)
     }
 }, []);
 
@@ -148,9 +155,13 @@ useEffect(() => {
             <Text style={styles.descriptionBar}>{barTags}</Text>
             <Text style={styles.descriptionBar}>{barProducts}</Text>
             </View>
-            <TouchableOpacity onPress={() => Likebar()}>
-              <Image style={styles.like} source={barliked ? require('../images/hearts.png') : require('../images/heartsempty.png')} />
-            </TouchableOpacity>
+            {connected ?
+              <TouchableOpacity onPress={() => Likebar()}>
+                <Image style={styles.like} source={barliked ? require('../images/hearts.png') : require('../images/heartsempty.png')} />
+              </TouchableOpacity>
+              :
+              <View></View>
+            }
             <Text style={styles.descriptionBar}>{barDescription}</Text>
             <View style={styles.socialBarButton}>
               <Image style={styles.icon} source={require('../images/clock.png')}/>
