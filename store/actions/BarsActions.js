@@ -17,10 +17,41 @@ export const GET_MY_BAR_MANAGER = "GET_MY_BAR_MANAGER";
 export const UPDATE_MY_BAR_MANAGER = "UPDATE_MY_BAR_MANAGER";
 export const CREATE_BAR_ADMIN = "CREATE_BAR_ADMIN";
 export const DELETE_USER = "DELETE_USER";
+export const GET_USER_INFO = "GET_USER_INFO";
+export const UPDATE_USER_INFO = "UPDATE_USER_INFO";
 
 import Api from '../../api/api';
 
+//Function permettant d'update un user'
+export const updateuserinfo = (data) => {
+    return async dispatch => {
+        try {
+            const response = await Api.patch('/user/updateuserinfo', data);
+            dispatch({ type: UPDATE_USER_INFO,
+              payload: response.data,
+              payloadstatus : response.status
+            });
+        } catch (error) {
+            dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la modification de cet user." });
+        }
+    };
+};
+
 //ADMINISTRATION
+// récupérer les info d'un utilisateur
+export const getUserInfo = (email) => {
+    return async dispatch => {
+        try {
+            const response = await Api.get('/users/'+email);
+            dispatch({ type: GET_USER_INFO,
+              payload: response.data,
+              payloadstatus : response.status
+            });
+        } catch (error) {
+            dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la récupération des données." });
+        }
+    };
+};
 // Function pour OBTENIR TOUS LES  tous les bars.
 export const getAllBarAdmin = () => {
     return async dispatch => {
@@ -28,6 +59,7 @@ export const getAllBarAdmin = () => {
             const response = await Api.get('/admin/allbars');
             dispatch({ type: GET_ALL_BARS_ADMIN,
               payload: response.data,
+              payloadstatus : response.status
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la récupération des données." });
@@ -41,6 +73,7 @@ export const getAllBar = () => {
             const response = await Api.get('/allbars');
             dispatch({ type: GET_ALL_BARS,
               payload: response.data,
+              payloadstatus : response.status
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la récupération des données." });
@@ -55,6 +88,7 @@ export const addBarToFavorite = (barID) => {
             const response = await Api.post('/bar/add-favorite', {barID});
             dispatch({ type: ADD_TO_FAVORITE,
               payload: response.data,
+              payloadstatus : response.status
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la récupération des données." });
@@ -69,6 +103,7 @@ export const removeBarToFavorite = (barID) => {
             const response = await Api.delete('/delete-favorite/'+barID);
             dispatch({ type: REMOVE_TO_FAVORITE,
               payload: response.data,
+              payloadstatus : response.status
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la récupération des données." });
@@ -83,6 +118,7 @@ export const getFavoriteBar = () => {
             const response = await Api.get('/my-favorite-bar');
             dispatch({ type: GET_FAVORITES_BARS,
               payload: response.data,
+              payloadstatus : response.status
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la récupération des données." });
@@ -97,6 +133,7 @@ export const getComment = (barID) => {
             const response = await Api.get('/bar/all-comment/'+barID );
             dispatch({ type: GET_COMMENT,
               payload: response.data,
+              payloadstatus : response.status
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite pour récupérer les commentaires." });
@@ -111,6 +148,7 @@ export const postComment = (barID, comment) => {
             const response = await Api.post('/bar/add-comment',{barID, comment});
             dispatch({ type: POST_COMMENT,
               payload: response.data,
+              payloadstatus : response.status
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite pour poster le commentaire." });
@@ -125,6 +163,7 @@ export const addRating = (barID, userNote) => {
             const response = await Api.patch('/bar/add-note',{barID, userNote});
             dispatch({ type: POST_NOTE,
               payload: response.data.success,
+              payloadstatus : response.status
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite pour poster le commentaire." });
@@ -139,6 +178,7 @@ export const checkRating = (barID, userNote) => {
             const response = await Api.get('/bar/check-note/'+barID);
             dispatch({ type: CHECK_NOTE,
               payload: response.data.success,
+              payloadstatus : response.status
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite pour poster le commentaire." });
@@ -165,7 +205,8 @@ export const setFilters = (filterUser) => {
               payload: response.data,
               payloadDate: filterUser.Date,
               payloadLike: filterUser.Like,
-              payloadDistance: filterUser.Distance
+              payloadDistance: filterUser.Distance,
+              payloadstatus : response.status
             });
 
         } catch (error) {
@@ -181,6 +222,7 @@ export const updateContentBar = (barId, nomVariable, contenu) => {
             const response = await Api.post('/bar/updateContentBar',{barId, nomVariable, contenu});
             dispatch({ type: POST_NOTE,
               payload: response.data.success,
+              payloadstatus : response.status
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite pour poster le commentaire." });
@@ -190,14 +232,18 @@ export const updateContentBar = (barId, nomVariable, contenu) => {
 
 //Function permettant de créer un bar manager
 export const createBarManager = (data) => {
+
     return async dispatch => {
         try {
             const response = await Api.post('/bar/create-bar', data);
             dispatch({ type: CREATE_BAR_MANAGER,
               payload: response.data,
+              payloadstatus : response.status
             });
+
         } catch (error) {
-            dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la creation du bar." });
+          console.log("fail")
+          dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la creation du bar.", payloadstatus : "401" });
         }
     };
 };
@@ -206,11 +252,10 @@ export const createBarManager = (data) => {
 export const createBarAdmin = (data) => {
     return async dispatch => {
         try {
-          console.log("1")
             const response = await Api.post('/admin/bar/create-bar', data);
-            console.log("2")
             dispatch({ type: CREATE_BAR_ADMIN,
               payload: response.data,
+              payloadstatus : response.status
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la creation du bar." });
@@ -221,11 +266,10 @@ export const createBarAdmin = (data) => {
 export const validebaradmin = (data) => {
     return async dispatch => {
         try {
-          console.log("1")
             const response = await Api.patch('/admin/validation-bar', data);
-            console.log("2")
             dispatch({ type: VALIDE_BAR_ADMIN,
               payload: response.data,
+              payloadstatus : response.status
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la validation du bar." });
@@ -240,6 +284,7 @@ export const modifystatutbaradmin = (data) => {
             const response = await Api.patch('/admin/bar/modify-statut', data);
             dispatch({ type: MODIFY_STATUT_BAR_ADMIN,
               payload: response.data,
+              payloadstatus : response.status
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la validation du bar." });
@@ -254,6 +299,7 @@ export const getmybarmanager = (barID) => {
             const response = await Api.get('/barfindone/'+barID);
             dispatch({ type: GET_MY_BAR_MANAGER,
               payload: response.data,
+              payloadstatus : response.status
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la validation du bar." });
@@ -268,6 +314,7 @@ export const updatemybarmanager = (data) => {
             const response = await Api.patch('/bar/modifymybar', data);
             dispatch({ type: UPDATE_MY_BAR_MANAGER,
               payload: response.data,
+              payloadstatus : response.status
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la validation du bar." });
@@ -282,6 +329,7 @@ export const getAllUsersAdmin = () => {
             const response = await Api.get('/admin/allUsers');
             dispatch({ type: GET_ALL_USERS_ADMIN,
               payload: response.data,
+              payloadstatus : response.status
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la récupération des données." });
@@ -296,6 +344,7 @@ export const deleteUser = (username) => {
             const response = await Api.delete('/admin/deleteUser/'+username);
             dispatch({ type: DELETE_USER,
               payload: response.data,
+              payloadstatus : response.status
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR_BARS, payload: "Une erreur s'est produite lors de la récupération des données." });

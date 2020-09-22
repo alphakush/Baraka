@@ -17,7 +17,9 @@ import {
     GET_MY_BAR_MANAGER,
     UPDATE_MY_BAR_MANAGER,
     DELETE_USER,
-    CREATE_BAR_ADMIN
+    CREATE_BAR_ADMIN,
+    GET_USER_INFO,
+    UPDATE_USER_INFO
 } from '../actions/BarsActions';
 
 const initialState = {
@@ -31,43 +33,49 @@ const initialState = {
     filterByLike: false,
     filterByDistance: false,
     filterByDate: false,
-    response: ''
+    response: '',
+    status: '',
+    userinfo: []
 }
 
 const barsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_ALL_BARS:
-            return { ...state, allbars: action.payload }
+            return { ...state, allbars: action.payload, status: action.payloadstatus}
         case GET_ALL_BARS_ADMIN:
-            return { ...state, allbars: action.payload }
+            return { ...state, allbars: action.payload, status: action.payloadstatus}
         case GET_ALL_USERS_ADMIN:
-            return { ...state, allusers: action.payload }
+            return { ...state, allusers: action.payload, status: action.payloadstatus}
         case GET_FAVORITES_BARS:
-            return { ...state, favoriteBars: action.payload }
+            return { ...state, favoriteBars: action.payload, status: action.payloadstatus }
         case ADD_TO_FAVORITE:
             return { ...state }
         case REMOVE_TO_FAVORITE:
             return { ...state }
         case GET_COMMENT:
-            return { ...state, commentBars: action.payload }
+            return { ...state, commentBars: action.payload, status: action.payloadstatus }
+        case GET_USER_INFO:
+            return { ...state, userinfo: action.payload, status: action.payloadstatus }
         case POST_COMMENT:
-            return { ...state, response: action.payload }
+            return { ...state, response: action.payload, status: action.payloadstatus }
         case VALIDE_BAR_ADMIN:
-            return { ...state, response: action.payload }
+            return { ...state, response: action.payload, status: action.payloadstatus }
         case POST_NOTE:
-            return { ...state, response: action.payload }
+            return { ...state, response: action.payload, status: action.payloadstatus }
         case GET_MY_BAR_MANAGER:
-            return { ...state, allbars: action.payload }
+            return { ...state, allbars: action.payload, status: action.payloadstatus }
         case MODIFY_STATUT_BAR_ADMIN:
-            return { ...state, response: action.payload }
+            return { ...state, response: action.payload, status: action.payloadstatus }
         case UPDATE_MY_BAR_MANAGER:
-            return { ...state, response: action.payload }
+            return { ...state, response: action.payload, status: action.payloadstatus }
+        case UPDATE_USER_INFO:
+            return { ...state, response: action.payload, status: action.payloadstatus }
         case CHECK_NOTE:
-            return { ...state, response: action.payload }
+            return { ...state, response: action.payload, status: action.payloadstatus }
         case CREATE_BAR_MANAGER:
-            return { ...state, response: action.payload }
+            return { ...state, response: action.payload, status: action.payloadstatus }
         case CREATE_BAR_ADMIN:
-            return { ...state, response: action.payload }
+            return { ...state, response: action.payload, status: action.payloadstatus }
         case DELETE_USER:
             return { ...state }
         case SET_FILTERS:
@@ -79,7 +87,7 @@ const barsReducer = (state = initialState, action) => {
                 filterByDistance: action.payloadDistance
             }
         case TOGGLE_ERROR_BARS:
-            return { ...state, errorMessage: action.payload }
+            return { ...state, errorMessage: action.payload, status: "401" }
         default:
             return state;
     }

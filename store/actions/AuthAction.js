@@ -14,7 +14,11 @@ export const signIn = (email, password) => {
     return async dispatch => {
         try {
             await AsyncStorage.clear()
+            console.log("4")
             const response = await Api.post('/signin', { email, password });
+            console.log("5")
+            console.log("status AuthActions.js :"+response.status)
+            console.log("6")
             await AsyncStorage.setItem('token', response.data.token);
             await AsyncStorage.setItem('username', response.data.user.username);
             await AsyncStorage.setItem('email', response.data.user.email);
@@ -25,17 +29,19 @@ export const signIn = (email, password) => {
             const longitude = location.coords.longitude.toString();
             await AsyncStorage.setItem('userlatitude', latitude);
             await AsyncStorage.setItem('userlongitude', longitude);
-            dispatch({ type: TOGGLE_SIGNIN,
+            await dispatch({ type: TOGGLE_SIGNIN,
               payload: response.data.token,
               payloademail: response.data.user.email,
               payloadusername : response.data.user.username,
               payloaduserlatitude : latitude,
               payloaduserlongitude : longitude,
               payloadaccesslevel : response.data.user.accessLevel,
-              payloadmanagerBarId : response.data.user.managerBarId
+              payloadmanagerBarId : response.data.user.managerBarId,
+              payloadstatus : response.status
             });
         } catch (error) {
-            dispatch({ type: TOGGLE_ERROR, payload: "Merci de bien vérifier votre E-mail ou votre mot de passe." });
+            dispatch({ type: TOGGLE_ERROR, payload: "Merci de bien vérifier votre E-mail ou votre mot de passe.", payloadstatus: "401"});
+            throw new Error(error);
         }
     };
 };
@@ -59,7 +65,8 @@ export const signUp = (username, email, password) => {
               payloadusername : response.data.user.username,
               payloaduserlatitude: latitude,
               payloaduserlongitude: longitude,
-              payloadaccesslevel: response.data.user.accessLevel
+              payloadaccesslevel: response.data.user.accessLevel,
+              payloadstatus : response.status
             });
         } catch (error) {
             dispatch({ type: TOGGLE_ERROR, payload: "Merci de bien vérifier votre E-mail ou votre mot de passe." });
