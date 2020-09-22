@@ -58,7 +58,6 @@ const MyAccountScreen = props => {
         quality: 1,
       });
       if (!result.cancelled) {
-        console.log(result.type)
         setSelectedImageuri(result.uri);
       }
   }

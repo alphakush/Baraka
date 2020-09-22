@@ -119,7 +119,6 @@ const Login = props => {
         />
         <Image style={styles.inputIcon} source={require('../images/email.png')} />
       </View>
-
       <View style={styles.inputContainer}>
         <TextInput style={styles.inputs}
           placeholder="mot de passe"
@@ -130,7 +129,6 @@ const Login = props => {
         />
         <Image style={styles.inputIcon} source={require('../images/password.png')} />
       </View>
-
       <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={signinHandler}>
         <Text style={styles.loginText}>Me connecter</Text>
       </TouchableOpacity>

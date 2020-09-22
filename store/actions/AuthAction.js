@@ -14,11 +14,7 @@ export const signIn = (email, password) => {
     return async dispatch => {
         try {
             await AsyncStorage.clear()
-            console.log("4")
             const response = await Api.post('/signin', { email, password });
-            console.log("5")
-            console.log("status AuthActions.js :"+response.status)
-            console.log("6")
             await AsyncStorage.setItem('token', response.data.token);
             await AsyncStorage.setItem('username', response.data.user.username);
             await AsyncStorage.setItem('email', response.data.user.email);
