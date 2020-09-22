@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback , ActivityIndicator} from 'react';
+import React, { useState, useEffect, useCallback, ActivityIndicator } from 'react';
 import {
   View,
   Text,
@@ -51,24 +51,24 @@ const BarInformations = props => {
 
   const setratingHandler = (enteredText) => {
     setrating(enteredText);
-    if(typeof responseRatingNote !== 'undefined'){
-      if(responseRatingNote === conditionForRatingBar){
-        dispatch(BarsActions.addRating(barID,rating));
+    if (typeof responseRatingNote !== 'undefined') {
+      if (responseRatingNote === conditionForRatingBar) {
+        dispatch(BarsActions.addRating(barID, rating));
       }
     }
   };
 
   const sendcomment = async () => {
-    if (comment != ''){
-      dispatch(BarsActions.postComment(barID,comment)).then(() =>{
-      {errormsg ? Alert.alert("Baraka",errormsg) : null }
-      dispatch(BarsActions.getComment(barID));
-       setcomment('');
+    if (comment != '') {
+      dispatch(BarsActions.postComment(barID, comment)).then(() => {
+        { errormsg ? Alert.alert("Baraka", errormsg) : null }
+        dispatch(BarsActions.getComment(barID));
+        setcomment('');
       })
-     } else{
-       Alert.alert("Baraka","Veuillez entrer un commentaire correcte");
-       return;
-     }
+    } else {
+      Alert.alert("Baraka", "Veuillez entrer un commentaire correcte");
+      return;
+    }
   };
 
   const Likebar = () => {
@@ -86,121 +86,128 @@ const BarInformations = props => {
 
   // On affiche le coeur j'aime de l'utilsateur
   useEffect(() => {
-    if(currentBarIsFavorite){
+    if (currentBarIsFavorite) {
       setbarliked(true);
     }
-    if (email != ""){
+    if (email != "") {
       setconnected(true)
-    }else{
+    } else {
       setconnected(false)
     }
-}, []);
+  }, []);
 
-// On affiche le coeur j'aime de l'utilsateur
-useEffect(() => {
-  dispatch(BarsActions.checkRating(barID));
-}, [setratingHandler]);
+  // On affiche le coeur j'aime de l'utilsateur
+  useEffect(() => {
+    dispatch(BarsActions.checkRating(barID));
+  }, [setratingHandler]);
 
-const loadComment = useCallback(async () => {
-  try {
-    dispatch(BarsActions.getComment(barID));
-  } catch (err) {
-    setError(err.message);
-  }
-}, [dispatch, setIsLoading]);
+  const loadComment = useCallback(async () => {
+    try {
+      dispatch(BarsActions.getComment(barID));
+    } catch (err) {
+      setError(err.message);
+    }
+  }, [dispatch, setIsLoading]);
 
   // On récupère les commentaires du bar
   useEffect(() => {
     loadComment();
-}, [dispatch, loadComment]);
+  }, [dispatch, loadComment]);
 
-//**
-// <Rating
-//   type='star'
-//   ratingCount={5}
-//   imageSize={35}
-//   readonly={true}
-//   fractions={1}
-//   startingValue={barAverageNotation}
-// />
+  //**
+  // <Rating
+  //   type='star'
+  //   ratingCount={5}
+  //   imageSize={35}
+  //   readonly={true}
+  //   fractions={1}
+  //   startingValue={barAverageNotation}
+  // />
 
-useEffect(() => {
-  const willFocusSub = props.navigation.addListener(
-    'willFocus',
-    loadComment
-  );
+  useEffect(() => {
+    const willFocusSub = props.navigation.addListener(
+      'willFocus',
+      loadComment
+    );
 
-  return () => {
-    willFocusSub.remove();
-  };
-}, [loadComment]);
+    return () => {
+      willFocusSub.remove();
+    };
+  }, [loadComment]);
 
   return (
     <ScrollView>
-    <KeyboardAwareScrollView
-      resetScrollToCoords={{ x: 0, y: 0 }}
-      contentContainerStyle={styles.container}
-      scrollEnabled={true}
-      enableOnAndroid={true}
-      enableAutomaticScroll={(Platform.OS === 'ios')}
-      extraScrollHeight={100}
-    >
-    <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss(); }} >
-      <View style={styles.container}>
-        <View style={{ marginHorizontal: 30 }}>
-          <Image resizeMode='contain' style={styles.image} source={{ uri: `data:image/png;base64,${barPicturesUrls}` }} />
-          <View style={{ alignItems: 'center' }}>
-            <Text style={styles.nameBar}>{barName}</Text>
-            <View style={{ alignItems: 'center' }}>
-            <Text style={styles.descriptionBar}>{barTags}</Text>
-            <Text style={styles.descriptionBar}>{barProducts}</Text>
+      <KeyboardAwareScrollView
+        resetScrollToCoords={{ x: 0, y: 0 }}
+        contentContainerStyle={styles.container}
+        scrollEnabled={true}
+        enableOnAndroid={true}
+        enableAutomaticScroll={(Platform.OS === 'ios')}
+        extraScrollHeight={100}
+      >
+        <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss(); }} >
+          <View style={styles.container}>
+            <View style={{ marginHorizontal: 30 }}>
+              <Image resizeMode='contain' style={styles.image} source={{ uri: `data:image/png;base64,${barPicturesUrls}` }} />
+              <View style={{ alignItems: 'center' }}>
+                <Text style={styles.nameBar}>{barName}</Text>
+                <View style={{ alignItems: 'center' }}>
+                  <Text style={styles.descriptionBar}>{barTags}</Text>
+                  <Text style={styles.descriptionBar}>{barProducts}</Text>
+                </View>
+                {connected ?
+                  <TouchableOpacity onPress={() => Likebar()}>
+                    <Image style={styles.like} source={barliked ? require('../images/hearts.png') : require('../images/heartsempty.png')} />
+                  </TouchableOpacity>
+                  :
+                  <View></View>
+                }
+                <Text style={styles.descriptionBar}>{barDescription}</Text>
+                <View style={styles.socialBarButton}>
+                  <Image style={styles.icon} source={require('../images/clock.png')} />
+                  <Text rkType='primary4 hintColor' style={styles.socialBarLabel}>Horaires : {baropenhours}h - {barendhours}h</Text>
+                </View>
+              </View>
+            </View>
+            <View style={styles.ButtonContainer}>
+              <TouchableOpacity style={styles.Button} onPress={() => {
+                props.navigation.navigate({
+                  routeName: 'BarRoute',
+                  params: {
+                    barlatitude: { barlatitude },
+                    barlongitude: { barlongitude },
+                    barname: { barName }
+                  }
+                });
+              }}>
+                <Text style={styles.ButtonText}>S'y rendre</Text>
+              </TouchableOpacity>
             </View>
             {connected ?
-              <TouchableOpacity onPress={() => Likebar()}>
-                <Image style={styles.like} source={barliked ? require('../images/hearts.png') : require('../images/heartsempty.png')} />
-              </TouchableOpacity>
+            <View>
+              <Text style={styles.desccomment}>Votre commentaire :</Text>
+              <AirbnbRating
+                count={5}
+                reviews={["Médiocre", "Moyen", "Bien", "Très Bien", "Excellent"]}
+                defaultRating={rating}
+                size={22}
+                onFinishRating={setratingHandler}
+              />
+              <View style={styles.inputContainermsg}>
+                <TextInput style={styles.inputs}
+                  placeholder="Entrez votre commentaires ici"
+                  onChangeText={setcommentHandler}
+                  value={comment}
+                />
+                <TouchableOpacity style={[styles.buttonContainer, styles.commentButton]} onPress={sendcomment}>
+                  <Text style={styles.commentButtonText}>Envoyer</Text>
+                </TouchableOpacity>
+              </View>
+              </View>
               :
-              <View></View>
+              <Text style={styles.desccomment}>Commentaires :</Text>
             }
-            <Text style={styles.descriptionBar}>{barDescription}</Text>
-            <View style={styles.socialBarButton}>
-              <Image style={styles.icon} source={require('../images/clock.png')}/>
-              <Text rkType='primary4 hintColor' style={styles.socialBarLabel}>Horaires : {baropenhours}h - {barendhours}h</Text>
-            </View>
-          </View>
-        </View>
-        <View style={styles.ButtonContainer}>
-          <TouchableOpacity style={styles.Button} onPress={() => {
-              props.navigation.navigate({
-                routeName: 'BarRoute',
-                params: {
-                  barlatitude: { barlatitude },
-                  barlongitude: { barlongitude },
-                  barname: { barName }
-                }
-              });
-            }}>
-            <Text style={styles.ButtonText}>S'y rendre</Text>
-          </TouchableOpacity>
-        </View>
-          <Text style={styles.desccomment}>Votre commentaire :</Text>
-          <AirbnbRating
-            count={5}
-            reviews={["Médiocre", "Moyen", "Bien", "Très Bien", "Excellent"]}
-            defaultRating={rating}
-            size={22}
-            onFinishRating={setratingHandler}
-          />
-          <View style={styles.inputContainermsg}>
-            <TextInput style={styles.inputs}
-              placeholder="Entrez votre commentaires ici"
-              onChangeText={setcommentHandler}
-              value={comment}
-            />
-            <TouchableOpacity  style={[styles.buttonContainer, styles.commentButton]} onPress={sendcomment}>
-              <Text style={styles.commentButtonText}>Envoyer</Text>
-            </TouchableOpacity>
-          </View>
+
             <FlatList
 
               style={styles.rootCom}
@@ -208,24 +215,24 @@ useEffect(() => {
               ItemSeparatorComponent={() => {
                 return (<View style={styles.separatorCom} />)
               }}
-          keyExtractor={(item, index) => item._id}
-          renderItem={(item) => {
-            const Commentaire = item.item;
-            return (
-              <View style={styles.containerCom}>
-                <Image style={styles.imageCom} source={{ uri: `data:image/png;base64,${Commentaire.image}` }} />
-                <View style={styles.contentCom}>
-                  <View style={styles.contentHeaderCom}>
-                    <Text style={styles.nameCom}>{Commentaire.author}</Text>
+              keyExtractor={(item, index) => item._id}
+              renderItem={(item) => {
+                const Commentaire = item.item;
+                return (
+                  <View style={styles.containerCom}>
+                    <Image style={styles.imageCom} source={{ uri: `data:image/png;base64,${Commentaire.image}` }} />
+                    <View style={styles.contentCom}>
+                      <View style={styles.contentHeaderCom}>
+                        <Text style={styles.nameCom}>{Commentaire.author}</Text>
+                      </View>
+                      <Text rkType='primary3 mediumLine'>{Commentaire.comment}</Text>
+                    </View>
                   </View>
-                  <Text rkType='primary3 mediumLine'>{Commentaire.comment}</Text>
-                </View>
-              </View>
-            );
-          }} />
-      </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAwareScrollView>
+                );
+              }} />
+          </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAwareScrollView>
     </ScrollView>
   );
 };
@@ -245,13 +252,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
-    marginLeft : 40,
+    marginLeft: 40,
     width: 100,
-    borderBottomRightRadius : 15,
-    borderTopRightRadius : 15,
+    borderBottomRightRadius: 15,
+    borderTopRightRadius: 15,
     backgroundColor: 'transparent',
   },
-  socialBarButton:{
+  socialBarButton: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -281,7 +288,7 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.LightBlue,
     backgroundColor: Colors.White,
     borderRadius: 15,
-    height:45,
+    height: 45,
     borderBottomWidth: 1,
     flexDirection: 'row',
     alignItems: 'flex-start',

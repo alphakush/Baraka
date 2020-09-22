@@ -4,7 +4,9 @@ import {
     Text,
     StyleSheet,
     ActivityIndicator,
-    FlatList
+    FlatList,
+    RefreshControl,
+
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { requestPermissionsAsync, watchPositionAsync, Accuracy } from 'expo-location';
@@ -18,17 +20,24 @@ import UserRow from '../components/UserRow';
 import Colors from '../constant/Colors';
 
 const ListOfAllUsers = props => {
-    const [err, setErr] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const dispatch = useDispatch();
 
+    const dispatch = useDispatch();
     const allUsers = useSelector(state => state.bars.allusers);
 
+    const [isLoading, setIsLoading] = useState(false);
+    const [refreshing, setRefreshing] = React.useState(false);
+    
     const loadAllUsers = async () => {
         setIsLoading(true);
         dispatch(BarsActions.getAllUsersAdmin());
         setIsLoading(false);
     }
+    
+    const onRefresh = React.useCallback(async () => {
+        setRefreshing(true);
+        loadAllUsers();
+        setRefreshing(false);
+      }, [refreshing]);
 
     // Pour récupérer tous les utilisateurs
     useEffect(() => {
@@ -69,7 +78,9 @@ const ListOfAllUsers = props => {
                 data={allUsers}
                 renderItem={_renderItem}
                 keyExtractor={(item, index) => item._id}
-                extraData={BarsActions.getAllUsersAdmin}
+                refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                  }
             />
         </View>
     );

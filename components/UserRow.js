@@ -18,48 +18,63 @@ const UserRow = props => {
     const dispatch = useDispatch();
     const sendDeleteOrder = async () => {
         dispatch(BarsActions.deleteUser(props.username));
+        dispatch(BarsActions.getAllUsersAdmin());
         Alert.alert("Suppression effectuée");
     };
 
     const confirmation = async () => {
-    Alert.alert(
-      "Confirmation de suppression",
-      "Supprimer l'utilisateur " + props.username,
-      [
-        {
-          text: "Non",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { text: "Supprimer", onPress: () => {sendDeleteOrder()} }
-      ],
-      { cancelable: false }
-    )
+        Alert.alert(
+            "Confirmation de suppression",
+            "Supprimer l'utilisateur " + props.username,
+            [
+                {
+                    text: "Non",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                { text: "Supprimer", onPress: () => { sendDeleteOrder() } }
+            ],
+            { cancelable: false }
+        )
     };
 
-    function AfficherUser(){
+    function AfficherUser() {
         return <Text style={styles.informationText}> Utilisateur</Text>
     }
 
-    function AfficherAdmin(){
+    function AfficherAdmin() {
         return <Text style={styles.informationText}> Administrateur</Text>
     }
 
-    function AfficherManager(){
+    function AfficherManager() {
         return <Text style={styles.informationText}> Manager</Text>
+    }
+
+    function AfficherBouton() {
+        return <SimpleLineIcons name="close" size={40} style={styles.iconDelete} />
     }
 
     function AfficherAccessLevel(props) {
         const l_accessLevel = props.accessLevel;
-        switch(l_accessLevel) {
+        switch (l_accessLevel) {
             case '-1':
-                return <AfficherUser/>
+                console.log(props.accessLevel)
+                return <AfficherUser />
             case '1':
-                return <AfficherManager/>  
+                return <AfficherManager />
             case '2':
-                return <AfficherAdmin/>
+                return <AfficherAdmin />
         }
-      }
+    }
+
+    function AfficherBoutonDelete(props) {
+        if (props.accessLevel != '2') {
+            return <AfficherBouton />
+        }
+        else {
+            return <Text></Text>
+        }
+    }
 
     return (
         <View style={styles.separator}>
@@ -84,7 +99,7 @@ const UserRow = props => {
                     </View >
                     <View style={styles.buttonPart}>
                         <TouchableOpacity onPress={confirmation}>
-                            <SimpleLineIcons name="close" size={40} style={styles.iconDelete} />
+                            <AfficherBoutonDelete accessLevel={props.accessLevel}/>
                         </TouchableOpacity>
                     </View>
 
@@ -113,7 +128,7 @@ const styles = StyleSheet.create({
     },
     usernameText: {
         marginHorizontal: 10,
-        fontSize: 17, 
+        fontSize: 17,
         fontWeight: 'bold'
     },
     informationText: {
@@ -138,12 +153,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: '20%',
     },
-    iconDelete:{        
+    iconDelete: {
         color: Colors.Red,
-        textShadowColor: 'black', 
+        textShadowColor: 'black',
         textShadowOffset: { width: 0.5, height: 0.5 },
-        textShadowRadius: 2, 
-    },
+        textShadowRadius: 2,
+    }
 });
 
 export default UserRow;
