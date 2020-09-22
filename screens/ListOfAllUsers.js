@@ -3,18 +3,19 @@ import {
     View,
     Text,
     StyleSheet,
-    ActivityIndicator
+    ActivityIndicator,
+    FlatList
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { requestPermissionsAsync, watchPositionAsync, Accuracy } from 'expo-location';
+import { useDispatch, useSelector } from 'react-redux';
+
+import * as BarsActions from '../store/actions/BarsActions';
+import { ScrollView } from 'react-native-gesture-handler';
 
 import HeaderButton from '../components/HeaderButton';
-import UserItem from '../components/UserItem';
-import { useDispatch, useSelector } from 'react-redux';
+import UserRow from '../components/UserRow';
 import Colors from '../constant/Colors';
-
-import * as AuthActions from '../store/actions/AuthAction';
-import * as BarsActions from '../store/actions/BarsActions';
 
 const ListOfAllUsers = props => {
     const [err, setErr] = useState(null);
@@ -22,14 +23,10 @@ const ListOfAllUsers = props => {
     const dispatch = useDispatch();
 
     const allUsers = useSelector(state => state.bars.allusers);
-    const errorMessage = useSelector(state => state.bars.errorMessage);
-
-    const userlatitude = useSelector(state => state.auth.userlatitude);
-    const userlongitude = useSelector(state => state.auth.userlongitude);
 
     const loadAllUsers = async () => {
         setIsLoading(true);
-        await dispatch(BarsActions.getAllUsersAdmin());
+        dispatch(BarsActions.getAllUsersAdmin());
         setIsLoading(false);
     }
 
@@ -45,17 +42,35 @@ const ListOfAllUsers = props => {
         }
     },[loadAllUsers]);
 
-    //Pour ajouter un spinner en attendant que la page se charge
+    // Pour ajouter un spinner en attendant que la page se charge
     if (isLoading) {
         return <View style={styles.actvityloadStyle}>
             <ActivityIndicator size='large' color={Colors.primary} />
         </View>
     }
 
+    const _renderItem = itemData => {
+        return (
+            <ScrollView>
+                <UserRow
+                    image={itemData.item.image}
+                    username={itemData.item.username}
+                    email={itemData.item.email}
+                    accessLevel={itemData.item.accessLevel}
+                />
+            </ScrollView>
+        );
+    };
+
+
     return (
-        <View style={styles.container}>
-            <UserItem data={allUsers}/>
-            {err ? <Text>Merci d'activer la localisation </Text> : null}
+        <View >
+            <FlatList
+                data={allUsers}
+                renderItem={_renderItem}
+                keyExtractor={(item, index) => item._id}
+                extraData={BarsActions.getAllUsersAdmin}
+            />
         </View>
     );
 };
