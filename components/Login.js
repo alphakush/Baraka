@@ -67,8 +67,8 @@ const Login = props => {
   };
 
   useEffect(() => {
-    setEmail("admin@gmail.com")
-    setPassword("test")
+    // setEmail("admin@gmail.com")
+    // setPassword("test")
     signinHandler();
   }, [connexionStatus]);
 

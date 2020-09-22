@@ -20,7 +20,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import * as BarsActions from '../store/actions/BarsActions';
 
-
 const BarManagerScreen = props => {
   const connexionStatus = useSelector(state => state.auth.token);
   const errormsg = useSelector(state => state.auth.errorMessage);
@@ -119,7 +118,8 @@ const BarManagerScreen = props => {
     dispatch(BarsActions.updatemybarmanager(data)).then(() =>{
       {errormsg ? Alert.alert("Baraka",errormsg) : null }
       })
-      // props.navigation.navigate('barManagerMainFlow');
+      Alert.alert("Baraka","Votre bar a été modifié")
+      props.navigation.navigate('barManagerMainFlow');
       // Alert.alert("Baraka","Modifications envoyé avec succès")
     return;
   };
@@ -138,7 +138,7 @@ const BarManagerScreen = props => {
         <View style={styles.container}>
         <Text style={[styles.infostatut, {color: barstatutrefused ? Colors.Red : Colors.Black}]}>Statut : {statutname}</Text>
           <View>
-          <Image resizeMode='contain' source={{ uri: `data:image/png;base64,${barPicturesUrls}` }} style={styles.image} />
+          <Image resizeMode='contain' source={{ uri: `data:image/png;base64,${barPicturesUrls}` }} style={styles.avatar} />
           </View>
         <View style={styles.socialBarButton}>
           <Image style={styles.icon} source={require('../images/clock.png')}/>
@@ -266,6 +266,14 @@ const styles = StyleSheet.create({
   image: {
     width: 250,
     height: 250,
+  },
+  avatar: {
+    width: 130,
+    height: 130,
+    borderRadius: 63,
+    borderWidth: 4,
+    borderColor: Colors.White,
+    marginTop : 20,
   },
   container: {
     flex: 1,

@@ -22,10 +22,12 @@ const FeedScreen = props => {
     const dispatch = useDispatch();
 
     const allbars = useSelector(state => state.bars.allbars);
+    const userInfo = useSelector(state => state.bars.userinfo);
     const errorMessage = useSelector(state => state.bars.errorMessage);
 
     const userlatitude = useSelector(state => state.auth.userlatitude);
     const userlongitude = useSelector(state => state.auth.userlongitude);
+    const useremail = useSelector(state => state.auth.email);
 
     const activeFilterByLike = useSelector(state => state.bars.filterByLike);
     const activeFilterByDistance = useSelector(state => state.bars.filterByDistance);
@@ -45,15 +47,13 @@ const FeedScreen = props => {
         }
     }
 
-    useEffect(() => {
-        TrackUser();
-    }, []);
-
     //Pour récupérer les favoris de l'utilisateur
     const loadFavorites = async () => {
         await dispatch(BarsActions.getFavoriteBar());
     }
-
+    const loaduserInfo = async () => {
+          await dispatch(BarsActions.getUserInfo(useremail));
+    }
     const loadAllBars = async () => {
         setIsLoading(true);
         // On vérifie qu'on n'a pas activé de filtre
@@ -67,6 +67,8 @@ const FeedScreen = props => {
     // Pour récupérer tous les bars
     useEffect(() => {
         loadAllBars();
+        loaduserInfo();
+        TrackUser();
     }, [dispatch]);
 
     useEffect(()=>{

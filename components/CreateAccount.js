@@ -59,6 +59,10 @@ const CreateAccount = props => {
       return;
     }
     if (email != '') {
+      var regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (!regexEmail.test(email)){
+        Alert.alert("Barak","Ceci n'est pas une adresse mail valide")
+      }
       if (username != '') {
         if (password != '') {
           if (password === confirmpassword) {

@@ -29,6 +29,7 @@ const FormulaireBar = props => {
 
   const connexionStatus = useSelector(state => state.auth.token);
 
+  const statusrequest = useSelector(state => state.bars.status);
   const errormsg = useSelector(state => state.auth.errorMessage);
   const accessLevel = useSelector(state => state.auth.accessLevel);
   const dispatch = useDispatch();
@@ -125,13 +126,15 @@ const FormulaireBar = props => {
 
   useEffect(() => {
     generateCaptcha();
-    // setnamebar("Wallace");
+    // setnamebar("L'échoppé 63 du châtea@u");
     // setDescription("Le meilleur bar pour prendre une bière à Lyon");
-    // setproduit("Kronenbourg, Mont Blanc Verte, Carlsberg Elephant");
-    // setSiret("785678378327827");
+    // setproduit("Bière, Mont Blanc Verte, Carlsberg Elephant");
+    // setSiret("52525252525252");
     // setPhone("04 78 42 59 56");
-    // setTags("Cool,sympa, magnifique");
+    // setTags("Cool, sympa, magnifique");
     // setAdresse("2 Rue Octavio Mey, 69005 Lyon");
+    // setbarOpenHours("06:30");
+    // setbarEndHours("10:30");
   }, [connexionStatus]);
 
   const sendFormulaireHandler = async() => {
@@ -148,6 +151,21 @@ const FormulaireBar = props => {
         return;
       }
     }
+    var regexPhone = /^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/;
+    if (!regexPhone.test(phone)){Alert.alert("Barak","Ceci n'est pas un numéro de téléphone valide"); return;}
+
+    var regexSiret = /^(?:[\s.-]?\d{14})$/;
+    if (!regexSiret.test(siret)){Alert.alert("Barak","Ceci n'est pas un numéro de siret valide (14 digits)"); return;}
+
+    var regexNomBar = /^[a-zA-Z0-9àéè _'.-]*$/;
+    if (!regexNomBar.test(namebar)){Alert.alert("Barak","Ceci n'est pas un nom de bar valide"); return;}
+
+    var regexProduit = /^[A-Za-zéàè]{3,}(?:(,| |, )[A-Za-zéàè]{3,})+$/;
+    if (!regexProduit.test(produit)){Alert.alert("Barak","Format produit : produit1,produit2,produit3"); return;}
+
+    var regexTags = /^[A-Za-zéàè]{3,}(?:(,| |, )[A-Za-zéàè]{3,})+$/;
+    if (!regexTags.test(tags)){Alert.alert("Barak","Format tags : tags1,tags2,tags3"); return;}
+
     if (selectedImageuri == ''){Alert.alert("Baraka", "Image obligatoire"); return; }
     if (namebar == ''){Alert.alert("Baraka", "Nom de bar obligatoire"); return; }
     if (tags == ''){Alert.alert("Baraka", "Tags obligatoire"); return;}
@@ -174,16 +192,17 @@ const FormulaireBar = props => {
     data.append('baropenhours',barOpenHours);
     data.append('barendhours',barEndHours);
     data.append('manager', email);
+    console.log(data)
     if (accessLevel=="2"){
       dispatch(BarsActions.createBarAdmin(data)).then(() =>{
         {errormsg ? Alert.alert("Baraka",errormsg) : null }
         })
         props.navigation.navigate('baradminMainFlow');
     } else if (accessLevel == "0" || accessLevel == "-1") {
-      dispatch(BarsActions.createBarManager(data)).then(() =>{
-        {errormsg ? Alert.alert("Baraka",errormsg) : null }
-        })
-        props.navigation.navigate('barManagerMainFlow');
+      dispatch(BarsActions.createBarManager(data));
+      Alert.alert("Baraka","Votre bar a été envoyé en validation")
+      props.navigation.navigate('barManagerMainFlow');
+        //props.navigation.navigate('barManagerMainFlow');
     }
 
     return;
@@ -225,13 +244,17 @@ const FormulaireBar = props => {
         </TouchableOpacity>
         </View>
         <View>
-          {selectedImageuri ? ( selectedImageuri && <Image source={{ uri: selectedImageuri }} style={styles.image} /> ) : <View /> }
+          {selectedImageuri ? ( selectedImageuri && <Image source={{ uri: selectedImageuri }} style={styles.avatar} /> ) : <View /> }
       </View>
       <View style={styles.inputContainer}>
         <TextInput style={styles.inputs}
           placeholder="Nom du bar"
           keyboardType="default"
-          defaultValue=""
+          defaultValue={namebar}
+          pattern={[
+            '(?=.*\\d)', // number required
+            '(?=.*[A-Z])', // uppercase letter
+          ]}
           underlineColorAndroid='transparent'
           onChangeText={setBarnameHandler} />
       </View>
@@ -239,7 +262,7 @@ const FormulaireBar = props => {
         <TextInput style={styles.inputs}
           placeholder="Description"
           keyboardType="default"
-          defaultValue=""
+          defaultValue={description}
           underlineColorAndroid='transparent'
           onChangeText={setDescriptionHandler} />
       </View>
@@ -247,7 +270,7 @@ const FormulaireBar = props => {
         <TextInput style={styles.inputs}
           placeholder="Tags"
           keyboardType="default"
-          defaultValue=""
+          defaultValue={tags}
           underlineColorAndroid='transparent'
           onChangeText={setTagsHandler} />
       </View>
@@ -255,7 +278,7 @@ const FormulaireBar = props => {
         <TextInput style={styles.inputs}
           placeholder="Adresse"
           keyboardType="default"
-          defaultValue=""
+          defaultValue={adresse}
           underlineColorAndroid='transparent'
           onChangeText={setAdressHandler} />
       </View>
@@ -263,7 +286,7 @@ const FormulaireBar = props => {
         <TextInput style={styles.inputs}
           placeholder="Produits"
           keyboardType="default"
-          defaultValue=""
+          defaultValue={produit}
           underlineColorAndroid='transparent'
           onChangeText={setProduitHandler} />
       </View>
@@ -271,7 +294,7 @@ const FormulaireBar = props => {
         <TextInput style={styles.inputs}
           placeholder="N° SIRET"
           keyboardType="numeric"
-          defaultValue=""
+          defaultValue={siret}
           underlineColorAndroid='transparent'
           onChangeText={setSiretHandler} />
       </View>
@@ -279,7 +302,7 @@ const FormulaireBar = props => {
         <TextInput style={styles.inputs}
           placeholder="N° Téléphone"
           keyboardType="numeric"
-          defaultValue=""
+          defaultValue={phone}
           underlineColorAndroid='transparent'
           onChangeText={setPhoneHandler} />
       </View>
@@ -342,6 +365,14 @@ const FormulaireBar = props => {
 }
 
 const styles = StyleSheet.create({
+  avatar: {
+    width: 130,
+    height: 130,
+    borderRadius: 63,
+    borderWidth: 4,
+    borderColor: Colors.White,
+    marginTop : 20,
+  },
   image: {
     width: 200,
     height: 200,

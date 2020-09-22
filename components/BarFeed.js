@@ -19,7 +19,8 @@ import * as BarsActions from '../store/actions/BarsActions';
 const BarFeed = props => {
   const [barliked, setbarliked] = useState(false);
   const dispatch = useDispatch();
-
+  const email = useSelector(state => state.auth.email);
+  const [connected, setconnected] = useState(false);
   const currentMealIsFavorite = useSelector(state => state.bars.favoriteBars.some(bar => bar._id === props.id));
 
   const Likebar = () => {
@@ -36,6 +37,12 @@ const BarFeed = props => {
     if(currentMealIsFavorite){
       setbarliked(true);
     }
+    if (email != ""){
+      setconnected(true)
+    }else{
+      setconnected(false)
+    }
+
 }, []);
 
   return (
@@ -51,11 +58,16 @@ const BarFeed = props => {
         <View style={styles.cardFooter}>
           <View style={styles.socialBarContainer}>
             <View style={styles.socialBarSection}>
+            {connected ?
               <TouchableOpacity style={styles.socialBarButton} onPress={ () => Likebar(props.id) }>
                 <Image style={styles.icon} source={barliked ? require('../images/hearts.png') : require('../images/heartsempty.png')}/>
                 <Text style={styles.socialBarLabel}>{props.numberLike}</Text>
               </TouchableOpacity>
+              :
+              <View></View>
+            }
             </View>
+
             <View style={styles.socialBarSection}>
               <Rating
                 type='star'
